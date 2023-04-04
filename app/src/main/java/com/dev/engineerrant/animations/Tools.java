@@ -144,7 +144,10 @@ public class Tools {
                             break;
                         }
                         default:
-                            _arg = _arg + " ";
+                            if (!_arg.equals("\n")) {
+                                _arg = _arg + " ";
+                            }
+
                             String[] args = _arg.split("");
 
                             for (String arg : args) {
