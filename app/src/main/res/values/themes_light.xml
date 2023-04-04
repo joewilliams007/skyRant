@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#454545</item>
+        <item name="colorOnPrimary">#000000</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#FFFFFF</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/dark_normalBottomNavigationButton</item>
+        <!-- Customize your theme here. --> 081B33
+        <item name="colorSurface">@color/dark_normalBottomNavigationButton</item>
+        <item name="colorSurfaceVariant">#DFDFDF</item>
+        <item name="colorOnSurfaceVariant">#000000</item>
+        <item name="colorAccent">#454545</item>
+    </style>
+</resources>
