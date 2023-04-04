@@ -6,9 +6,9 @@ skyRant is not in any way affiliated with devRant
 
 ## Download
 
-[Click to download apk](https://github.com/joewilliams007/engineerRant/blob/master/app/release/app-release.apk?raw=true)
+[Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
 
-Or download from here: https://github.com/joewilliams007/engineerRant/blob/master/app/release/app-release.apk
+Or download from here: https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk
 
 ## Update
 this page is pinged in settings to check for updates
