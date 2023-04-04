@@ -303,8 +303,8 @@ public class SettingsActivity extends AppCompatActivity {
             toast("min 10 max 50 ");
         } else {
             Account.setLimit(amount);
+            feed.setVisibility(View.GONE);
         }
-        feed.setVisibility(View.GONE);
     }
 
 
