@@ -468,8 +468,8 @@ public class MainActivity extends AppCompatActivity {
                     surpriseRant = response.body().getRant();
 
                     String s =  surpriseRant.getText().split("\n")[0];
-                    if (s.length()>20) {
-                        s = s.substring(0, 20);
+                    if (s.length()>26) {
+                        s = s.substring(0, 26);
                     }
 
 
