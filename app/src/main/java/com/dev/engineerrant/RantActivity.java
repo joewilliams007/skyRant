@@ -349,55 +349,60 @@ public class RantActivity extends AppCompatActivity {
     }
 
     private void voteComment(String c_id, int i) {
-        vibrate();
-        try {
-            RequestBody app = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "3");
-            RequestBody vote = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(i));
-            RequestBody token_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.id()));
-            RequestBody token_key = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), Account.key());
-            RequestBody user_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.user_id()));
+        if (Account.isLoggedIn()) {
+            vibrate();
+            try {
+                RequestBody app = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "3");
+                RequestBody vote = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(i));
+                RequestBody token_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.id()));
+                RequestBody token_key = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), Account.key());
+                RequestBody user_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.user_id()));
 
-            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BASE_URL + "comments/" + c_id + "/").addConverterFactory(GsonConverterFactory.create());
+                Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BASE_URL + "comments/" + c_id + "/").addConverterFactory(GsonConverterFactory.create());
 
-            Retrofit retrofit = builder.build(); // /devrant/comments/{comment_id}/vote
+                Retrofit retrofit = builder.build(); // /devrant/comments/{comment_id}/vote
 
-            VoteCommentClient client = retrofit.create(VoteCommentClient.class);
-            // finally, execute the request
+                VoteCommentClient client = retrofit.create(VoteCommentClient.class);
+                // finally, execute the request
 
-            Call<ModelSuccess> call = client.vote(app, vote, token_id, token_key, user_id);
-            call.enqueue(new Callback<ModelSuccess>() {
-                @Override
-                public void onResponse(@NonNull Call<ModelSuccess> call, @NonNull Response<ModelSuccess> response) {
-                    Log.v("Upload", response + " ");
+                Call<ModelSuccess> call = client.vote(app, vote, token_id, token_key, user_id);
+                call.enqueue(new Callback<ModelSuccess>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ModelSuccess> call, @NonNull Response<ModelSuccess> response) {
+                        Log.v("Upload", response + " ");
 
-                    if (response.isSuccessful()) {
-                        // Do awesome stuff
-                        assert response.body() != null;
-                        Boolean success = response.body().getSuccess();
+                        if (response.isSuccessful()) {
+                            // Do awesome stuff
+                            assert response.body() != null;
+                            Boolean success = response.body().getSuccess();
 
-                        if (success) {
-                            requestComments();
+                            if (success) {
+                                requestComments();
+                            } else {
+                                toast("failed");
+                            }
+                        } else if (response.code() == 400) {
+                            toast("Invalid login credentials entered. Please try again. :(");
+                        } else if (response.code() == 429) {
+                            // Handle unauthorized
+                            toast("You are not authorized :P");
                         } else {
-                            toast("failed");
+                            toast(response.message());
                         }
-                    } else if (response.code() == 400) {
-                        toast("Invalid login credentials entered. Please try again. :(");
-                    } else if (response.code() == 429) {
-                        // Handle unauthorized
-                        toast("You are not authorized :P");
-                    } else {
-                        toast(response.message());
                     }
-                }
 
-                @Override
-                public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
-                    toast("Request failed! " + t.getMessage());
-                }
+                    @Override
+                    public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
+                        toast("Request failed! " + t.getMessage());
+                    }
 
-            });
-        } catch (Exception e) {
-            toast(e.toString());
+                });
+            } catch (Exception e) {
+                toast(e.toString());
+            }
+        } else {
+            Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -465,7 +470,8 @@ public class RantActivity extends AppCompatActivity {
                 textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
             }
         } else {
-            toast("please login first");
+            Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -481,7 +487,8 @@ public class RantActivity extends AppCompatActivity {
                 textViewMinus.setTextColor(Color.parseColor("#FFFF0000"));
             }
         } else {
-            toast("please login first");
+            Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
