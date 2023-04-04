@@ -309,22 +309,6 @@
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switchLoad"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:checked="true"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="switchAutoLoad"
-                    android:padding="10dp"
-                    android:text="a u t o l o a d  i m a g e s  ( f e e d )"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchAnimation"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHighlight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -333,27 +317,27 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchHighlight"
                     android:padding="10dp"
-                    android:text="h i g h l i g h t  c o d e ( r a n t )"
+                    android:text="h i g h l i g h t  c o d e"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchInfoOnFeed"
+                    app:layout_constraintTop_toBottomOf="@+id/switchAnimation"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switchInfoOnFeed"
+                    android:id="@+id/switchSurprise"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:checked="true"
                     android:fontFamily="@font/nunito"
-                    android:onClick="switchUserInfoFeed"
+                    android:onClick="switchSurprise"
                     android:padding="10dp"
-                    android:text="u s e r  i n f o  ( f e e d )"
+                    android:text="s u r p r i s e  r a n t  o n  t o p"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchLoad"
+                    app:layout_constraintTop_toBottomOf="@+id/switchHighlight"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <TextView
@@ -370,8 +354,109 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchHighlight" />
+                    app:layout_constraintTop_toBottomOf="@+id/switchSurprise" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textViewFeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="showFeed"
+                android:padding="10dp"
+                android:text=">  f e e d"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/features" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/feed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFeed">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchInfoOnFeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchUserInfoFeed"
+                    android:padding="10dp"
+                    android:text="u s e r  i n f o"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchLoad"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchAutoLoad"
+                    android:padding="10dp"
+                    android:text="a u t o l o a d  i m a g e s"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchInfoOnFeed"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <TextView
+                    android:id="@+id/textViewRantsReq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:padding="10dp"
+                    android:text="r a n t s  p e r  r e q u e s t\nm i n  1 0\nm a x  5 0"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchLoad" />
+
+                <EditText
+                    android:id="@+id/editTextRantsAmount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="?attr/colorSurfaceVariant"
+                    android:ems="10"
+                    android:fontFamily="@font/nunito"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textColorHint="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRantsReq" />
+
+                <TextView
+                    android:id="@+id/textViewSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="saveRantsAmount"
+                    android:padding="10dp"
+                    android:text="s a v e"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextRantsAmount" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

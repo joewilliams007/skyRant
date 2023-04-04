@@ -40,9 +40,11 @@ import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.methods.MethodsFeed;
 import com.dev.engineerrant.methods.MethodsId;
 import com.dev.engineerrant.methods.MethodsNotif;
+import com.dev.engineerrant.methods.MethodsRant;
 import com.dev.engineerrant.methods.ModelNotif;
 import com.dev.engineerrant.models.ModelFeed;
 import com.dev.engineerrant.models.ModelId;
+import com.dev.engineerrant.models.ModelRant;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;
@@ -57,14 +59,16 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
-    TextView textViewUsername, textViewSetting, textViewNotif;
+    TextView textViewUsername, textViewSetting, textViewNotif, textViewSurprise;
     private int i = 1;
     private long duration = 800;
     private Handler animHandler;
     String sort = "recent";
+    Rants surpriseRant = null;
     RantLoadingAnimation rantLoadingAnimation;
     ConstraintLayout scrollLayout;
     private static final String NAME = "ThemeColors", KEY = "color";
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         textViewUsername = findViewById(R.id.username);
         textViewNotif = findViewById(R.id.notif);
         textViewSetting = findViewById(R.id.setting);
-
+        textViewSurprise = findViewById(R.id.textViewSurprise);
 
         handleDeepLinkIntent();
 
@@ -91,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
         setUpFadeAnimation(textViewUsername);
         setUpFadeAnimation(textViewNotif);
         setUpFadeAnimation(textViewSetting);
+
+        if (Account.surprise()) {
+            getSurpriseId();
+        }
 
         //com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
         //writer.typeWrite(textViewBottom,this, "> n o t i f\n> s e t t i n g s", 100L);
@@ -439,5 +447,93 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void getSurpriseId() { // Get random Rant. Need to make 2 api calls cuz comments don't come with the surprise sadly
+        MethodsRant methods = RetrofitClient.getRetrofitInstance().create(MethodsRant.class);
+        String total_url;
+        if (Account.isLoggedIn()) {
+            total_url = BASE_URL + "devrant/rants/surprise?app=3&token_id="+Account.id()+"&token_key="+Account.key()+"&user_id="+Account.user_id();
+        } else {
+            total_url = BASE_URL + "devrant/rants/surprise?app=3";
+        }
 
+        Call<ModelRant> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelRant>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelRant> call, @NonNull Response<ModelRant> response) {
+                if (response.isSuccessful()) {
+
+                    // Do awesome stuff
+                    assert response.body() != null;
+                    surpriseRant = response.body().getRant();
+
+                    String s =  surpriseRant.getText().split("\n")[0];
+                    if (s.length()>20) {
+                        s = s.substring(0, 20);
+                    }
+
+
+                    com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
+                    textViewSurprise.setVisibility(View.VISIBLE);
+                    writer.typeWrite(textViewSurprise,MainActivity.this, s+"... [read more]", 100L);
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ModelRant> call, @NonNull Throwable t) {
+                Log.d("no network", t.toString());
+            }
+        });
+    }
+
+    public void openSurpriseRant(View view) {
+        Intent intent = new Intent(MainActivity.this, RantActivity.class);
+        intent.putExtra("id", String.valueOf(surpriseRant.getId()));
+        intent.putExtra("text",surpriseRant.getText());
+        intent.putExtra("username", surpriseRant.getUser_username());
+        intent.putExtra("user_id", String.valueOf(surpriseRant.getUser_id()));
+        intent.putExtra("num_comments",String.valueOf(surpriseRant.getNum_comments()));
+        intent.putExtra("date",getRelativeTimeSpanString(surpriseRant.getCreated_time()* 1000L));
+        if (Account.isLoggedIn()) {
+            intent.putExtra("vote_state",String.valueOf(surpriseRant.getVote_state()));
+        } else {
+            intent.putExtra("vote_state",String.valueOf("0"));
+        }
+
+        if (surpriseRant.getUser_score()<0) {
+            intent.putExtra("user_score",String.valueOf(surpriseRant.getUser_score()));
+        } else {
+            intent.putExtra("user_score","+"+String.valueOf(surpriseRant.getUser_score()));
+        }
+
+        if (surpriseRant.getScore()<0) {
+            intent.putExtra("score",String.valueOf(surpriseRant.getScore()));
+        } else {
+            intent.putExtra("score","+"+String.valueOf(surpriseRant.getScore()));
+        }
+
+        intent.putExtra("user_id",String.valueOf(surpriseRant.getUser_id()));
+        intent.putExtra("b",surpriseRant.getUser_avatar().getB());
+        intent.putExtra("i",surpriseRant.getUser_avatar().getI());
+        intent.putExtra("info","true");
+
+        String url = null;
+        if (surpriseRant.getAttached_image().toString().contains("http")) {
+            url = surpriseRant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+        }
+        intent.putExtra("image",url);
+
+        String[] tags = surpriseRant.getTags();
+        String t = "";
+        for (String tag: tags) {
+            t+=tag+", ";
+        }
+        intent.putExtra("tags",t.substring(0, t.length()-2));
+
+        startActivity(intent);
+    }
 }

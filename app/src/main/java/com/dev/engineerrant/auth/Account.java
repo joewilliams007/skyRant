@@ -85,6 +85,17 @@ public class Account {
         editor.apply();
     }
 
+    public static Boolean surprise() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("surprise", true);
+    }
+
+    public static void setSurprise(Boolean surprise) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("surprise",surprise);
+        editor.apply();
+    }
+
     public static Boolean highlighter() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("highlighter", true);

@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -37,8 +38,9 @@ import retrofit2.Response;
 public class SettingsActivity extends AppCompatActivity {
 
     TextView textViewLogin,textViewCurrentNr,textViewNewestNr;
-    ConstraintLayout theme, profile, update, features;
+    ConstraintLayout theme, profile, update, features, feed;
     ProgressBar progressBar;
+    EditText editTextRantsAmount;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,11 @@ public class SettingsActivity extends AppCompatActivity {
         profile = findViewById(R.id.profile);
         update = findViewById(R.id.update);
         features = findViewById(R.id.features);
+        feed = findViewById(R.id.feed);
         textViewCurrentNr = findViewById(R.id.textViewCurrentNr);
         textViewNewestNr = findViewById(R.id.textViewNewestNr);
         progressBar = findViewById(R.id.progressBar);
+        editTextRantsAmount = findViewById(R.id.editTextRantsAmount);
 
         setSwitches();
 
@@ -148,11 +152,18 @@ public class SettingsActivity extends AppCompatActivity {
         setSwitches();
     }
 
+    public void switchSurprise(View view) {
+        Account.setSurprise(!Account.surprise());
+        setSwitches();
+    }
+
     private void setSwitches() {
         SwitchCompat switchAuto = findViewById(R.id.switchLoad);
         SwitchCompat switchInfo = findViewById(R.id.switchInfoOnFeed);
         SwitchCompat switchHighlight = findViewById(R.id.switchHighlight);
+        SwitchCompat switchSurprise = findViewById(R.id.switchSurprise);
         SwitchCompat switchAnimation = findViewById(R.id.switchAnimation);
+        switchSurprise.setChecked(Account.surprise());
         switchAnimation.setChecked(Account.animate());
         switchHighlight.setChecked(Account.highlighter());
         switchAuto.setChecked(Account.autoLoad());
@@ -197,6 +208,15 @@ public class SettingsActivity extends AppCompatActivity {
             features.setVisibility(View.VISIBLE);
         } else {
             features.setVisibility(View.GONE);
+        }
+    }
+
+    public void showFeed(View view) {
+        if (feed.getVisibility() == View.GONE) {
+            editTextRantsAmount.setText(String.valueOf(Account.limit()));
+            feed.setVisibility(View.VISIBLE);
+        } else {
+            feed.setVisibility(View.GONE);
         }
     }
 
@@ -276,4 +296,17 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(browserIntent);
         // String url = "https://github.com/Piashsarker/AndroidAppUpdateLibrary/raw/master/app-debug.apk";
     }
+
+    public void saveRantsAmount(View view) {
+
+        int amount = Integer.parseInt(editTextRantsAmount.getText().toString());
+        if (amount < 10 || amount > 50) {
+            toast("min 10 max 50 ");
+        } else {
+            Account.setLimit(amount);
+        }
+    }
+
+
+
 }
