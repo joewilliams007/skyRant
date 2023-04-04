@@ -30,3 +30,6 @@ Im not sure what is causing this but logging out and in again fixes it most ofte
 this page is pinged in settings to check for updates
 
 https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/phoneclient.json
+
+## About
+You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation
