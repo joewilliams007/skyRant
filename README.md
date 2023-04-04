@@ -10,6 +10,8 @@ animation of SIMMORSAL https://github.com/SIMMORSAL/DevRantNative
 simple code highlighter
 
 user information in feed
+
+surprise rant in main screen
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
