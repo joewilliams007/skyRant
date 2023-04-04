@@ -99,16 +99,16 @@
         android:id="@+id/textViewLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:fontFamily="@font/nunito"
+        android:onClick="register"
         android:padding="10dp"
-        android:text="l o g i n"
+        android:layout_marginTop="10dp"
+        android:text="new to devRant? Sign up"
         android:textColor="?attr/colorOnPrimary"
         android:textStyle="bold"
-        android:onClick="login"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom" />
 
     <TextView
         android:id="@+id/textViewSkip"
@@ -117,20 +117,10 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
         android:text="skip login"
+        android:padding="10dp"
+        android:onClick="skip"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/nunito"
-        android:text="forgot password?"
-        android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewSkip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -138,21 +128,21 @@
         android:id="@+id/bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="?attr/colorOnPrimary"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLogin">
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword">
 
         <TextView
             android:id="@+id/textViewForgotSignup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textAlignment="center"
             android:fontFamily="@font/nunito"
-            android:onClick="register"
-            android:text="new to devRant? Sign up"
+            android:onClick="login"
+            android:padding="10dp"
+            android:text="l o g i n"
+            android:textAlignment="center"
             android:textColor="@color/devDark"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

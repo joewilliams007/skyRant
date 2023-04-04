@@ -118,4 +118,8 @@ public class LoginActivity extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://devrant.com/feed/top/month?signup=1"));
         startActivity(browserIntent);
     }
+
+    public void skip(View view) {
+        finish();
+    }
 }
