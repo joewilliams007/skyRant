@@ -270,4 +270,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     }
+
+    public void updateOpen(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant/blob/master/README.md"));
+        startActivity(browserIntent);
+        // String url = "https://github.com/Piashsarker/AndroidAppUpdateLibrary/raw/master/app-debug.apk";
+    }
 }

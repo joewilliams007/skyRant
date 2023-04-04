@@ -28,6 +28,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
     packagingOptions {
         pickFirst 'lib/armeabi-v7a/libassmidi.so'
         pickFirst 'lib/x86/libassmidi.so'
@@ -42,7 +43,12 @@ android {
         exclude("META-INF/*.kotlin_module")
         exclude 'META-INF/*'
     }
+
+
+
 }
+
+
 
 dependencies {
 
@@ -63,4 +69,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
     implementation "androidx.fragment:fragment-ktx:1.5.6"
+
 }
