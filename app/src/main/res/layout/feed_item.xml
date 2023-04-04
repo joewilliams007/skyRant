@@ -105,7 +105,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewMinus"
                 app:layout_constraintStart_toEndOf="@+id/textViewPlus"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/textViewMinus" />
 
             <TextView
                 android:id="@+id/textViewPlus"
@@ -118,7 +118,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewMinus"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/textViewMinus" />
 
             <TextView
                 android:id="@+id/textViewMinus"
