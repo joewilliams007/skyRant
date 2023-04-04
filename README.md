@@ -13,7 +13,7 @@ user information in feed
 
 surprise rant in main screen
 
-resizeable without breaking ui
+resizeable without breaking UI & horizontal view available
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
