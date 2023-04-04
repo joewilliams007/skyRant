@@ -298,13 +298,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveRantsAmount(View view) {
-
         int amount = Integer.parseInt(editTextRantsAmount.getText().toString());
         if (amount < 10 || amount > 50) {
             toast("min 10 max 50 ");
         } else {
             Account.setLimit(amount);
         }
+        feed.setVisibility(View.GONE);
     }
 
 
