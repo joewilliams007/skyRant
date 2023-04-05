@@ -121,19 +121,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleDeepLinkIntent() {
-        Intent intent = getIntent();
-        if(intent != null) {
-            Uri data = intent.getData();
-            if(data != null) {
-                if (data.getPath().split("/")[1].equals("rants")) {
-                    Intent i = new Intent(MainActivity.this, RantActivity.class);
-                    i.putExtra("id",data.getPath().split("/")[2]);
-                    i.putExtra("info","false");
-                    startActivity(i);
-                } else if (data.getPath().split("/")[1].equals("users")) {
-                    getUserIdFromNameAndOpenProfile(data.getPath().split("/")[2]);
+        try {
+            Intent intent = getIntent();
+            if(intent != null) {
+                Uri data = intent.getData();
+                if(data != null) {
+                    if (data.getPath().split("/")[1].equals("rants")) {
+                        Intent i = new Intent(MainActivity.this, RantActivity.class);
+                        i.putExtra("id",data.getPath().split("/")[2]);
+                        i.putExtra("info","false");
+                        startActivity(i);
+                    } else if (data.getPath().split("/")[1].equals("users")) {
+                        getUserIdFromNameAndOpenProfile(data.getPath().split("/")[2]);
+                    }
                 }
             }
+        } catch (Exception ignored) {
+
         }
     }
 
