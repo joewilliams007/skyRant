@@ -24,9 +24,7 @@ Or download from here: https://github.com/joewilliams007/skyRant/blob/master/app
 
 ### Note
 
-A logged in user may get the error "bad request" upon sigining in.
-
-Im not sure what is causing this but logging out and in again fixes it most often. Im sure the reason is a symbol in a token. Will resolve it hopefully soon.
+A logged in user may get the error "bad request" upon sigining in -> please update to version >= 1.1.2
 
 ## Update
 this page is pinged in settings to check for updates
