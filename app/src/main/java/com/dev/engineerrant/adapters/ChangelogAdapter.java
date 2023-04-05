@@ -71,7 +71,8 @@ public abstract class ChangelogAdapter extends RecyclerView.Adapter<ChangelogAda
         int versionCode = BuildConfig.VERSION_CODE;
         String versionName = BuildConfig.VERSION_NAME;
 
-        // holder.setIsRecyclable(false);
+
+        //  holder.setIsRecyclable(false);
 
         holder.textViewDate.setText(getRelativeTimeSpanString(data_provider.getTimestamp()));
         // holder.textViewText.setText(data_provider.getText());
