@@ -75,7 +75,8 @@ public abstract class ChangelogAdapter extends RecyclerView.Adapter<ChangelogAda
 
         holder.textViewDate.setText(getRelativeTimeSpanString(data_provider.getTimestamp()));
         // holder.textViewText.setText(data_provider.getText());
-        holder.textViewVersion.setText(data_provider.getVersion());
+        holder.textViewVersion.setText("Version "+data_provider.getVersion());
+        holder.textViewBuild.setText("Build "+data_provider.getBuild());
 
         Tools.logHighlighter(data_provider.getText(),holder.textViewText);
 
