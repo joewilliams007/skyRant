@@ -59,6 +59,8 @@ public class RantActivity extends AppCompatActivity {
     ImageView imageViewProfile, imageViewRant;
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus;
     EditText editTextComment;
+
+    View view_container;
     int rantVote = 0;
     String id;
     String user_id;
@@ -192,7 +194,21 @@ public class RantActivity extends AppCompatActivity {
         textViewPlus = findViewById(R.id.textViewPlus);
         editTextComment = findViewById(R.id.editTextComment);
         imageViewRant = findViewById(R.id.imageViewRant);
+        view_container = findViewById(R.id.view_container);
+
+        view_container.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+
+            }
+
+            @Override
+            public void onDoubleClick(View v) {
+                upvoteRant();
+            }
+        });
     }
+
 
     private void requestComments() {
         MethodsRant methods = RetrofitClient.getRetrofitInstance().create(MethodsRant.class);
@@ -458,7 +474,7 @@ public class RantActivity extends AppCompatActivity {
         }
     }
 
-    public void upvote(View view) {
+    private void upvoteRant() {
         if (Account.isLoggedIn()) {
             if (rantVote == 1) {
                 votePost(0);
@@ -473,6 +489,9 @@ public class RantActivity extends AppCompatActivity {
             Intent intent = new Intent(RantActivity.this, LoginActivity.class);
             startActivity(intent);
         }
+    }
+    public void upvote(View view) {
+        upvoteRant();
     }
 
     public void downVote(View view) {
@@ -586,4 +605,6 @@ public class RantActivity extends AppCompatActivity {
         /*Fire!*/
         startActivity(Intent.createChooser(intent, "devRant"));
     }
+
+
 }

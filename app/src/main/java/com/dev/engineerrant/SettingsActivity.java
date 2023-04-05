@@ -25,10 +25,12 @@ import android.widget.TextView;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.classes.Changelog;
 import com.dev.engineerrant.methods.MethodsUpdate;
 import com.dev.engineerrant.models.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import retrofit2.Call;
@@ -221,8 +223,19 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void profileOptions(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://devrant.com/"));
-        startActivity(browserIntent);
+        if (Account.isLoggedIn()) {
+            Intent intent = new Intent(SettingsActivity.this, EditProfileActivity.class);
+            intent.putExtra("user_id",String.valueOf(Account.user_id()));
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void updateLog(View view) {
+        Intent intent = new Intent(SettingsActivity.this, ChangelogActivity.class);
+        startActivity(intent);
     }
 
     public void appInfo(View view) {
@@ -263,6 +276,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String version = response.body().getVersion();
                     int build = response.body().getBuild();
                     int versionCode = BuildConfig.VERSION_CODE;
+                    List<Changelog> logs = response.body().getChangelog();
 
                     textViewNewestNr.setText(version);
 

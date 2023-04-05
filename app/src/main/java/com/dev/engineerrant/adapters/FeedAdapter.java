@@ -1,5 +1,7 @@
 package com.dev.engineerrant.adapters;
 
+import static com.dev.engineerrant.app.toast;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.dev.engineerrant.DoubleClickListener;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
@@ -35,7 +38,7 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
     public abstract void onItemClicked(Integer feedPosition);
 
     public interface AdapterCallback{
-        void onItemClicked(Integer menuPosition);
+        void onItemClicked(Integer menuPosition, String type);
     }
     private AdapterCallback callback;
 
@@ -62,7 +65,7 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
         ImageView imageViewProfile, imageViewRant;
         TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewPlus, textViewMinus;
         ConstraintLayout constraintLayout, userInfo;
-        View viewState;
+        View viewState, _view;
 
         public RecyclerViewHolder(View view) {
             super(view);
@@ -79,6 +82,7 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
             textViewPlus = view.findViewById(R.id.textViewPlus);
             imageViewRant = view.findViewById(R.id.imageViewRant);
             userInfo = view.findViewById(R.id.userInfo);
+            _view = view.findViewById(R.id.view_container);
         };
     }
 
@@ -148,6 +152,65 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
             holder.textViewScoreRant.setText("+"+data_provider.getScore());
         }
 
+        holder.textViewPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(callback != null) {
+                    if (holder.textViewPlus.getCurrentTextColor() == Color.parseColor("#FFFF0000")) {
+                        holder.textViewPlus.setTextColor(Color.parseColor("#FFFFFF"));
+                        holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
+                        callback.onItemClicked(position, "removeVote");
+                    } else {
+                        holder.textViewPlus.setTextColor(Color.parseColor("#FFFF0000"));
+                        holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
+                        callback.onItemClicked(position, "upvote");
+                    }
+                }
+            }
+        });
+
+        holder.textViewMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(callback != null) {
+                    if (holder.textViewMinus.getCurrentTextColor() == Color.parseColor("#FFFF0000")) {
+                        holder.textViewPlus.setTextColor(Color.parseColor("#FFFFFF"));
+                        holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
+                        callback.onItemClicked(position, "removeVote");
+                    } else {
+                        holder.textViewPlus.setTextColor(Color.parseColor("#FFFFFF"));
+                        holder.textViewMinus.setTextColor(Color.parseColor("#FFFF0000"));
+                        callback.onItemClicked(position, "downVote");
+                    }
+                }
+            }
+        });
+
+        holder._view.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if(callback != null) {
+                    callback.onItemClicked(position, "rant");
+                }
+            }
+
+            @Override
+            public void onDoubleClick(View v) {
+                if(callback != null) {
+                    if (holder.textViewPlus.getCurrentTextColor() == Color.parseColor("#FFFF0000")) {
+                        holder.textViewPlus.setTextColor(Color.parseColor("#FFFFFF"));
+                        holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
+                        callback.onItemClicked(position, "removeVote");
+                    } else {
+                        holder.textViewPlus.setTextColor(Color.parseColor("#FFFF0000"));
+                        holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
+                        callback.onItemClicked(position, "upvote");
+                    }
+                }
+            }
+        });
+
+
 
 
         String[] tags = data_provider.getTags();
@@ -175,15 +238,6 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
         //    callback.onItemClicked(position);
         //}
 
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-
-                if(callback != null) {
-                    callback.onItemClicked(position);
-                }
-            }
-        });
 
 
     }

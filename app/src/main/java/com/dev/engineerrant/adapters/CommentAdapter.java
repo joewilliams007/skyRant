@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.dev.engineerrant.DoubleClickListener;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
@@ -62,6 +63,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
         ImageView imageViewProfile, imageViewRant;
         TextView textViewUsername, textViewScore, textViewText, textViewReply, textViewDate, textViewScoreRant, textViewPlus, textViewMinus;
         ConstraintLayout constraintLayout;
+        View _view;
         View viewState;
 
         public RecyclerViewHolder(View view) {
@@ -78,6 +80,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
             textViewPlus = view.findViewById(R.id.textViewPlus);
             textViewMinus = view.findViewById(R.id.textViewMinus);
             imageViewRant = view.findViewById(R.id.imageViewRant);
+            _view = view.findViewById(R.id.view_container);
         };
     }
 
@@ -151,6 +154,21 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
                 }
             }
         });
+
+        holder._view.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+
+            }
+
+            @Override
+            public void onDoubleClick(View v) {
+                if(callback != null) {
+                    callback.onItemClicked(position, "upvote");
+                }
+            }
+        });
+
 
         holder.textViewMinus.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -80,6 +80,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardViewProfile" />
 
+                <View
+                    android:id="@+id/view_container"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewProfile"
                     android:layout_width="wrap_content"
@@ -217,7 +226,7 @@
         android:background="?attr/colorSurfaceVariant"
         android:ems="10"
         android:fontFamily="@font/nunito"
-        android:hint="c o m m e n t . . ."
+        android:hint="comment ..."
         android:inputType="textMultiLine"
         android:padding="10dp"
         android:textColor="?attr/colorOnPrimary"

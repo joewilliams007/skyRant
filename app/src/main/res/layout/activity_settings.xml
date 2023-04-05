@@ -86,7 +86,7 @@
                     android:layout_margin="10dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="c h a n g e\np r o f i l e  s e t t i n g s"
+                    android:text="c h a n g e\np r o f i l e  d e t a i l s"
                     android:textAlignment="center"
                     android:onClick="profileOptions"
                     android:textColor="?attr/colorOnPrimary"
@@ -196,6 +196,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewUpdate">
 
                 <TextView
+                    android:id="@+id/textViewChangelog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="updateLog"
+                    android:padding="10dp"
+                    android:text="c h a n g e l o g"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/textViewCurrent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -204,7 +218,7 @@
                     android:text="c u r r e n t  v e r s i o n :"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewChangelog" />
 
                 <TextView
                     android:id="@+id/textViewCurrentNr"
@@ -215,7 +229,7 @@
                     android:text="1.2.0"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewChangelog" />
 
                 <TextView
                     android:id="@+id/textViewNewest"
@@ -252,6 +266,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewNewest" />
+
 
                 <ProgressBar
                     android:id="@+id/progressBar"

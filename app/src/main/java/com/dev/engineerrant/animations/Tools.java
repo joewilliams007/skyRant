@@ -144,7 +144,9 @@ public class Tools {
                             break;
                         }
                         default:
-                            _arg = _arg + " ";
+                            if (!_arg.equals("\n")) {
+                                _arg = _arg + " ";
+                            }
                             String[] args = _arg.split("");
 
                             for (String arg : args) {
@@ -180,6 +182,104 @@ public class Tools {
                             break;
                     }
                     }
+            }
+        }
+
+
+
+        tv.setText( builderHighlighted, TextView.BufferType.SPANNABLE);
+    }
+
+    public static void logHighlighter(String text, TextView tv) {
+        SpannableStringBuilder builderHighlighted = new SpannableStringBuilder();
+
+        String[] __args = text.split("\n");
+
+        for (String __arg: __args) {
+            __arg = __arg + " \n";
+            if (__arg.startsWith("##") || __arg.startsWith("//")) {
+                SpannableString str = new SpannableString(__arg);
+                str.setSpan(new ForegroundColorSpan(Color.parseColor("#DAA06D")), 0, str.length(), 0);
+                builderHighlighted.append(str);
+            } else {
+                String[] _args = __arg.split(" ");
+
+                for (String _arg: _args) {
+
+                    switch (_arg.replaceAll(",","").replaceAll(";","")) {
+                        case "FIX":
+                        case "FIXED":{
+                            _arg = _arg + " ";
+                            SpannableString str = new SpannableString(_arg);
+                            str.setSpan(new ForegroundColorSpan(Color.parseColor("#FFFF0000")), 0, str.length(), 0);
+                            builderHighlighted.append(str);
+                            break;
+                        }
+                        case "SKYRANT":
+                        case "IMPROVED": {
+                            _arg = _arg + " ";
+                            SpannableString str = new SpannableString(_arg);
+                            str.setSpan(new ForegroundColorSpan(Color.parseColor("#0096FF")), 0, str.length(), 0);
+                            builderHighlighted.append(str);
+                            break;
+                        }
+                        case "MISC":
+                        case "MOVED": {
+                            _arg = _arg + " ";
+                            SpannableString str = new SpannableString(_arg);
+                            str.setSpan(new ForegroundColorSpan(Color.parseColor("#FFC300")), 0, str.length(), 0);
+                            builderHighlighted.append(str);
+                            break;
+                        }
+                        case "ADDED":
+                        case "RE-ADDED":
+                        case "FEATURE":
+                        case "NEW": {
+                            _arg = _arg + " ";
+                            SpannableString str = new SpannableString(_arg);
+                            str.setSpan(new ForegroundColorSpan(Color.parseColor("#008f39")), 0, str.length(), 0);
+                            builderHighlighted.append(str);
+                            break;
+                        }
+                        default:
+                            if (!_arg.equals("\n")) {
+                                _arg = _arg + " ";
+                            }
+                            String[] args = _arg.split("");
+
+                            for (String arg : args) {
+                                if (arg.equals("{") || arg.equals("}")) {
+                                    SpannableString str = new SpannableString(arg);
+                                    str.setSpan(new ForegroundColorSpan(Color.parseColor("#efbbff")), 0, str.length(), 0);
+                                    builderHighlighted.append(str);
+                                } else if (arg.equals("(") || arg.equals(")")) {
+                                    SpannableString str = new SpannableString(arg);
+                                    str.setSpan(new ForegroundColorSpan(Color.parseColor("#CCACDB")), 0, str.length(), 0);
+                                    builderHighlighted.append(str);
+                                } else if (arg.equals("[") || arg.equals("]")) {
+                                    SpannableString str = new SpannableString(arg);
+                                    str.setSpan(new ForegroundColorSpan(Color.parseColor("#61346B")), 0, str.length(), 0);
+                                    builderHighlighted.append(str);
+                                } else if (arg.matches("[^\"]*\"[^\"]*") || arg.equals("'")) {
+                                    SpannableString str = new SpannableString(arg);
+                                    str.setSpan(new ForegroundColorSpan(Color.parseColor("#EADDCA")), 0, str.length(), 0);
+                                    builderHighlighted.append(str);
+                                } else if (arg.equals(":")) {
+                                    SpannableString str = new SpannableString(arg);
+                                    str.setSpan(new ForegroundColorSpan(Color.parseColor("#F0E68C")), 0, str.length(), 0);
+                                    builderHighlighted.append(str);
+                                } else if (arg.equals("=")) {
+                                    SpannableString str = new SpannableString(arg);
+                                    str.setSpan(new ForegroundColorSpan(Color.parseColor("#E6E6FA")), 0, str.length(), 0);
+                                    builderHighlighted.append(str);
+                                } else {
+                                    builderHighlighted.append(arg);
+                                }
+                            }
+
+                            break;
+                    }
+                }
             }
         }
 

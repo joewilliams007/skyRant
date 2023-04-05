@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dev.engineerrant.adapters.CommentItem;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
@@ -45,16 +46,22 @@ import com.dev.engineerrant.methods.ModelNotif;
 import com.dev.engineerrant.models.ModelFeed;
 import com.dev.engineerrant.models.ModelId;
 import com.dev.engineerrant.models.ModelRant;
+import com.dev.engineerrant.models.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
+import com.dev.engineerrant.post.VoteClient;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -338,47 +345,60 @@ public class MainActivity extends AppCompatActivity {
 
         FeedAdapter mAdapter = new FeedAdapter(this, feedItems, new FeedAdapter.AdapterCallback() {
             @Override
-            public void onItemClicked(Integer menuPosition) {
+            public void onItemClicked(Integer menuPosition, String type) {
                 FeedItem menuItem = feedItems.get(menuPosition);
-                Intent intent = new Intent(MainActivity.this, RantActivity.class);
-                intent.putExtra("id", String.valueOf(menuItem.getId()));
-                intent.putExtra("text",menuItem.getText());
-                intent.putExtra("username", menuItem.getUsername());
-                intent.putExtra("user_id", String.valueOf(menuItem.getUser_id()));
-                intent.putExtra("num_comments",String.valueOf(menuItem.getNumComments()));
-                intent.putExtra("date",getRelativeTimeSpanString(menuItem.getCreated_time()* 1000L));
-                if (Account.isLoggedIn()) {
-                    intent.putExtra("vote_state",String.valueOf(menuItem.getVote_state()));
-                } else {
-                    intent.putExtra("vote_state",String.valueOf("0"));
+                switch (type) {
+                    case "upvote":
+                        votePost(1,menuItem.getId());
+                        break;
+                    case "downVote":
+                        votePost(-1,menuItem.getId());
+                        break;
+                    case "removeVote":
+                        votePost(0,menuItem.getId());
+                        break;
+                    case "rant":
+                        Intent intent = new Intent(MainActivity.this, RantActivity.class);
+                        intent.putExtra("id", String.valueOf(menuItem.getId()));
+                        intent.putExtra("text",menuItem.getText());
+                        intent.putExtra("username", menuItem.getUsername());
+                        intent.putExtra("user_id", String.valueOf(menuItem.getUser_id()));
+                        intent.putExtra("num_comments",String.valueOf(menuItem.getNumComments()));
+                        intent.putExtra("date",getRelativeTimeSpanString(menuItem.getCreated_time()* 1000L));
+                        if (Account.isLoggedIn()) {
+                            intent.putExtra("vote_state",String.valueOf(menuItem.getVote_state()));
+                        } else {
+                            intent.putExtra("vote_state",String.valueOf("0"));
+                        }
+
+                        if (menuItem.getUser_score()<0) {
+                            intent.putExtra("user_score",String.valueOf(menuItem.getUser_score()));
+                        } else {
+                            intent.putExtra("user_score","+"+String.valueOf(menuItem.getUser_score()));
+                        }
+
+                        if (menuItem.getScore()<0) {
+                            intent.putExtra("score",String.valueOf(menuItem.getScore()));
+                        } else {
+                            intent.putExtra("score","+"+String.valueOf(menuItem.getScore()));
+                        }
+
+                        intent.putExtra("user_id",String.valueOf(menuItem.getUser_id()));
+                        intent.putExtra("b",menuItem.getB());
+                        intent.putExtra("i",menuItem.getI());
+                        intent.putExtra("info","true");
+                        intent.putExtra("image",menuItem.getImage());
+
+                        String[] tags = menuItem.getTags();
+                        String t = "";
+                        for (String tag: tags) {
+                            t+=tag+", ";
+                        }
+                        intent.putExtra("tags",t.substring(0, t.length()-2));
+
+                        startActivity(intent);
+                        break;
                 }
-
-                if (menuItem.getUser_score()<0) {
-                    intent.putExtra("user_score",String.valueOf(menuItem.getUser_score()));
-                } else {
-                    intent.putExtra("user_score","+"+String.valueOf(menuItem.getUser_score()));
-                }
-
-                if (menuItem.getScore()<0) {
-                    intent.putExtra("score",String.valueOf(menuItem.getScore()));
-                } else {
-                    intent.putExtra("score","+"+String.valueOf(menuItem.getScore()));
-                }
-
-                intent.putExtra("user_id",String.valueOf(menuItem.getUser_id()));
-                intent.putExtra("b",menuItem.getB());
-                intent.putExtra("i",menuItem.getI());
-                intent.putExtra("info","true");
-                intent.putExtra("image",menuItem.getImage());
-
-                String[] tags = menuItem.getTags();
-                String t = "";
-                for (String tag: tags) {
-                    t+=tag+", ";
-                }
-                intent.putExtra("tags",t.substring(0, t.length()-2));
-
-                startActivity(intent);
             }
         }) {
             @Override
@@ -549,5 +569,57 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("tags",t.substring(0, t.length()-2));
 
         startActivity(intent);
+    }
+
+    private void votePost(int i, int rant_id) {
+        vibrate();
+        try {
+            RequestBody app = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "3");
+            RequestBody vote = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(i));
+            RequestBody token_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.id()));
+            RequestBody token_key = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), Account.key());
+            RequestBody user_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.user_id()));
+
+            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BASE_URL + "devrant/rants/" + rant_id + "/").addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+
+            VoteClient client = retrofit.create(VoteClient.class);
+            // finally, execute the request
+
+            Call<ModelSuccess> call = client.vote(app, vote, token_id, token_key, user_id);
+            call.enqueue(new Callback<ModelSuccess>() {
+                @Override
+                public void onResponse(@NonNull Call<ModelSuccess> call, @NonNull Response<ModelSuccess> response) {
+                    Log.v("Upload", response + " ");
+
+                    if (response.isSuccessful()) {
+                        // Do awesome stuff
+                        assert response.body() != null;
+                        Boolean success = response.body().getSuccess();
+
+                        if (success) {
+                            // requestFeed();
+                        } else {
+                            toast("failed");
+                        }
+                    } else if (response.code() == 400) {
+                        toast("Invalid login credentials entered. Please try again. :(");
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        toast("You are not authorized :P");
+                    } else {
+                        toast(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
+                    toast("Request failed! " + t.getMessage());
+                }
+
+            });
+        } catch (Exception e) {
+            toast(e.toString());
+        }
     }
 }

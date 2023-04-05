@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EngineerRant"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ChangelogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".PostComposeActivity"
             android:exported="false" />
@@ -45,78 +50,60 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-                <action
-                    android:name="android.intent.action.VIEW" />
-
-                <category
-                    android:name="android.intent.category.DEFAULT" />
-
-                <category
-                    android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="www.devrant.com"
-                    android:pathPattern="\/rants\/.*" />
-
+                    android:pathPattern="\/rants\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="devrant.com"
-                    android:pathPattern="\/rants\/.*" />
-
-
+                    android:pathPattern="\/rants\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="www.devrant.com"
-                    android:pathPattern="\/users\/.*" />
-
+                    android:pathPattern="\/users\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="devrant.com"
-                    android:pathPattern="\/users\/.*" />
-
+                    android:pathPattern="\/users\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="www.devrant.com"
-                    android:pathPattern="\/collabs\/.*" />
-
+                    android:pathPattern="\/collabs\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="devrant.com"
-                    android:pathPattern="\/collabs\/.*" />
-
+                    android:pathPattern="\/collabs\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="www.devrant.io"
-                    android:pathPattern="\/rants\/.*" />
-
+                    android:pathPattern="\/rants\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="devrant.io"
-                    android:pathPattern="\/rants\/.*" />
-
+                    android:pathPattern="\/rants\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="www.devrant.io"
-                    android:pathPattern="\/users\/.*" />
-
+                    android:pathPattern="\/users\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="devrant.io"
-                    android:pathPattern="\/users\/.*" />
-
+                    android:pathPattern="\/users\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="www.devrant.io"
-                    android:pathPattern="\/collabs\/.*" />
-
+                    android:pathPattern="\/collabs\/.*"
+                    android:scheme="https" />
                 <data
-                    android:scheme="https"
                     android:host="devrant.io"
-                    android:pathPattern="\/collabs\/.*" />
+                    android:pathPattern="\/collabs\/.*"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </application>
