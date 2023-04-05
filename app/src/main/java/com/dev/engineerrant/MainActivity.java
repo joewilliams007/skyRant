@@ -82,7 +82,17 @@ public class MainActivity extends AppCompatActivity {
         textViewSetting = findViewById(R.id.setting);
         textViewSurprise = findViewById(R.id.textViewSurprise);
 
-        handleDeepLinkIntent();
+        try {
+            handleDeepLinkIntent();
+        } catch (Exception ignored) {
+
+        }
+
+        // YDBfs8yL!vAb9qGUQ13JL#o_PhWUS#GAQ9a$X3fm (fail)
+        // 3!D34wkuXdUZkB6wTSVbYfATSDp59wmzKdQwxGyK (work)
+
+        // LD#ZMLsXtuXg3iJ#z5e#MYHv5dGcLhVAYbrKRysq (fail)
+        // JRzMGqB9woxAAXMmfHVqzd1xhsr$dm!2MzZh7feZ (work)
 
         String text = username();
         String[] t = text.toString().split("");
@@ -91,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
             text+=l+"\n";
         }
         textViewUsername.setText(text);
+
+        System.out.println("LOGGING SESSION\n\n\n\n"+Account.key()+"\n"+Account.id()+"\n"+Account.user_id());
 
         setUpFadeAnimation(textViewUsername);
         setUpFadeAnimation(textViewNotif);
@@ -223,16 +235,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (Account.isLoggedIn()) {
             total_url = BASE_URL
-                    + "devrant/rants?token_id="+Account.id()+"&token_key="+Account.key()+"&user_id="+Account.user_id()+"&limit="+Account.limit()+"&sort="+sort+"&app=3&range=day&skip=0/";
+                    + "devrant/rants?token_id="+Account.id()+"&user_id="+Account.user_id()+"&token_key="+Account.key()+"&limit="+Account.limit()+"&sort="+sort+"&app=3&range=day&skip=0/";
 
         } else {
             total_url = BASE_URL
                     + "devrant/rants?app=3&limit="+Account.limit()+"&sort="+sort+"&range=day&skip=0/";
         }
 
-
         Call<ModelFeed> call = methods.getAllData(total_url);
-
         call.enqueue(new Callback<ModelFeed>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -259,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                     // Handle unauthorized
                     toast("you are not authorized");
                 } else {
-                    toast("no success "+response.message());
+                    toast("please logout and in again - "+response.message());
                 }
 
                 if (rantLoadingAnimation != null)

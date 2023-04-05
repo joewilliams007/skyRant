@@ -92,6 +92,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     toast("login approved");
 
+
+
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
