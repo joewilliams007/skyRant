@@ -14,6 +14,8 @@ user information in feed
 surprise rant in main screen
 
 resizeable without breaking UI & horizontal view available
+
+no wait time from [read more] to rant screen
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
@@ -30,3 +32,6 @@ Im not sure what is causing this but logging out and in again fixes it most ofte
 this page is pinged in settings to check for updates
 
 https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/phoneclient.json
+
+## About
+You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation
