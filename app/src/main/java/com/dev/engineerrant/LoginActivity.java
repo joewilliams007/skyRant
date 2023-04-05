@@ -17,8 +17,14 @@ import android.widget.ProgressBar;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.classes.Rants;
+import com.dev.engineerrant.methods.MethodsFeed;
+import com.dev.engineerrant.models.ModelFeed;
 import com.dev.engineerrant.models.ModelLogin;
+import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.LoginClient;
+
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -46,14 +52,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if (editTextUsername.getText().toString().length()<1) {
+        if (editTextUsername.getText().toString().length() < 1) {
             toast("enter username");
             return;
         }
-        if (editTextPassword.getText().toString().length()<1) {
+        if (editTextPassword.getText().toString().length() < 1) {
             toast("enter password");
             return;
         }
+        startlogin();
+    }
+    public void startlogin() {
         progressBar.setVisibility(View.VISIBLE);
 
         RequestBody app = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "3");
@@ -90,13 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                     Account.setExpire_time(expire_time);
                     Account.setUsername(editTextUsername.getText().toString());
 
-                    toast("login approved");
-
-
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    tryTokens();
                 } else if (response.code() == 400) {
                     toast("Invalid login credentials entered. Please try again. :(");
                     progressBar.setVisibility(View.GONE);
@@ -114,6 +117,40 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void tryTokens() {
+        MethodsFeed methods = RetrofitClient.getRetrofitInstance().create(MethodsFeed.class);
+      String  total_url = BASE_URL + "devrant/rants?token_id="+Account.id()+"&user_id="+Account.user_id()+"&token_key="+Account.key()+"&limit=10&sort=recent&app=3&range=day&skip=0/";
+    Call<ModelFeed> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelFeed>() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onResponse(@NonNull Call<ModelFeed> call, @NonNull Response<ModelFeed> response) {
+            if (response.isSuccessful()) {
+                assert response.body() != null;
+                Boolean success = response.body().getSuccess();
+
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+
+                toast("login approved");
+            } else if (response.code() == 429) {
+                // Handle unauthorized
+                toast("you are not authorized");
+            } else {
+                startlogin();
+            }
+
+        }
+
+        @Override
+        public void onFailure(@NonNull Call<ModelFeed> call, @NonNull Throwable t) {
+            Log.d("error_contact", t.toString());
+            toast("no network");
+        }
+    });
     }
 
     public void register(View view) {
