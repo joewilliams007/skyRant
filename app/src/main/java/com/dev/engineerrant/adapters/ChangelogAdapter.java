@@ -83,11 +83,11 @@ public abstract class ChangelogAdapter extends RecyclerView.Adapter<ChangelogAda
 
         if (Integer.parseInt(data_provider.getBuild())==versionCode) {
             holder.textViewInstalled.setText("current version");
-        } else if (Integer.parseInt(data_provider.getBuild())<versionCode) {
+        } else if (Integer.parseInt(data_provider.getBuild())>versionCode) {
             holder.textViewInstalled.setText("not installed");
         } else {
-            holder.textViewInstalled.setText("");
-        }
+            holder.textViewInstalled.setText("") ;
+        };
 
 
     }

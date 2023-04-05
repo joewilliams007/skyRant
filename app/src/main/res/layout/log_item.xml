@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito"
-                android:padding="10dp"
+                android:layout_margin="10dp"
                 android:text="FIXED (color red): login bad request\nADDED: more themes\nREMOVED: redunedent function"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
