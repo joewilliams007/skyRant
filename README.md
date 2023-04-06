@@ -33,6 +33,7 @@ this page is pinged in settings to check for updates
 https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/phoneclient.json
 
 ### Community Projects
+Projects show in the app, add an issue to add another project
 
 https://github.com/joewilliams007/jsonapi
 
