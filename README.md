@@ -38,4 +38,4 @@ projects show in the app, add an issue to add another project
 https://github.com/joewilliams007/jsonapi
 
 ## Credit
-You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation
+You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation. And <3 to devRant
