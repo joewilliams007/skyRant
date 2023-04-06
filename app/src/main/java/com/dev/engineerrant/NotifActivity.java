@@ -15,8 +15,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.dev.engineerrant.adapters.CommentAdapter;
-import com.dev.engineerrant.adapters.CommentItem;
 import com.dev.engineerrant.adapters.NotifAdapter;
 import com.dev.engineerrant.adapters.NotifItem;
 import com.dev.engineerrant.animations.Tools;
@@ -24,7 +22,7 @@ import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.classes.NotifItems;
 import com.dev.engineerrant.classes.NotifUnread;
 import com.dev.engineerrant.methods.MethodsNotif;
-import com.dev.engineerrant.methods.ModelNotif;
+import com.dev.engineerrant.models.ModelNotif;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;

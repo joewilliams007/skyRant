@@ -40,7 +40,7 @@ import retrofit2.Response;
 public class SettingsActivity extends AppCompatActivity {
 
     TextView textViewLogin,textViewCurrentNr,textViewNewestNr;
-    ConstraintLayout theme, profile, update, features, feed;
+    ConstraintLayout theme, profile, update, features, feed, about;
     ProgressBar progressBar;
     EditText editTextRantsAmount;
     @SuppressLint("MissingInflatedId")
@@ -56,6 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         update = findViewById(R.id.update);
         features = findViewById(R.id.features);
         feed = findViewById(R.id.feed);
+        about = findViewById(R.id.about);
         textViewCurrentNr = findViewById(R.id.textViewCurrentNr);
         textViewNewestNr = findViewById(R.id.textViewNewestNr);
         progressBar = findViewById(R.id.progressBar);
@@ -213,6 +214,13 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    public void showAbout(View view) {
+        if (about.getVisibility() == View.GONE) {
+            about.setVisibility(View.VISIBLE);
+        } else {
+            about.setVisibility(View.GONE);
+        }
+    }
     public void showFeed(View view) {
         if (feed.getVisibility() == View.GONE) {
             editTextRantsAmount.setText(String.valueOf(Account.limit()));
@@ -321,6 +329,31 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+
+    public void openCommunity(View view) {
+        Intent intent = new Intent(SettingsActivity.this, CommunityActivity.class);
+        startActivity(intent);
+    }
+
+    public void githubSkyRant(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant"));
+        startActivity(browserIntent);
+    }
+
+    public void skyRantIssueTracker(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant/issues"));
+        startActivity(browserIntent);
+    }
+
+    public void addCommunityProject(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/jsonapi/issues"));
+        startActivity(browserIntent);
+    }
+
+    public void devrantWebsite(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://devrant.com/"));
+        startActivity(browserIntent);
+    }
 
 
 }

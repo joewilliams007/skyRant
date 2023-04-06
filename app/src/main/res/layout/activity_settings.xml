@@ -472,6 +472,107 @@
                     app:layout_constraintTop_toBottomOf="@+id/editTextRantsAmount" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/textViewCommunity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="openCommunity"
+                android:padding="10dp"
+                android:text=">  c o m m u n i t y"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feed" />
+
+            <TextView
+                android:id="@+id/textViewAbout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="showAbout"
+                android:padding="10dp"
+                android:text=">  a b o u t"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCommunity" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAbout">
+
+
+                <TextView
+                    android:id="@+id/textViewGithub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="githubSkyRant"
+                    android:padding="10dp"
+                    android:text="G i t H u b - s k y R a n t"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewIssues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="skyRantIssueTracker"
+                    android:padding="10dp"
+                    android:text="i s s u e  t r a c k e r"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGithub" />
+
+                <TextView
+                    android:id="@+id/textViewCommunityIssue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="addCommunityProject"
+                    android:padding="10dp"
+                    android:text="a d d  c o m m u n i t y  p r o j e c t"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewIssues" />
+
+                <TextView
+                    android:id="@+id/textViewDevRant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="devrantWebsite"
+                    android:padding="10dp"
+                    android:text="d e v R a n t  w e b s i t e  \uFE643"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCommunityIssue" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.EngineerRant"
         tools:targetApi="31">
         <activity
+            android:name=".CommunityActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangelogActivity"
             android:exported="false" />
         <activity

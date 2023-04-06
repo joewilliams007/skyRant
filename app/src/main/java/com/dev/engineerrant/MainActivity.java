@@ -9,40 +9,31 @@ import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dev.engineerrant.adapters.CommentItem;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.NotifItems;
-import com.dev.engineerrant.classes.NotifUnread;
 import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.methods.MethodsFeed;
 import com.dev.engineerrant.methods.MethodsId;
-import com.dev.engineerrant.methods.MethodsNotif;
 import com.dev.engineerrant.methods.MethodsRant;
-import com.dev.engineerrant.methods.ModelNotif;
 import com.dev.engineerrant.models.ModelFeed;
 import com.dev.engineerrant.models.ModelId;
 import com.dev.engineerrant.models.ModelRant;
@@ -52,7 +43,6 @@ import com.dev.engineerrant.post.VoteClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import okhttp3.MediaType;
