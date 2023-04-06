@@ -26,10 +26,15 @@ Or download from here: https://github.com/joewilliams007/skyRant/blob/master/app
 
 A logged in user may get the error "bad request" upon sigining in -> please update to version >= 1.1.2
 
-## Update
+## About
+### Updates
 this page is pinged in settings to check for updates
 
 https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/phoneclient.json
 
-## About
+### Community Projects
+
+https://github.com/joewilliams007/jsonapi
+
+## Credit
 You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation
