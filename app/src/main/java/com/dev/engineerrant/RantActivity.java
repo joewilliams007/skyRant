@@ -1,6 +1,7 @@
 package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
+import static com.dev.engineerrant.app.hideKeyboard;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
@@ -529,6 +530,7 @@ public class RantActivity extends AppCompatActivity {
             } else {
                 editTextComment.setText("");
                 uploadC(c);
+                hideKeyboard(RantActivity.this);
             }
         } else {
             Intent intent = new Intent(RantActivity.this, LoginActivity.class);
