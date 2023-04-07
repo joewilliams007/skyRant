@@ -7,7 +7,7 @@ not in any way complete!
 
 ## preview
 
-![devrantnative2](https://github.com/joewilliams007/skyRant/blob/master/skyRant.gif?raw=true)
+![devrantnative2](https://github.com/joewilliams007/skyRant/blob/master/skyRantPreview.gif?raw=true)
 
 ## Features
 animation of SIMMORSAL https://github.com/SIMMORSAL/DevRantNative
