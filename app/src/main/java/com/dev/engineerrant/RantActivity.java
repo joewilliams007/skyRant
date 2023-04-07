@@ -94,7 +94,7 @@ public class RantActivity extends AppCompatActivity {
                 textViewText.setText(intent.getStringExtra("text"));
             }
 
-            Tools.textUrlMentionHighlighter(intent.getStringExtra("tags"),textViewTags);
+            Tools.textTagsHighlighter(intent.getStringExtra("tags"),textViewTags);
 
             textViewDate.setText(intent.getStringExtra("date"));
             user_id = intent.getStringExtra("user_id");
