@@ -165,6 +165,22 @@
                             android:textColor="?attr/colorOnPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/bot"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/bot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/rounded_corner"
+                            android:fontFamily="@font/nunito"
+                            android:gravity="center_horizontal"
+                            android:onClick="typeBot"
+                            android:padding="10dp"
+                            android:text="bots"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/libraries"
                             app:layout_constraintTop_toTopOf="parent" />
 

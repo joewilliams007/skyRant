@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.dev.engineerrant.MainActivity;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
@@ -283,8 +285,39 @@ public class Tools {
             }
         }
 
-
-
         tv.setText( builderHighlighted, TextView.BufferType.SPANNABLE);
+    }
+    public static void textUrlMentionHighlighter(String text, TextView tv) {
+
+    }
+    public static void textTagsHighlighter(String text, TextView tv) {
+        SpannableString ss = new SpannableString(text);
+        String[] args = text.split(",");
+        for (String arg : args) {
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    String searchTag = arg;
+                    if (searchTag.startsWith(" ")) {
+                        searchTag = searchTag.substring(1);
+                    }
+
+                    Intent i = new Intent(MyApplication.getAppContext(), MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("searchTag",searchTag);
+                    MyApplication.getAppContext().startActivity(i);
+                }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(true);
+                }
+            };
+            ss.setSpan(clickableSpan, text.indexOf(arg), text.indexOf(arg) + arg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        tv.setText(ss);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        tv.setPaintFlags(0);
     }
 }

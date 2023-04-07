@@ -74,6 +74,17 @@ public class Account {
         editor.apply();
     }
 
+    public static String search() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getString("search", "print");
+    }
+
+    public static void setSearch(String search) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putString("search",search);
+        editor.apply();
+    }
+
     public static Boolean animate() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("animate", true);

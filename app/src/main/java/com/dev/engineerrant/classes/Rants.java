@@ -1,5 +1,7 @@
 package com.dev.engineerrant.classes;
 
+import java.util.List;
+
 public class Rants {
     int id;
     int score;
@@ -19,6 +21,11 @@ public class Rants {
     User_avatar user_avatar;
     Object attached_image;
     String[] tags;
+    List<Links> links;
+
+    public List<Links> getLinks() {
+        return links;
+    }
 
     public String[] getTags() {
         return tags;

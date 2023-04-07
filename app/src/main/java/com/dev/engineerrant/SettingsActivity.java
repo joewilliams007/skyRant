@@ -1,5 +1,6 @@
 package com.dev.engineerrant;
 
+import static com.dev.engineerrant.app.hideKeyboard;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.app.toastLong;
 
@@ -42,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView textViewLogin,textViewCurrentNr,textViewNewestNr;
     ConstraintLayout theme, profile, update, features, feed, about;
     ProgressBar progressBar;
-    EditText editTextRantsAmount;
+    EditText editTextRantsAmount, editTextSearchText;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
         textViewNewestNr = findViewById(R.id.textViewNewestNr);
         progressBar = findViewById(R.id.progressBar);
         editTextRantsAmount = findViewById(R.id.editTextRantsAmount);
+        editTextSearchText = findViewById(R.id.editTextSearchText);
 
         setSwitches();
 
@@ -176,6 +178,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void showTheme(View view) {
         if (theme.getVisibility() == View.GONE) {
+            editTextSearchText.setText(Account.search());
             theme.setVisibility(View.VISIBLE);
         } else {
             theme.setVisibility(View.GONE);
@@ -227,6 +230,17 @@ public class SettingsActivity extends AppCompatActivity {
             feed.setVisibility(View.VISIBLE);
         } else {
             feed.setVisibility(View.GONE);
+        }
+    }
+
+    public void saveSearch(View view) {
+        String t = editTextSearchText.getText().toString();
+        if (t.length()>1) {
+            Account.setSearch(t);
+            theme.setVisibility(View.GONE);
+            hideKeyboard(SettingsActivity.this);
+        } else {
+            toast("enter a term");
         }
     }
 
@@ -325,6 +339,7 @@ public class SettingsActivity extends AppCompatActivity {
             toast("min 10 max 50 ");
         } else {
             Account.setLimit(amount);
+            hideKeyboard(SettingsActivity.this);
             feed.setVisibility(View.GONE);
         }
     }
@@ -354,6 +369,5 @@ public class SettingsActivity extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://devrant.com/"));
         startActivity(browserIntent);
     }
-
 
 }

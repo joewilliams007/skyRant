@@ -1,6 +1,7 @@
 package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
+import static com.dev.engineerrant.app.hideKeyboard;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.username;
 import static com.dev.engineerrant.auth.Account.vibrate;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,9 +36,11 @@ import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.methods.MethodsFeed;
 import com.dev.engineerrant.methods.MethodsId;
 import com.dev.engineerrant.methods.MethodsRant;
+import com.dev.engineerrant.methods.MethodsSearch;
 import com.dev.engineerrant.models.ModelFeed;
 import com.dev.engineerrant.models.ModelId;
 import com.dev.engineerrant.models.ModelRant;
+import com.dev.engineerrant.models.ModelSearch;
 import com.dev.engineerrant.models.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.VoteClient;
@@ -56,14 +60,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
-    TextView textViewUsername, textViewSetting, textViewNotif, textViewSurprise;
-    private int i = 1;
-    private long duration = 800;
-    private Handler animHandler;
+    TextView textViewUsername, textViewSetting, textViewNotif, textViewSurprise,textViewSearch;
+    EditText editTextSearch;
     String sort = "recent";
     Rants surpriseRant = null;
     RantLoadingAnimation rantLoadingAnimation;
-    ConstraintLayout scrollLayout;
+    ConstraintLayout scrollLayout, search;
     private static final String NAME = "ThemeColors", KEY = "color";
     @SuppressLint("MissingInflatedId")
     @Override
@@ -78,18 +80,13 @@ public class MainActivity extends AppCompatActivity {
         textViewNotif = findViewById(R.id.notif);
         textViewSetting = findViewById(R.id.setting);
         textViewSurprise = findViewById(R.id.textViewSurprise);
+        editTextSearch = findViewById(R.id.editTextSearch);
+        search = findViewById(R.id.search);
+        search.setVisibility(View.GONE);
+        textViewSearch = findViewById(R.id.textViewSearch);
+        textViewSearch.setText(Account.search());
 
-        try {
-            handleDeepLinkIntent();
-        } catch (Exception ignored) {
-
-        }
-
-        // YDBfs8yL!vAb9qGUQ13JL#o_PhWUS#GAQ9a$X3fm (fail)
-        // 3!D34wkuXdUZkB6wTSVbYfATSDp59wmzKdQwxGyK (work)
-
-        // LD#ZMLsXtuXg3iJ#z5e#MYHv5dGcLhVAYbrKRysq (fail)
-        // JRzMGqB9woxAAXMmfHVqzd1xhsr$dm!2MzZh7feZ (work)
+        handleDeepLinkIntent(); // feed request comes afterwards
 
         String text = username();
         String[] t = text.toString().split("");
@@ -111,10 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         //com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
         //writer.typeWrite(textViewBottom,this, "> n o t i f\n> s e t t i n g s", 100L);
-
-        requestFeed();
-
-
     }
 
     private void handleDeepLinkIntent() {
@@ -131,10 +124,16 @@ public class MainActivity extends AppCompatActivity {
                     } else if (data.getPath().split("/")[1].equals("users")) {
                         getUserIdFromNameAndOpenProfile(data.getPath().split("/")[2]);
                     }
+                } else if (intent.getStringExtra("searchTag")!=null) {
+                    requestSearch(intent.getStringExtra("searchTag"));
+                    search.setVisibility(View.VISIBLE);
+                    editTextSearch.setText(intent.getStringExtra("searchTag"));
+                } else {
+                    requestFeed();
                 }
             }
         } catch (Exception ignored) {
-
+            requestFeed();
         }
     }
 
@@ -213,10 +212,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestFeed() {
         scrollLayout.setVisibility(View.INVISIBLE);
+        if (search.getVisibility() == View.VISIBLE) {
+            search.setVisibility(View.GONE);
+            hideKeyboard(MainActivity.this);
+        }
+
         if (Account.animate()) {
             RelativeLayout relContainer = findViewById(R.id.relContainer);
             relContainer.setVisibility(View.VISIBLE);
-            rantLoadingAnimation = new RantLoadingAnimation((RelativeLayout) findViewById(R.id.relContainer));
+            rantLoadingAnimation = new RantLoadingAnimation(relContainer);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -611,5 +615,77 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             toast(e.toString());
         }
+    }
+
+    public void closeSearch(View view) {
+        search.setVisibility(View.GONE);
+    }
+
+    public void showSearch(View view) {
+        if (search.getVisibility() == View.GONE) {
+            search.setVisibility(View.VISIBLE);
+            textViewSearch.setText(Account.search());
+        } else {
+            search.setVisibility(View.GONE);
+        }
+    }
+
+    public void searchBtnStart(View view) {
+        String searchText = editTextSearch.getText().toString();
+        if (searchText.length()>0) {
+            requestSearch(searchText);
+            hideKeyboard(MainActivity.this);
+        }
+    }
+
+    private void requestSearch(String searchText) {
+        if (Account.animate()) {
+            RelativeLayout relContainer = findViewById(R.id.relContainer);
+            relContainer.setVisibility(View.VISIBLE);
+            rantLoadingAnimation = new RantLoadingAnimation(relContainer);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startSearchReq(searchText);
+                }
+            }, 1000);
+        } else {
+            RelativeLayout relContainer = findViewById(R.id.relContainer);
+            relContainer.setVisibility(View.GONE);
+            startReq();
+        }
+    }
+
+    private void startSearchReq(String searchText) {
+        MethodsSearch methods = RetrofitClient.getRetrofitInstance().create(MethodsSearch.class);
+        String total_url = BASE_URL + "devrant/search?app=3&term="+searchText;
+
+        Call<ModelSearch> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelSearch>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelSearch> call, @NonNull Response<ModelSearch> response) {
+                if (response.isSuccessful()) {
+
+                    // Do awesome stuff
+                    assert response.body() != null;
+                    Boolean success = response.body().getSuccess();
+                    List<Rants> rants = response.body().getRants();
+                    //   toast("success: "+success+" size: "+rants.size());
+                    createFeedList(rants);
+                }
+
+                if (rantLoadingAnimation != null)
+                    rantLoadingAnimation.stop();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ModelSearch> call, @NonNull Throwable t) {
+                Log.d("error_contact", t.toString());
+                toast("no network");
+                if (rantLoadingAnimation != null)
+                    rantLoadingAnimation.stop();
+            }
+        });
     }
 }

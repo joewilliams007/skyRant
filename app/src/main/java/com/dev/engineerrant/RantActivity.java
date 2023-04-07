@@ -31,6 +31,7 @@ import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Comment;
+import com.dev.engineerrant.classes.Links;
 import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.methods.MethodsFeed;
 import com.dev.engineerrant.methods.MethodsRant;
@@ -93,7 +94,8 @@ public class RantActivity extends AppCompatActivity {
                 textViewText.setText(intent.getStringExtra("text"));
             }
 
-            textViewTags.setText(intent.getStringExtra("tags"));
+            Tools.textUrlMentionHighlighter(intent.getStringExtra("tags"),textViewTags);
+
             textViewDate.setText(intent.getStringExtra("date"));
             user_id = intent.getStringExtra("user_id");
 
@@ -130,6 +132,8 @@ public class RantActivity extends AppCompatActivity {
     private void setRantPulled(Rants rants) { // If Rant could not be pulled from previous activity
         textViewUsername.setText(rants.getUser_username());
         textViewText.setText(rants.getText());
+
+
         textViewDate.setText(getRelativeTimeSpanString(rants.getCreated_time()* 1000L));
 
         if (rants.getUser_score()<0) {
@@ -143,6 +147,7 @@ public class RantActivity extends AppCompatActivity {
         for (String tag: tags) {
             t+=tag+", ";
         }
+        Tools.textTagsHighlighter(t,textViewTags);
 
         rantVote = rants.getVote_state();
 
@@ -232,6 +237,11 @@ public class RantActivity extends AppCompatActivity {
                     assert response.body() != null;
 
                     List<Comment> comments = response.body().getComments();
+                    List<Links> links = response.body().getRant().getLinks();
+                    if (links!=null) {
+                        // toast(String.valueOf(links.size()));
+                    }
+
                     Rants rants = response.body().getRant();
 
                     rantVote = rants.getVote_state();

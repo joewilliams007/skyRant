@@ -235,7 +235,10 @@ public class CommunityActivity extends AppCompatActivity {
         createList();
     }
 
-
+    public void typeBot(View view) {
+        type = "bot";
+        createList();
+    }
     public void osAll(View view) {
         os = "all";
         createList();

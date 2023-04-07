@@ -39,7 +39,6 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-
             <TextView
                 android:id="@+id/textViewProfile"
                 android:layout_width="wrap_content"
@@ -123,7 +122,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTheme">
 
-
                 <TextView
                     android:id="@+id/textViewThemeLight"
                     android:layout_width="wrap_content"
@@ -162,11 +160,52 @@
                     android:padding="10dp"
                     android:text="a m o l e d"
                     android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeDark" />
 
+                <TextView
+                    android:id="@+id/textViewSearchTextDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="themeAmoled"
+                    android:text="s e a r c h  t e x t\ne x a m p l e :  p r i n t ( )"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeAmoled" />
+
+                <EditText
+                    android:id="@+id/editTextSearchText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="?attr/colorSurfaceVariant"
+                    android:ems="10"
+                    android:fontFamily="@font/nunito"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textColorHint="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewSaveSearchText"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewSearchTextDesc" />
+
+                <TextView
+                    android:id="@+id/textViewSaveSearchText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="saveSearch"
+                    android:padding="10dp"
+                    android:text="s a v e"
+                    android:layout_margin="10dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextSearchText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/editTextSearchText" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -432,10 +471,9 @@
                     android:id="@+id/textViewRantsReq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:fontFamily="@font/nunito"
-                    android:padding="10dp"
-                    android:text="r a n t s  p e r  r e q u e s t\nm i n  1 0\nm a x  5 0"
+                    android:text="r a n t s  p e r  r e q u e s t\nm i n  1 0 - m a x  5 0"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchLoad" />
@@ -452,7 +490,8 @@
                     android:padding="10dp"
                     android:textColor="?attr/colorOnPrimary"
                     android:textColorHint="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewSave"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewRantsReq" />
 
@@ -466,10 +505,9 @@
                     android:padding="10dp"
                     android:text="s a v e"
                     android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextRantsAmount"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextRantsAmount" />
+                    app:layout_constraintTop_toTopOf="@+id/editTextRantsAmount" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
