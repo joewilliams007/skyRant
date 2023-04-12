@@ -140,7 +140,7 @@
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewRant" />
+                app:layout_constraintTop_toBottomOf="@+id/link_view" />
 
             <ImageView
                 android:id="@+id/imageViewRant"
@@ -164,9 +164,17 @@
                 android:text="26min"
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/link_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/link_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewRant" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

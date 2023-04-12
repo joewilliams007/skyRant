@@ -1,5 +1,9 @@
 package com.dev.engineerrant.adapters;
 
+import com.dev.engineerrant.classes.Links;
+
+import java.util.List;
+
 public class CommentItem {
     private final String text;
     private final String image;
@@ -19,16 +23,18 @@ public class CommentItem {
     private final String b;
     private final int user_score;
     private final int user_id;
+    private final List<Links> links;
 
+    public List<Links> getLinks() {
+        return links;
+    }
 
-
-    public CommentItem(String image_url, String text, int id, String type, int score, long created_time, String username, int vote_state, String b, String i, int user_score, int user_id) {
+    public CommentItem(String image_url, String text, int id, String type, int score, long created_time, String username, int vote_state, String b, String i, int user_score, int user_id, List<Links> links) {
         this.image = image_url;
         this.text = text;
         this.id = id;
         this.type = type;
         this.score = score;
-        this.numComments = numComments;
         this.created_time = created_time;
         this.username = username;
         this.vote_state = vote_state;
@@ -36,6 +42,7 @@ public class CommentItem {
         this.i = i;
         this.user_id = user_id;
         this.user_score = user_score;
+        this.links = links;
     }
 
 

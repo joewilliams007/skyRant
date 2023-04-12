@@ -15,7 +15,7 @@
         <!-- Customize your theme here. --> 081B33
         <item name="colorSurface">@color/devDark</item>
         <item name="colorSurfaceVariant">@color/devBlue</item>
-        <item name="colorOnSurfaceVariant">@color/devBlue</item>
+        <item name="colorOnSurfaceVariant">@color/devDark</item>
 
         <item name="colorAccent">#B5B5B5</item>
     </style>

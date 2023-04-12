@@ -2,12 +2,15 @@ package com.dev.engineerrant.adapters;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
+import static com.dev.engineerrant.auth.Account.vibrate;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +19,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dev.engineerrant.DoubleClickListener;
+import com.dev.engineerrant.ProfileActivity;
 import com.dev.engineerrant.R;
+import com.dev.engineerrant.RantActivity;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
+import com.dev.engineerrant.classes.Comment;
+import com.dev.engineerrant.classes.Links;
 import com.dev.engineerrant.network.DownloadImageTask;
 
 import java.util.ArrayList;
@@ -65,7 +73,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
         ConstraintLayout constraintLayout;
         View _view;
         View viewState;
-
+        RecyclerView link_view;
         public RecyclerViewHolder(View view) {
             super(view);
             imageViewProfile = view.findViewById(R.id.imageViewProfile);
@@ -80,6 +88,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
             textViewPlus = view.findViewById(R.id.textViewPlus);
             textViewMinus = view.findViewById(R.id.textViewMinus);
             imageViewRant = view.findViewById(R.id.imageViewRant);
+            link_view = view.findViewById(R.id.link_view);
             _view = view.findViewById(R.id.view_container);
         }
     }
@@ -239,8 +248,37 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
         });
 
 
+        // LINK RECYCLERVIEW
 
+        if (data_provider.getLinks() != null) {
+            ArrayList<LinkItem> linkItems = new ArrayList<>();
 
+            for (Links link : data_provider.getLinks()) {
+                linkItems.add(new LinkItem(link.getUrl()));
+            }
+
+            holder.link_view.setHasFixedSize(false);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MyApplication.getAppContext());
+            LinkAdapter mAdapter = new LinkAdapter(MyApplication.getAppContext(), linkItems, new LinkAdapter.AdapterCallback() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onItemClicked(Integer menuPosition) {
+                    LinkItem menuItem = linkItems.get(menuPosition);
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(browserIntent);
+                }
+            }) {
+                @Override
+                public void onItemClicked(Integer feedPosition) {
+
+                }
+            };
+
+            holder.link_view.setLayoutManager(mLayoutManager);
+            holder.link_view.setAdapter(mAdapter);
+        }
     }
 
     @Override

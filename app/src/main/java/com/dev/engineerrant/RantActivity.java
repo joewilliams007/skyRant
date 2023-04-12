@@ -28,6 +28,8 @@ import com.dev.engineerrant.adapters.CommentAdapter;
 import com.dev.engineerrant.adapters.CommentItem;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
+import com.dev.engineerrant.adapters.LinkAdapter;
+import com.dev.engineerrant.adapters.LinkItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
@@ -44,6 +46,8 @@ import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.CommentClient;
 import com.dev.engineerrant.post.VoteClient;
 import com.dev.engineerrant.post.VoteCommentClient;
+import com.nguyencse.URLEmbeddedData;
+import com.nguyencse.URLEmbeddedView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +66,7 @@ public class RantActivity extends AppCompatActivity {
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus;
     EditText editTextComment;
 
+    RecyclerView link_view;
     View view_container;
     int rantVote = 0;
     String id;
@@ -181,6 +186,7 @@ public class RantActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        link_view = findViewById(R.id.link_view);
         imageViewProfile = findViewById(R.id.imageViewProfile);
         textViewUsername = findViewById(R.id.textViewUsername);
         textViewScore = findViewById(R.id.textViewScore);
@@ -231,7 +237,34 @@ public class RantActivity extends AppCompatActivity {
                     List<Comment> comments = response.body().getComments();
                     List<Links> links = response.body().getRant().getLinks();
                     if (links!=null) {
-                        // toast(String.valueOf(links.size()));
+                        // LINK RECYCLERVIEW
+                        ArrayList<LinkItem> linkItems = new ArrayList<>();
+
+                        for (Links link : links) {
+                            linkItems.add(new LinkItem(link.getUrl()));
+                        }
+
+                        link_view.setHasFixedSize(false);
+
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MyApplication.getAppContext());
+                        LinkAdapter mAdapter = new LinkAdapter(MyApplication.getAppContext(), linkItems, new LinkAdapter.AdapterCallback() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onItemClicked(Integer menuPosition) {
+                                LinkItem menuItem = linkItems.get(menuPosition);
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                MyApplication.getAppContext().startActivity(browserIntent);
+                            }
+                        }) {
+                            @Override
+                            public void onItemClicked(Integer feedPosition) {
+
+                            }
+                        };
+
+                        link_view.setLayoutManager(mLayoutManager);
+                        link_view.setAdapter(mAdapter);
                     }
 
                     Rants rants = response.body().getRant();
@@ -295,7 +328,8 @@ public class RantActivity extends AppCompatActivity {
                     comment.getUser_avatar().getB(),
                     comment.getUser_avatar().getI(),
                     comment.getUser_score(),
-                    comment.getUser_id()
+                    comment.getUser_id(),
+                    comment.getLinks()
             ));
 
 

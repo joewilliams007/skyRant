@@ -1,5 +1,7 @@
 package com.dev.engineerrant.classes;
 
+import java.util.List;
+
 public class Comment {
     int id;
     int rant_id;
@@ -8,6 +10,11 @@ public class Comment {
     int created_time;
     int vote_state;
     User_avatar user_avatar;
+    List<Links> links;
+
+    public List<Links> getLinks() {
+        return links;
+    }
 
     public User_avatar getUser_avatar() {
         return user_avatar;
