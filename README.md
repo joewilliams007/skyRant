@@ -14,6 +14,8 @@ user information in feed
 
 surprise rant in main screen
 
+Link Preview in Comments and on Posts
+
 resizeable without breaking UI & horizontal view available
 
 no wait time from [read more] to rant screen
