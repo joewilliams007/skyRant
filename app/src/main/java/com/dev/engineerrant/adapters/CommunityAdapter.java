@@ -28,10 +28,10 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
     public interface AdapterCallback{
         void onItemClicked(Integer menuPosition);
     }
-    private AdapterCallback callback;
+    private final AdapterCallback callback;
 
     private String drawableIcon;
-    private Context context;
+    private final Context context;
 
 
     public CommunityAdapter(Context context, ArrayList<CommunityItem> dataArgs, AdapterCallback callback){
@@ -60,7 +60,7 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
             textViewDate = view.findViewById(R.id.textViewDate);
             textViewDesc = view.findViewById(R.id.textViewDesc);
             constraintLayout = view.findViewById(R.id.inside);
-        };
+        }
     }
 
     @SuppressLint("SetTextI18n")

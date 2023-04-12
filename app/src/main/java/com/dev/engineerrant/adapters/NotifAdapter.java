@@ -31,10 +31,10 @@ public abstract class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.Rec
     public interface AdapterCallback{
         void onItemClicked(Integer menuPosition);
     }
-    private AdapterCallback callback;
+    private final AdapterCallback callback;
 
     private String drawableIcon;
-    private Context context;
+    private final Context context;
 
 
     public NotifAdapter(Context context, ArrayList<NotifItem> dataArgs, AdapterCallback callback){
@@ -62,7 +62,7 @@ public abstract class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.Rec
             textViewText = view.findViewById(R.id.textViewText);
             constraintLayout = view.findViewById(R.id.item);
             textViewDate = view.findViewById(R.id.textViewDate);
-        };
+        }
     }
 
     @SuppressLint("SetTextI18n")

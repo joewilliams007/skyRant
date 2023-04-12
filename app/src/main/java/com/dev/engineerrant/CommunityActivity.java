@@ -30,9 +30,17 @@ import com.dev.engineerrant.methods.MethodsUpdate;
 import com.dev.engineerrant.models.ModelCommunity;
 import com.dev.engineerrant.models.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
+import com.paulrybitskyi.valuepicker.ValuePickerView;
+import com.paulrybitskyi.valuepicker.model.Item;
+import com.paulrybitskyi.valuepicker.model.Orientation;
+import com.paulrybitskyi.valuepicker.model.PickerItem;
+import com.paulrybitskyi.valuepicker.valueeffects.ValueEffect;
+import com.paulrybitskyi.valuepicker.valueeffects.concrete.NoValueEffect;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +53,9 @@ public class CommunityActivity extends AppCompatActivity {
     String type = "all";
     TextView filter;
     String os = "all";
+    SwitchCompat switchCompat;
+    ValuePickerView valuePickerViewType;
+    ValuePickerView valuePickerViewOs;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +65,21 @@ public class CommunityActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.community_view);
         progressBar = findViewById(R.id.progressBar);
         filter = findViewById(R.id.filter);
+        switchCompat = findViewById(R.id.switchActive);
+        valuePickerViewType = findViewById(R.id.valuePickerViewType);
+        valuePickerViewOs = findViewById(R.id.valuePickerViewOs);
+        filter.setText("");
         getLogs();
     }
+
+
 
     private void getLogs() {
         MethodsCommunity methods = RetrofitClient.getRetrofitInstance().create(MethodsCommunity.class);
         String total_url = "https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/community.json";
 
         progressBar.setVisibility(View.VISIBLE);
+        switchCompat.setVisibility(View.GONE);
 
         Call<ModelCommunity> call = methods.getAllData(total_url);
         call.enqueue(new Callback<ModelCommunity>() {
@@ -96,12 +114,37 @@ public class CommunityActivity extends AppCompatActivity {
     }
     ArrayList<CommunityItem> menuItems;
     public void createList(){
+        progressBar.setVisibility(View.VISIBLE);
+        switchCompat.setVisibility(View.GONE);
+        filter.setText("");
         menuItems = new ArrayList<>();
 
         SwitchCompat switchCompat = findViewById(R.id.switchActive);
         boolean active = switchCompat.isChecked();
 
+        ArrayList<String> __os = new ArrayList<>();
+        ArrayList<String> __type = new ArrayList<>();
+        __os.add("all");
+        __type.add("all");
+        // Some os types may include multiple Os. They are separated with a comma.
         for (Projects item : logs){
+
+            for (String _type: item.getType().split(",")) {
+                if (!Objects.equals(_type, "")) {
+                    if (!__type.contains(_type)) {
+                        __type.add(_type);
+                    }
+                }
+            }
+
+            for (String _os: item.getOs().split(",")) {
+                if (!Objects.equals(_os, "")) {
+                    if (!__os.contains(_os)) {
+                        __os.add(_os);
+                    }
+                }
+            }
+
             if (active) {
                 if (item.getActive()) {
                     sortType(item);
@@ -109,9 +152,35 @@ public class CommunityActivity extends AppCompatActivity {
             } else {
                 sortType(item);
             }
-
         }
+
+
+        // for Os
+        valuePickerViewOs.setOnItemSelectedListener((item) -> {
+            os = item.getTitle();
+            createList();
+        });
+        valuePickerViewOs.setItems(getPickerItems(__os));
+
+        // for types
+        valuePickerViewType.setOnItemSelectedListener((item) -> {
+            type = item.getTitle();
+            createList();
+        });
+        valuePickerViewType.setItems(getPickerItems(__type));
+
+
         build(menuItems);
+    }
+
+    private ArrayList<Item> getPickerItems(ArrayList<String> _strings) {
+        final ArrayList<Item> pickerItems = new ArrayList<>(100);
+        int i = 0;
+        for (String str: _strings) {
+            pickerItems.add(new PickerItem(i,str));
+            i++;
+        }
+        return pickerItems;
     }
 
     private void addItem(Projects item) {
@@ -126,6 +195,7 @@ public class CommunityActivity extends AppCompatActivity {
                 item.getLanguage(),
                 item.getActive()
         ));
+
     }
 
     private void sortType(Projects item) {
@@ -139,7 +209,7 @@ public class CommunityActivity extends AppCompatActivity {
     private void sortOs(Projects item) {
         if (os.equals("all")) {
             addItem(item);
-        } else if (item.getOs().toLowerCase().contains(os)) {
+        } else if (item.getOs().toLowerCase().contains(os.toLowerCase())) {
             addItem(item);
         }
     }
@@ -150,7 +220,7 @@ public class CommunityActivity extends AppCompatActivity {
         recyclerView.getRecycledViewPool().setMaxRecycledViews(0,0);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CommunityActivity.this);
 
-        filter.setText(type+" - "+os+" ("+menuItems.size()+")");
+        filter.setText(String.valueOf(menuItems.size()+" results"));
 
 
         CommunityAdapter mAdapter = new CommunityAdapter(this, menuItems, new CommunityAdapter.AdapterCallback() {
@@ -199,69 +269,13 @@ public class CommunityActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+
+
+        switchCompat.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     public void switchActive(View view) {
         createList();
     }
-
-    public void typeAll(View view) {
-        type = "all";
-        createList();
-    }
-
-    public void typeClient(View view) {
-        type = "client";
-        createList();
-    }
-
-    public void typeCommunity(View view) {
-        type = "community";
-        createList();
-    }
-
-    public void typeDocumentation(View view) {
-        type = "documentation";
-        createList();
-    }
-
-    public void typeLibrary(View view) {
-        type = "library";
-        createList();
-    }
-
-    public void typeContent(View view) {
-        type = "content";
-        createList();
-    }
-
-    public void typeBot(View view) {
-        type = "bot";
-        createList();
-    }
-    public void osAll(View view) {
-        os = "all";
-        createList();
-    }
-
-    public void osAndroid(View view) {
-        os = "android";
-        createList();
-    }
-
-    public void osIos(View view) {
-        os = "ios";
-        createList();
-    }
-
-    public void osLinux(View view) {
-        os = "linux";
-        createList();
-    }
-
-    public void osWindows(View view) {
-        os = "windows";
-        createList();
-    }
-
 }

@@ -370,4 +370,13 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(browserIntent);
     }
 
+    public void avatar(View view) {
+        if (Account.isLoggedIn()) {
+            Intent intent = new Intent(SettingsActivity.this, BuilderActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 }

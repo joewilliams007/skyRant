@@ -10,7 +10,7 @@ public class RantLoadingAnimation {
     // remember to add api level check before running this
     // (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
 
-    private RelativeLayout relContainer;
+    private final RelativeLayout relContainer;
 
     private View[] devs;
 
@@ -46,7 +46,7 @@ public class RantLoadingAnimation {
     private void beginAnimation() {
 
 
-        final Handler handler = new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -88,7 +88,7 @@ public class RantLoadingAnimation {
     }
 
     private int index;
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @SuppressLint("NewApi")
         @Override
         public void run() {

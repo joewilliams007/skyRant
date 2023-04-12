@@ -30,10 +30,10 @@ public abstract class ChangelogAdapter extends RecyclerView.Adapter<ChangelogAda
     public interface AdapterCallback{
         void onItemClicked(Integer menuPosition);
     }
-    private AdapterCallback callback;
+    private final AdapterCallback callback;
 
     private String drawableIcon;
-    private Context context;
+    private final Context context;
 
 
     public ChangelogAdapter(Context context, ArrayList<ChangelogItem> dataArgs, AdapterCallback callback){
@@ -60,7 +60,7 @@ public abstract class ChangelogAdapter extends RecyclerView.Adapter<ChangelogAda
             textViewVersion = view.findViewById(R.id.textViewVersion);
             textViewDate = view.findViewById(R.id.textViewDate);
             textViewInstalled = view.findViewById(R.id.textViewInstalled);
-        };
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -87,7 +87,7 @@ public abstract class ChangelogAdapter extends RecyclerView.Adapter<ChangelogAda
             holder.textViewInstalled.setText("not installed");
         } else {
             holder.textViewInstalled.setText("") ;
-        };
+        }
 
 
     }

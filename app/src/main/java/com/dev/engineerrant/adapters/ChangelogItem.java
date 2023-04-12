@@ -1,10 +1,10 @@
 package com.dev.engineerrant.adapters;
 
 public class ChangelogItem {
-    private long timestamp;
-    private String version;
-    private String build;
-    private String text;
+    private final long timestamp;
+    private final String version;
+    private final String build;
+    private final String text;
 
     public long getTimestamp() {
         return timestamp;

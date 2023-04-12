@@ -11,8 +11,8 @@ android {
         applicationId "com.dev.engineerrant"
         minSdk 24
         targetSdk 33
-        versionCode 7
-        versionName "1.1.5"
+        versionCode 8
+        versionName "1.1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,4 +70,5 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:1.5.6"
 
+    implementation "com.paulrybitskyi.valuepicker:valuepicker:1.0.3"
 }

@@ -30,9 +30,8 @@
         android:fontFamily="@font/nunito"
         android:onClick="saveAccountBtn"
         android:padding="10dp"
-        android:text="S A V E"
+        android:text="s a v e"
         android:textColor="?attr/colorOnPrimary"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

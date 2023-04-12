@@ -80,14 +80,10 @@ public class RantActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void setRant() { // If rant was already loaded in previous Activity
         Intent intent = getIntent();
-
         id = intent.getStringExtra("id");
-
         if (intent.getStringExtra("info").equals("true")) {
-
             textViewUsername.setText(intent.getStringExtra("username"));
             textViewScore.setText(intent.getStringExtra("user_score"));
-
 
             if(Account.highlighter()) {
                 Tools.highlighter(intent.getStringExtra("text"),textViewText);
@@ -96,10 +92,8 @@ public class RantActivity extends AppCompatActivity {
             }
 
             Tools.textTagsHighlighter(intent.getStringExtra("tags"),textViewTags);
-
             textViewDate.setText(intent.getStringExtra("date"));
             user_id = intent.getStringExtra("user_id");
-
             rantVote = Integer.parseInt(intent.getStringExtra("vote_state"));
 
             if (rantVote == 1) {
@@ -124,7 +118,6 @@ public class RantActivity extends AppCompatActivity {
                     new DownloadImageTask(imageViewRant)
                             .execute(image);
             }
-
             textViewScoreRant.setText(intent.getStringExtra("score"));
         }
     }
@@ -133,22 +126,22 @@ public class RantActivity extends AppCompatActivity {
     private void setRantPulled(Rants rants) { // If Rant could not be pulled from previous activity
         textViewUsername.setText(rants.getUser_username());
         textViewText.setText(rants.getText());
-
-
         textViewDate.setText(getRelativeTimeSpanString(rants.getCreated_time()* 1000L));
+
+
 
         if (rants.getUser_score()<0) {
             textViewScore.setText(String.valueOf(rants.getUser_score()));
         } else {
-            textViewScore.setText("+"+String.valueOf(rants.getUser_score()));
+            textViewScore.setText("+"+ rants.getUser_score());
         }
 
         String[] tags = rants.getTags();
-        String t = "";
+        StringBuilder t = new StringBuilder();
         for (String tag: tags) {
-            t+=tag+", ";
+            t.append(tag).append(", ");
         }
-        Tools.textTagsHighlighter(t,textViewTags);
+        Tools.textTagsHighlighter(t.toString(),textViewTags);
 
         rantVote = rants.getVote_state();
 
@@ -174,16 +167,16 @@ public class RantActivity extends AppCompatActivity {
         if (url == null) {
             imageViewRant.setVisibility(View.GONE);
         } else {
+            image = url;
             if (Account.autoLoad()) {
                 new DownloadImageTask(imageViewRant)
                         .execute(url);
             }
         }
-
         if (rants.getScore()<0) {
             textViewScoreRant.setText(String.valueOf(rants.getScore()));
         } else {
-            textViewScoreRant.setText("+"+String.valueOf(rants.getScore()));
+            textViewScoreRant.setText("+"+rants.getScore());
         }
     }
 
@@ -233,8 +226,6 @@ public class RantActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ModelRant> call, @NonNull Response<ModelRant> response) {
                 if (response.isSuccessful()) {
-
-                    // Do awesome stuff
                     assert response.body() != null;
 
                     List<Comment> comments = response.body().getComments();

@@ -1,5 +1,7 @@
 package com.dev.engineerrant.animations;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +28,14 @@ import com.dev.engineerrant.MainActivity;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -314,10 +324,59 @@ public class Tools {
                     ds.setUnderlineText(true);
                 }
             };
-            ss.setSpan(clickableSpan, text.indexOf(arg), text.indexOf(arg) + arg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            String _searchTag = arg;
+            if (_searchTag.startsWith(" ")) {
+                _searchTag = _searchTag.substring(1);
+            }
+
+            ss.setSpan(clickableSpan, text.indexOf(_searchTag), text.indexOf(arg) + arg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         tv.setText(ss);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         tv.setPaintFlags(0);
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public static Boolean writeStringAsFile(final String fileContents, String fileName) {
+        Context context = MyApplication.getAppContext();
+        try {
+            FileWriter out = new FileWriter(new File(context.getFilesDir(), fileName));
+            out.write(fileContents);
+            out.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public static String readFileAsString(String fileName) {
+        Context context = MyApplication.getAppContext();
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        BufferedReader in = null;
+
+        try {
+            in = new BufferedReader(new FileReader(new File(context.getFilesDir(), fileName)));
+            while ((line = in.readLine()) != null) stringBuilder.append(line);
+
+        } catch (FileNotFoundException e) {
+            return "no file";
+        } catch (IOException e) {
+            return "error";
+        }
+
+        return stringBuilder.toString();
     }
 }

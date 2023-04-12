@@ -56,251 +56,54 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top">
 
-                <TextView
-                    android:id="@+id/about"
+                <com.paulrybitskyi.valuepicker.ValuePickerView
+                    android:id="@+id/valuePickerViewType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="?attr/colorSurface"
-                    android:fontFamily="@font/nunito"
-                    android:gravity="center_horizontal"
-                    android:padding="10dp"
-                    android:text="devRant projects by the community and for the community"
-                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:vpv_areDividersEnabled="false"
+                    app:vpv_divider="@drawable/custom_divider"
+                    app:vpv_dividerColor="?attr/colorOnPrimary"
+                    app:vpv_flingSpeedFactor="0.3"
+                    app:vpv_isInfiniteScrollEnabled="false"
+                    app:vpv_maxVisibleItems="9"
+                    app:vpv_orientation="horizontal"
+                    app:vpv_textColor="?attr/colorOnPrimary"
+                    app:vpv_textTypeface="@font/nunito" />
 
+                <com.paulrybitskyi.valuepicker.ValuePickerView
+                    android:id="@+id/valuePickerViewOs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/valuePickerViewType"
+                    app:vpv_areDividersEnabled="false"
+                    app:vpv_divider="@drawable/custom_divider"
+                    app:vpv_dividerColor="?attr/colorOnPrimary"
+                    app:vpv_flingSpeedFactor="0.3"
+                    app:vpv_isInfiniteScrollEnabled="false"
+                    app:vpv_maxVisibleItems="5"
+                    app:vpv_orientation="horizontal"
+                    app:vpv_textColor="?attr/colorOnPrimary"
+                    app:vpv_textTypeface="@font/nunito" />
 
                 <HorizontalScrollView
                     android:id="@+id/items"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    app:layout_constraintTop_toBottomOf="@+id/about">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/scroll"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurface"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/libraries"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:onClick="typeLibrary"
-                            android:padding="10dp"
-                            android:text="libraries"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/documentation"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/documentation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:onClick="typeDocumentation"
-                            android:padding="10dp"
-                            android:text="documentation"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/community"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/clients"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:padding="10dp"
-                            android:onClick="typeClient"
-                            android:text="clients"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/all"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/community"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:padding="10dp"
-                            android:onClick="typeCommunity"
-                            android:text="communities"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/clients"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/content"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:onClick="typeContent"
-                            android:padding="10dp"
-                            android:text="content"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/bot"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/bot"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:onClick="typeBot"
-                            android:padding="10dp"
-                            android:text="bots"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/libraries"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/all"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:padding="10dp"
-                            android:onClick="typeAll"
-                            android:text="all"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </HorizontalScrollView>
+                    app:layout_constraintTop_toBottomOf="@+id/valuePickerViewOs"
+                    tools:layout_editor_absoluteX="0dp"/>
 
                 <HorizontalScrollView
                     android:id="@+id/itemsOs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    app:layout_constraintTop_toBottomOf="@+id/items">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/scrollOs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorSurface"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/linux"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:onClick="osLinux"
-                            android:padding="10dp"
-                            android:text="linux"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ios"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/windows"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:onClick="osWindows"
-                            android:padding="10dp"
-                            android:text="windows"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.762"
-                            app:layout_constraintStart_toEndOf="@+id/linux"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/android"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:padding="10dp"
-                            android:text="android"
-                            android:onClick="osAndroid"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/allOs"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/ios"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:padding="10dp"
-                            android:text="iOS"
-                            android:onClick="osIos"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/android"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/allOs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_corner"
-                            android:fontFamily="@font/nunito"
-                            android:gravity="center_horizontal"
-                            android:padding="10dp"
-                            android:text="all"
-                            android:onClick="osAll"
-                            android:textColor="?attr/colorOnPrimary"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </HorizontalScrollView>
+                    app:layout_constraintTop_toBottomOf="@+id/items"/>
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchActive"
@@ -308,12 +111,11 @@
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:fontFamily="@font/nunito"
-                    android:text="active only"
                     android:onClick="switchActive"
+                    android:text="active "
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/itemsOs"
+                    app:layout_constraintTop_toBottomOf="@+id/valuePickerViewOs"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <TextView
@@ -322,11 +124,12 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/colorSurface"
                     android:fontFamily="@font/nunito"
-                    android:text="all - all"
+                    android:text="0"
                     android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/switchActive"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchActive" />
+                    app:layout_constraintTop_toTopOf="@+id/switchActive" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/community_view"

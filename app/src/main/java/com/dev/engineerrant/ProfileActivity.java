@@ -165,7 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (score<0) {
                         textViewScore.setText(String.valueOf(score));
                     } else {
-                        textViewScore.setText("+"+ String.valueOf(score));
+                        textViewScore.setText("+"+ score);
                     }
 
                     imageViewProfile.setImageDrawable(null);
@@ -259,19 +259,19 @@ public class ProfileActivity extends AppCompatActivity {
                         if (Account.isLoggedIn()) {
                             intent.putExtra("vote_state", String.valueOf(menuItem.getVote_state()));
                         } else {
-                            intent.putExtra("vote_state", String.valueOf("0"));
+                            intent.putExtra("vote_state", "0");
                         }
 
                         if (menuItem.getUser_score() < 0) {
                             intent.putExtra("user_score", String.valueOf(menuItem.getUser_score()));
                         } else {
-                            intent.putExtra("user_score", "+" + String.valueOf(menuItem.getUser_score()));
+                            intent.putExtra("user_score", "+" + menuItem.getUser_score());
                         }
 
                         if (menuItem.getScore() < 0) {
                             intent.putExtra("score", String.valueOf(menuItem.getScore()));
                         } else {
-                            intent.putExtra("score", "+" + String.valueOf(menuItem.getScore()));
+                            intent.putExtra("score", "+" + menuItem.getScore());
                         }
 
                         intent.putExtra("user_id", String.valueOf(menuItem.getUser_id()));

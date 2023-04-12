@@ -38,10 +38,10 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
         void onItemClicked(Integer menuPosition, String type);
 
     }
-    private AdapterCallback callback;
+    private final AdapterCallback callback;
 
     private String drawableIcon;
-    private Context context;
+    private final Context context;
 
 
     public CommentAdapter(Context context, ArrayList<CommentItem> dataArgs, AdapterCallback callback){
@@ -81,7 +81,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
             textViewMinus = view.findViewById(R.id.textViewMinus);
             imageViewRant = view.findViewById(R.id.imageViewRant);
             _view = view.findViewById(R.id.view_container);
-        };
+        }
     }
 
     @SuppressLint("SetTextI18n")

@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 class typeWriter {
     fun typeWrite(textView: TextView,lifecycleOwner: LifecycleOwner, text: String, intervalMs: Long) {
-        textView.typeWrite(lifecycleOwner,text,intervalMs);
+        textView.typeWrite(lifecycleOwner,text,intervalMs)
     }
 
     companion object {

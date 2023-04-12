@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         handleDeepLinkIntent(); // feed request comes afterwards
 
         String text = username();
-        String[] t = text.toString().split("");
+        String[] t = text.split("");
         text = "";
         for (String l:t) {
             text+=l+"\n";
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     requestSearch(intent.getStringExtra("searchTag"));
                     search.setVisibility(View.VISIBLE);
                     editTextSearch.setText(intent.getStringExtra("searchTag"));
+                    intent.removeExtra("searchTag");
                 } else {
                     requestFeed();
                 }
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
         int green = new Random().nextInt(255);
         int blue = new Random().nextInt(255);
         ThemeColors.setNewThemeColor(MainActivity.this, red, green, blue);
+        search.setVisibility(View.GONE);
     }
 
 
@@ -262,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (Account.isLoggedIn()) {
                         String text = response.body().getUnread().getTotal() + " NOTIF";
-                        String[] t = text.toString().split("");
+                        String[] t = text.split("");
                         text = "";
                         for (String l:t) {
                             text+=l+"\n";
@@ -317,13 +319,6 @@ public class MainActivity extends AppCompatActivity {
                     rant.getUser_score(),
                     rant.getUser_id()
                     ));
-
-           /* if (rant.getAttached_image().toString().contains("http")) {
-                menuItems.add(new FeedItem(null,s,rant.getId(),"feed",rant.getScore(), rant.getNum_comments(),0,null,rant.getVote_state(),rant.getUser_avatar().getB(),rant.getUser_avatar().getI()));
-                menuItems.add(new FeedItem(null,s,rant.getId(),"image",rant.getScore(), rant.getNum_comments(),0,null,rant.getVote_state(),rant.getUser_avatar().getB(),rant.getUser_avatar().getI()));
-            } else {
-            }*/
-
         }
         build(menuItems);
     }
@@ -362,19 +357,19 @@ public class MainActivity extends AppCompatActivity {
                         if (Account.isLoggedIn()) {
                             intent.putExtra("vote_state",String.valueOf(menuItem.getVote_state()));
                         } else {
-                            intent.putExtra("vote_state",String.valueOf("0"));
+                            intent.putExtra("vote_state", "0");
                         }
 
                         if (menuItem.getUser_score()<0) {
                             intent.putExtra("user_score",String.valueOf(menuItem.getUser_score()));
                         } else {
-                            intent.putExtra("user_score","+"+String.valueOf(menuItem.getUser_score()));
+                            intent.putExtra("user_score","+"+ menuItem.getUser_score());
                         }
 
                         if (menuItem.getScore()<0) {
                             intent.putExtra("score",String.valueOf(menuItem.getScore()));
                         } else {
-                            intent.putExtra("score","+"+String.valueOf(menuItem.getScore()));
+                            intent.putExtra("score","+"+ menuItem.getScore());
                         }
 
                         intent.putExtra("user_id",String.valueOf(menuItem.getUser_id()));
@@ -529,19 +524,19 @@ public class MainActivity extends AppCompatActivity {
         if (Account.isLoggedIn()) {
             intent.putExtra("vote_state",String.valueOf(surpriseRant.getVote_state()));
         } else {
-            intent.putExtra("vote_state",String.valueOf("0"));
+            intent.putExtra("vote_state", "0");
         }
 
         if (surpriseRant.getUser_score()<0) {
             intent.putExtra("user_score",String.valueOf(surpriseRant.getUser_score()));
         } else {
-            intent.putExtra("user_score","+"+String.valueOf(surpriseRant.getUser_score()));
+            intent.putExtra("user_score","+"+ surpriseRant.getUser_score());
         }
 
         if (surpriseRant.getScore()<0) {
             intent.putExtra("score",String.valueOf(surpriseRant.getScore()));
         } else {
-            intent.putExtra("score","+"+String.valueOf(surpriseRant.getScore()));
+            intent.putExtra("score","+"+ surpriseRant.getScore());
         }
 
         intent.putExtra("user_id",String.valueOf(surpriseRant.getUser_id()));
@@ -617,7 +612,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void closeSearch(View view) {
+    public void clearSearch(View view) {
+        editTextSearch.setText(null);
         search.setVisibility(View.GONE);
     }
 
@@ -627,6 +623,7 @@ public class MainActivity extends AppCompatActivity {
             textViewSearch.setText(Account.search());
         } else {
             search.setVisibility(View.GONE);
+            editTextSearch.setText(null);
         }
     }
 

@@ -40,10 +40,10 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
     public interface AdapterCallback{
         void onItemClicked(Integer menuPosition, String type);
     }
-    private AdapterCallback callback;
+    private final AdapterCallback callback;
 
     private String drawableIcon;
-    private Context context;
+    private final Context context;
 
 
     public FeedAdapter(Context context, ArrayList<FeedItem> dataArgs, AdapterCallback callback){
@@ -83,7 +83,7 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
             imageViewRant = view.findViewById(R.id.imageViewRant);
             userInfo = view.findViewById(R.id.userInfo);
             _view = view.findViewById(R.id.view_container);
-        };
+        }
     }
 
     @SuppressLint("SetTextI18n")

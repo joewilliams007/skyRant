@@ -1,25 +1,25 @@
 package com.dev.engineerrant.adapters;
 
 public class FeedItem {
-    private String text;
-    private String image;
-    private String type;
-    private int score;
-    private int numComments;
-    private long created_time;
+    private final String text;
+    private final String image;
+    private final String type;
+    private final int score;
+    private final int numComments;
+    private final long created_time;
 
-    private int id;
-    private String username;
-    private int vote_state;
+    private final int id;
+    private final String username;
+    private final int vote_state;
 
     public int getVote_state() {
         return vote_state;
     }
-    private String i;
-    private String b;
-    private String[] tags;
-    private int user_score;
-    private int user_id;
+    private final String i;
+    private final String b;
+    private final String[] tags;
+    private final int user_score;
+    private final int user_id;
 
 
 
