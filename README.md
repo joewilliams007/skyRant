@@ -4,6 +4,7 @@ skyRant is an android client for devRant with a focus on animations.
 skyRant is not in any way affiliated with devRant
 
 not in any way complete!
+
 ## Features
 animation of SIMMORSAL https://github.com/SIMMORSAL/DevRantNative
 
