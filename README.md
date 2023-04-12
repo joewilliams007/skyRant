@@ -6,23 +6,23 @@ skyRant is not in any way affiliated with devRant
 not in any way complete!
 
 ## Features
-animation of SIMMORSAL https://github.com/SIMMORSAL/DevRantNative
+- animation of SIMMORSAL https://github.com/SIMMORSAL/DevRantNative
 
-simple code highlighter
+- simple code highlighter
 
-user information in feed
+- user information in feed
 
-surprise rant in main screen
+- surprise rant in main screen
 
-Link Preview in Comments and on Posts
+- Link Preview in Comments and on Posts
 
-resizeable without breaking UI & horizontal view available
+- resizeable without breaking UI & horizontal view available
 
-no wait time from [read more] to rant screen
+- no wait time from [read more] to rant screen
 
-an implementation of the community projects API
+- an implementation of the community projects API
 
-the Avatar Builder
+- the Avatar Builder
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
