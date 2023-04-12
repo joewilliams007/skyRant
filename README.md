@@ -19,6 +19,8 @@ resizeable without breaking UI & horizontal view available
 no wait time from [read more] to rant screen
 
 an implementation of the community projects API
+
+the Avatar Builder
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
