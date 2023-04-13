@@ -47,7 +47,7 @@
 
     <com.paulrybitskyi.valuepicker.ValuePickerView
         android:id="@+id/valuePickerView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/builder_view"
         app:layout_constraintEnd_toEndOf="parent"

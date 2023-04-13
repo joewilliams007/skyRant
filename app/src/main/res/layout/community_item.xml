@@ -51,7 +51,7 @@
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDesc" />
+                app:layout_constraintTop_toBottomOf="@+id/link_view" />
 
             <TextView
                 android:id="@+id/textViewActive"
@@ -61,10 +61,10 @@
                 android:fontFamily="@font/nunito"
                 android:gravity="right"
                 android:text="active"
-                android:textColor="?attr/colorPrimaryVariant"
+                android:textColor="#FF7F50"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDesc" />
+                app:layout_constraintTop_toBottomOf="@+id/link_view" />
 
             <TextView
                 android:id="@+id/textViewTitle"
@@ -86,6 +86,16 @@
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintStart_toStartOf="@+id/textViewTitle"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/link_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDesc" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

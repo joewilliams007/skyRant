@@ -107,9 +107,7 @@ public abstract class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.Recyc
                         holder.imageViewPreview.setVisibility(View.GONE);
                     }
                     if (data.getFavorURL()!=null) {
-                        if (data.getHost().equals("github.com")) {
-                            holder.imageViewIcon.setImageResource(R.drawable.github);
-                        } else if (data.getHost().equals("devrant.com")) {
+                        if (data.getHost().equals("devrant.com")) {
                             holder.imageViewIcon.setImageResource(R.drawable.icon);
                         } else {
                             Glide.with(MyApplication.getAppContext()).load(data.getFavorURL()).into(holder.imageViewIcon);
