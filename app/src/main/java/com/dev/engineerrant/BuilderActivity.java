@@ -116,9 +116,9 @@ public class BuilderActivity extends AppCompatActivity {
         Options option = (Options) payload;
 
         try {
-            request((String) option.getId(),option.getLabel());
+            request((String) option.getId(),String.valueOf(option.getSub_type()));
         } catch (Exception e) {
-            request(String.valueOf((double) option.getId()).split("\\.")[0],option.getLabel());
+            request(String.valueOf((double) option.getId()).split("\\.")[0],String.valueOf(option.getSub_type()));
         }
 
     }

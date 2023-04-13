@@ -649,7 +649,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             RelativeLayout relContainer = findViewById(R.id.relContainer);
             relContainer.setVisibility(View.GONE);
-            startReq();
+            startSearchReq(searchText);
         }
     }
 
