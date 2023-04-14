@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,11 +28,17 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dev.engineerrant.adapters.AvatarsAdapter;
+import com.dev.engineerrant.adapters.AvatarsItem;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
+import com.dev.engineerrant.adapters.UsersAdapter;
+import com.dev.engineerrant.adapters.UsersItem;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.classes.Profile;
+import com.dev.engineerrant.classes.Projects;
 import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.methods.MethodsFeed;
 import com.dev.engineerrant.methods.MethodsId;
@@ -42,11 +49,13 @@ import com.dev.engineerrant.models.ModelId;
 import com.dev.engineerrant.models.ModelRant;
 import com.dev.engineerrant.models.ModelSearch;
 import com.dev.engineerrant.models.ModelSuccess;
+import com.dev.engineerrant.network.DownloadImageTaskProgress;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.VoteClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import okhttp3.MediaType;
@@ -65,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     String sort = "recent";
     Rants surpriseRant = null;
     RantLoadingAnimation rantLoadingAnimation;
+    RecyclerView users_view;
     ConstraintLayout scrollLayout, search;
     private static final String NAME = "ThemeColors", KEY = "color";
     @SuppressLint("MissingInflatedId")
@@ -85,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         search.setVisibility(View.GONE);
         textViewSearch = findViewById(R.id.textViewSearch);
         textViewSearch.setText(Account.search());
+        users_view = findViewById(R.id.users_view);
+        users_view.setVisibility(View.GONE);
 
         handleDeepLinkIntent(); // feed request comes afterwards
 
@@ -213,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void requestFeed() {
+        users_view.setVisibility(View.GONE);
         scrollLayout.setVisibility(View.INVISIBLE);
         if (search.getVisibility() == View.VISIBLE) {
             search.setVisibility(View.GONE);
@@ -299,6 +312,8 @@ public class MainActivity extends AppCompatActivity {
     public void createFeedList(List<Rants> rants){
         ArrayList<FeedItem> menuItems = new ArrayList<>();
 
+        ArrayList<UsersItem> profiles = new ArrayList<>();
+        ArrayList<String> _profiles = new ArrayList<>();
         for (Rants rant : rants){
             String s = rant.getText();
 
@@ -306,6 +321,23 @@ public class MainActivity extends AppCompatActivity {
             if (rant.getAttached_image().toString().contains("http")) {
                 url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
             }
+            /* // This will add users on top of search. no reason though nobody needed this fr now
+            if (profiles.size()<11) {
+                if (search.getVisibility() == View.VISIBLE) {
+                    Profile profile = new Profile();
+                    profile.setUsername(rant.getUser_username());
+                    profile.setAvatar(rant.getUser_avatar());
+                    profile.setScore(rant.getUser_score());
+                    profile.setUser_id(rant.getUser_id());
+                    UsersItem usersItem = new UsersItem(profile);
+
+                    if (!_profiles.contains(rant.getUser_username())) {
+                        profiles.add(usersItem);
+                        _profiles.add(rant.getUser_username());
+                    }
+                }
+            }
+            */
 
             menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
                     rant.getScore(),
@@ -320,7 +352,44 @@ public class MainActivity extends AppCompatActivity {
                     rant.getUser_id()
                     ));
         }
+
+        if (search.getVisibility() == View.VISIBLE) {
+            buildProfileSearch(profiles);
+        }
+
         build(menuItems);
+    }
+
+    private void buildProfileSearch(ArrayList<UsersItem> profiles) {
+        users_view.setHasFixedSize(false);
+        users_view.setVisibility(View.VISIBLE);
+        users_view.getRecycledViewPool().setMaxRecycledViews(0,0);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false);
+
+
+        UsersAdapter mAdapter = new UsersAdapter(this, profiles, new UsersAdapter.AdapterCallback() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemClicked(Integer menuPosition) {
+                UsersItem menuItem = profiles.get(menuPosition);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("user_id",String.valueOf(menuItem.getProfile().getUser_id()));
+                startActivity(intent);
+            }
+        }) {
+            @Override
+            public void onItemClicked(Integer feedPosition) {
+
+            }
+        };
+
+
+        users_view.setAlpha(0);
+        users_view.setTranslationY(Tools.dpToPx(40));
+        users_view.animate().alpha(1).translationY(0).setDuration(300).withLayer();
+
+        users_view.setLayoutManager(mLayoutManager);
+        users_view.setAdapter(mAdapter);
     }
 
     private void build(ArrayList<FeedItem> feedItems) {
@@ -669,6 +738,7 @@ public class MainActivity extends AppCompatActivity {
                     Boolean success = response.body().getSuccess();
                     List<Rants> rants = response.body().getRants();
                     //   toast("success: "+success+" size: "+rants.size());
+
                     createFeedList(rants);
                 }
 

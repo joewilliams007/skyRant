@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Discord" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">#7289da</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#FFFFFF</item>
+        <item name="colorSecondaryVariant">#FFFFFF</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">#1e2124</item>
+        <!-- Customize your theme here. --> 081B33
+        <item name="colorSurface">#1e2124</item>
+        <item name="colorSurfaceVariant">#282b30</item>
+        <item name="colorOnSurfaceVariant">#282b30</item>
+        <item name="colorAccent">#edf7fc</item>
+    </style>
+</resources>

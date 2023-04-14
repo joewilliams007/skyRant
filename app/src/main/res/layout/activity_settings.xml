@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:visibility="gone"
+
                 android:animateLayoutChanges="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -161,8 +161,7 @@
                     android:padding="10dp"
                     android:text="d a r k"
                     android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
 
                 <TextView
@@ -175,9 +174,34 @@
                     android:padding="10dp"
                     android:text="a m o l e d"
                     android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeDark" />
+
+                <TextView
+                    android:id="@+id/textViewThemeGreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="themeGreen"
+                    android:padding="10dp"
+                    android:text="g r e e n"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeDiscord" />
+
+                <TextView
+                    android:id="@+id/textViewThemeDiscord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="themeDiscord"
+                    android:padding="10dp"
+                    android:text="d i s c o r d"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
 
                 <TextView
                     android:id="@+id/textViewSearchTextDesc"
@@ -189,7 +213,7 @@
                     android:text="s e a r c h  t e x t\ne x a m p l e :  p r i n t ( )"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeAmoled" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeGreen" />
 
                 <EditText
                     android:id="@+id/editTextSearchText"

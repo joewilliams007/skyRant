@@ -88,6 +88,12 @@ public class Tools {
             case "amoled":
                 context.setTheme(R.style.Theme_Amoled);
                 break;
+            case "green":
+                context.setTheme(R.style.Theme_Green);
+                break;
+            case "discord":
+                context.setTheme(R.style.Theme_Discord);
+                break;
         }
     }
 

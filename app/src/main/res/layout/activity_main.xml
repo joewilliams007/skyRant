@@ -212,14 +212,23 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLayout" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feed_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/notif"
+        app:layout_constraintEnd_toStartOf="@+id/helper"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/users_view" />
 
     <RelativeLayout
         android:id="@+id/relContainer"
@@ -328,7 +337,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
         android:onClick="openMyProfile"
         android:textAlignment="center"
         android:textColor="?attr/colorOnPrimary"
@@ -340,8 +352,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
         android:text="N\nO\nT\nI\nF"
+        android:textAlignment="center"
+        android:onClick="openNotifs"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/setting"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/helper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:padding="10dp"
+        android:visibility="invisible"
+        android:text="H"
         android:textAlignment="center"
         android:onClick="openNotifs"
         android:textColor="?attr/colorOnPrimary"
@@ -353,7 +382,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
-        android:padding="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
         android:text="S\nE\nT\nT\nI\nN\nG\nS"
         android:textAlignment="center"
         android:onClick="openSettings"

@@ -138,6 +138,24 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
+    public void themeGreen(View view) {
+        Account.setTheme("green");
+        Intent intent;
+        Tools.setTheme(SettingsActivity.this);
+        intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void themeDiscord(View view) {
+        Account.setTheme("discord");
+        Intent intent;
+        Tools.setTheme(SettingsActivity.this);
+        intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void switchAutoLoad(View view) {
         Account.setAutoLoad(!Account.autoLoad());
         setSwitches();
@@ -379,4 +397,6 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+
 }
