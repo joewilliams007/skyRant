@@ -109,7 +109,7 @@ public class Account {
 
     public static Boolean highlighter() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-        return preferences.getBoolean("highlighter", true);
+        return preferences.getBoolean("highlighter", false);
     }
 
     public static void setHighlighter(Boolean highlighter) {
