@@ -161,4 +161,42 @@ public class Account {
         SharedPreferences.Editor editor = preferences.edit().putInt("limit",limit);
         editor.apply();
     }
+
+    // FOR NOTIFICATIONS - PLEASE DON'T JUDGE HOW NOTIFICATIONS WORK, because AT LEAST THEY WORK!
+
+    public static boolean isPushNotif() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("push_notif", true);
+    }
+
+    public static void setPushNotif(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("push_notif",b);
+        editor.apply();
+    }
+
+    public static long pushNotifTime() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getLong("push_notif_time", 30L);
+    }
+
+    public static void setPushNotifTime(long t) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("last_push_notif_time",t);
+        editor.apply();
+    }
+
+    public static long lastPushNotifTime() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getLong("last_push_notif_time", 0);
+    }
+
+    public static void setLastPushNotifTime(long t) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong("last_push_notif_time",t);
+        editor.apply();
+    }
 }

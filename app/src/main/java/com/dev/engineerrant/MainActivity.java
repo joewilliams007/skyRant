@@ -7,6 +7,7 @@ import static com.dev.engineerrant.auth.Account.username;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.webkit.PermissionRequest;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,6 +53,7 @@ import com.dev.engineerrant.models.ModelSearch;
 import com.dev.engineerrant.models.ModelSuccess;
 import com.dev.engineerrant.network.DownloadImageTaskProgress;
 import com.dev.engineerrant.network.RetrofitClient;
+import com.dev.engineerrant.notifcenter.AlarmReceiver;
 import com.dev.engineerrant.post.VoteClient;
 
 import java.util.ArrayList;
@@ -118,8 +121,11 @@ public class MainActivity extends AppCompatActivity {
             getSurpriseId();
         }
 
-        //com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
-        //writer.typeWrite(textViewBottom,this, "> n o t i f\n> s e t t i n g s", 100L);
+        if (Account.isLoggedIn()) { // Why do we need Alarm Receiver? To handle notifications obviously!!! No firebase, no Google ****, just a simple Alarm at which when it triggers tries to search for Notifs
+            // Notif center
+            AlarmReceiver alarm = new AlarmReceiver();
+            alarm.setAlarm(this);
+        }
     }
 
     private void handleDeepLinkIntent() {

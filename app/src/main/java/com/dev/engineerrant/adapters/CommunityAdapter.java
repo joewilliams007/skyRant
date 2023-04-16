@@ -106,13 +106,13 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
             ArrayList<LinkItem> linkItems = new ArrayList<>();
 
             if (!Objects.equals(data_provider.getGithub(), "")) {
-                linkItems.add(new LinkItem(data_provider.getGithub()));
+                linkItems.add(new LinkItem(data_provider.getGithub(),false));
             }
             if (!Objects.equals(data_provider.getWebsite(), "")) {
-                linkItems.add(new LinkItem(data_provider.getWebsite()));
+                linkItems.add(new LinkItem(data_provider.getWebsite(),false));
             }
             if (!Objects.equals(data_provider.getRelevant_dr_url(), "")) {
-                linkItems.add(new LinkItem(data_provider.getRelevant_dr_url()));
+                linkItems.add(new LinkItem(data_provider.getRelevant_dr_url(),false));
             }
             holder.link_view.setHasFixedSize(false);
 

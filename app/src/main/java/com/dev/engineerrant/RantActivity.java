@@ -241,7 +241,7 @@ public class RantActivity extends AppCompatActivity {
                         ArrayList<LinkItem> linkItems = new ArrayList<>();
 
                         for (Links link : links) {
-                            linkItems.add(new LinkItem(link.getUrl()));
+                            linkItems.add(new LinkItem(link.getUrl(),true));
                         }
 
                         link_view.setHasFixedSize(false);

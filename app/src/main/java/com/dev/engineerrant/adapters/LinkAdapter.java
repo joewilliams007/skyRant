@@ -101,8 +101,12 @@ public abstract class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.Recyc
 
                     holder.imageViewPreview.setImageDrawable(null);
                     if (data.getThumbnailURL()!=null) {
-                        Glide.with(MyApplication.getAppContext()).load(data.getThumbnailURL()).into(holder.imageViewPreview);
-                        holder.imageViewPreview.setVisibility(View.VISIBLE);
+                        if (data_provider.getImage()) {
+                            Glide.with(MyApplication.getAppContext()).load(data.getThumbnailURL()).into(holder.imageViewPreview);
+                            holder.imageViewPreview.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.imageViewPreview.setVisibility(View.GONE);
+                        }
                     } else {
                         holder.imageViewPreview.setVisibility(View.GONE);
                     }

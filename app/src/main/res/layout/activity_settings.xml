@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/textViewProfile"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:padding="10dp"
@@ -104,7 +104,6 @@
                     android:onClick="profileOptions"
                     android:padding="10dp"
                     android:text="c h a n g e\np r o f i l e  d e t a i l s"
-                    android:textAlignment="center"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +113,7 @@
 
             <TextView
                 android:id="@+id/textViewTheme"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:padding="10dp"
@@ -249,7 +248,7 @@
 
             <TextView
                 android:id="@+id/textViewUpdate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:padding="10dp"
@@ -361,8 +360,66 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
+                android:id="@+id/textViewNotif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="showNotif"
+                android:padding="10dp"
+                android:text=">  n o t i f"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feed" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.473"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNotif">
+
+
+                <TextView
+                    android:id="@+id/textViewNotifSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="appNotifSettings"
+                    android:padding="10dp"
+                    android:text="a l l o w\nn o t i f i c a t i o n s"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifications"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotif"
+                    android:padding="10dp"
+                    android:text="n o t i f i c a t i o n s"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNotifSettings"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
                 android:id="@+id/textViewFeatures"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
@@ -452,7 +509,7 @@
 
             <TextView
                 android:id="@+id/textViewFeed"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
@@ -551,7 +608,7 @@
 
             <TextView
                 android:id="@+id/textViewCommunity"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
@@ -561,11 +618,11 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feed" />
+                app:layout_constraintTop_toBottomOf="@+id/notif" />
 
             <TextView
                 android:id="@+id/textViewAbout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"

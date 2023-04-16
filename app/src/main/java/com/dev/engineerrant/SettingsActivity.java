@@ -13,10 +13,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -41,7 +44,7 @@ import retrofit2.Response;
 public class SettingsActivity extends AppCompatActivity {
 
     TextView textViewLogin,textViewCurrentNr,textViewNewestNr;
-    ConstraintLayout theme, profile, update, features, feed, about;
+    ConstraintLayout theme, profile, update, features, feed, about, notif;
     ProgressBar progressBar;
     EditText editTextRantsAmount, editTextSearchText;
     @SuppressLint("MissingInflatedId")
@@ -58,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
         features = findViewById(R.id.features);
         feed = findViewById(R.id.feed);
         about = findViewById(R.id.about);
+        notif = findViewById(R.id.notif);
         textViewCurrentNr = findViewById(R.id.textViewCurrentNr);
         textViewNewestNr = findViewById(R.id.textViewNewestNr);
         progressBar = findViewById(R.id.progressBar);
@@ -180,12 +184,19 @@ public class SettingsActivity extends AppCompatActivity {
         setSwitches();
     }
 
+    public void switchNotif(View view) {
+        Account.setPushNotif(!Account.isPushNotif());
+        setSwitches();
+    }
+
     private void setSwitches() {
         SwitchCompat switchAuto = findViewById(R.id.switchLoad);
         SwitchCompat switchInfo = findViewById(R.id.switchInfoOnFeed);
         SwitchCompat switchHighlight = findViewById(R.id.switchHighlight);
         SwitchCompat switchSurprise = findViewById(R.id.switchSurprise);
         SwitchCompat switchAnimation = findViewById(R.id.switchAnimation);
+        SwitchCompat switchNotif = findViewById(R.id.switchNotifications);
+        switchNotif.setChecked(Account.isPushNotif());
         switchSurprise.setChecked(Account.surprise());
         switchAnimation.setChecked(Account.animate());
         switchHighlight.setChecked(Account.highlighter());
@@ -251,6 +262,14 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    public void showNotif(View view) {
+        if (notif.getVisibility() == View.GONE) {
+            notif.setVisibility(View.VISIBLE);
+        } else {
+            notif.setVisibility(View.GONE);
+        }
+    }
+
     public void saveSearch(View view) {
         String t = editTextSearchText.getText().toString();
         if (t.length()>1) {
@@ -276,25 +295,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void updateLog(View view) {
         Intent intent = new Intent(SettingsActivity.this, ChangelogActivity.class);
         startActivity(intent);
-    }
-
-    public void appInfo(View view) {
-        String packageName = "com.dev.engineerrant";
-        try {
-            //Open the specific App Info page:
-            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" + packageName));
-            startActivity(intent);
-
-        } catch ( ActivityNotFoundException e ) {
-            //e.printStackTrace();
-
-            //Open the generic Apps page:
-            Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-            startActivity(intent);
-
-        }
-        toastLong("enable all:\nSetAsDefault/SupportedAddresses");
     }
 
     private void checkUpdate() {
@@ -399,4 +399,39 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
+    public void appNotifSettings(View view) {
+        Intent intent = new Intent();
+        Context context = this;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        } else {
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", context.getPackageName());
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);
+        }
+        context.startActivity(intent);
+    }
+
+    public void appInfo(View view) {
+        String packageName = this.getPackageName();
+        try {
+
+            Intent intent = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                intent = new Intent(Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS);
+            } else {
+                intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            }
+            intent.setData(Uri.parse("package:" + packageName));
+            startActivity(intent);
+
+        } catch ( ActivityNotFoundException e ) {
+            //e.printStackTrace();
+            //Open the generic Apps page:
+            Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
+            startActivity(intent);
+        }
+        toastLong("enable all:\nSetAsDefault/SupportedAddresses");
+    }
 }

@@ -254,7 +254,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
             ArrayList<LinkItem> linkItems = new ArrayList<>();
 
             for (Links link : data_provider.getLinks()) {
-                linkItems.add(new LinkItem(link.getUrl()));
+                linkItems.add(new LinkItem(link.getUrl(),true));
             }
 
             holder.link_view.setHasFixedSize(false);
