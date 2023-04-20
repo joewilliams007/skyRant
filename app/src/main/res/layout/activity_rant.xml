@@ -216,6 +216,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comments_view"
                 android:layout_width="match_parent"
@@ -268,4 +270,43 @@
         app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
         app:srcCompat="@drawable/rants" />
 
+    <ImageView
+        android:id="@+id/imageViewRefresh"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="refresh"
+        android:padding="12dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/refresh"
+        app:layout_constraintBottom_toBottomOf="@+id/top"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewShare"
+        app:layout_constraintTop_toTopOf="@+id/top"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageViewSurprise"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="surpriseRant"
+        android:padding="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/surprise"
+        app:layout_constraintBottom_toBottomOf="@+id/top"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+        app:layout_constraintTop_toTopOf="@+id/top"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

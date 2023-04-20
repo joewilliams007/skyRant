@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.dev.engineerrant.adapters.NotifAdapter;
@@ -28,6 +29,7 @@ import com.dev.engineerrant.network.RetrofitClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -165,5 +167,12 @@ public class NotifActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    public void refresh(View view) {
+        int red = new Random().nextInt(255);
+        int green = new Random().nextInt(255);
+        int blue = new Random().nextInt(255);
+        ThemeColors.setNewThemeColor(NotifActivity.this, red, green, blue);
     }
 }

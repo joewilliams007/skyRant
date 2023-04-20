@@ -22,9 +22,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.PermissionRequest;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -126,6 +128,22 @@ public class MainActivity extends AppCompatActivity {
             AlarmReceiver alarm = new AlarmReceiver();
             alarm.setAlarm(this);
         }
+
+        editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // Your piece of code on keyboard search click
+                    String searchText = editTextSearch.getText().toString();
+                    if (searchText.length()>0) {
+                        requestSearch(searchText);
+                        hideKeyboard(MainActivity.this);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void handleDeepLinkIntent() {
@@ -139,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                         i.putExtra("id",data.getPath().split("/")[2]);
                         i.putExtra("info","false");
                         startActivity(i);
+                        requestFeed();
                     } else if (data.getPath().split("/")[1].equals("users")) {
                         getUserIdFromNameAndOpenProfile(data.getPath().split("/")[2]);
                     }
@@ -315,8 +334,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    ArrayList<FeedItem> menuItems;
     public void createFeedList(List<Rants> rants){
-        ArrayList<FeedItem> menuItems = new ArrayList<>();
+        menuItems = new ArrayList<>();
 
         ArrayList<UsersItem> profiles = new ArrayList<>();
         ArrayList<String> _profiles = new ArrayList<>();
@@ -618,7 +639,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("b",surpriseRant.getUser_avatar().getB());
         intent.putExtra("i",surpriseRant.getUser_avatar().getI());
         intent.putExtra("info","true");
-
+        intent.putExtra("surprise","true");
         String url = null;
         if (surpriseRant.getAttached_image().toString().contains("http")) {
             url = surpriseRant.getAttached_image().toString().replace("{url=","").split(", width")[0];
@@ -690,17 +711,26 @@ public class MainActivity extends AppCompatActivity {
     public void clearSearch(View view) {
         editTextSearch.setText(null);
         search.setVisibility(View.GONE);
+        textViewNotif.setVisibility(View.VISIBLE);
+        textViewSetting.setVisibility(View.VISIBLE);
+        app.hideKeyboard(MainActivity.this);
     }
 
     public void showSearch(View view) {
         if (search.getVisibility() == View.GONE) {
+            textViewNotif.setVisibility(View.GONE);
+            textViewSetting.setVisibility(View.GONE);
             search.setVisibility(View.VISIBLE);
             textViewSearch.setText(Account.search());
         } else {
             search.setVisibility(View.GONE);
             editTextSearch.setText(null);
+            textViewNotif.setVisibility(View.VISIBLE);
+            textViewSetting.setVisibility(View.VISIBLE);
+            app.hideKeyboard(MainActivity.this);
         }
     }
+
 
     public void searchBtnStart(View view) {
         String searchText = editTextSearch.getText().toString();

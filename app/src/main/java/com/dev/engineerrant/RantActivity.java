@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,6 +53,7 @@ import com.nguyencse.URLEmbeddedView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -62,10 +64,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RantActivity extends AppCompatActivity {
-    ImageView imageViewProfile, imageViewRant;
+    ImageView imageViewProfile, imageViewRant, imageViewSurprise;
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus;
     EditText editTextComment;
 
+    ProgressBar progressBar;
     RecyclerView link_view;
     View view_container;
     int rantVote = 0;
@@ -86,6 +89,9 @@ public class RantActivity extends AppCompatActivity {
     private void setRant() { // If rant was already loaded in previous Activity
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        if (intent.getStringExtra("surprise")==null) {
+            imageViewSurprise.setVisibility(View.GONE);
+        }
         if (intent.getStringExtra("info").equals("true")) {
             textViewUsername.setText(intent.getStringExtra("username"));
             textViewScore.setText(intent.getStringExtra("user_score"));
@@ -187,6 +193,8 @@ public class RantActivity extends AppCompatActivity {
 
     private void initialize() {
         link_view = findViewById(R.id.link_view);
+        progressBar = findViewById(R.id.progressBar);
+        imageViewSurprise = findViewById(R.id.imageViewSurprise);
         imageViewProfile = findViewById(R.id.imageViewProfile);
         textViewUsername = findViewById(R.id.textViewUsername);
         textViewScore = findViewById(R.id.textViewScore);
@@ -644,4 +652,101 @@ public class RantActivity extends AppCompatActivity {
     }
 
 
+    public void refresh(View view) {
+        int red = new Random().nextInt(255);
+        int green = new Random().nextInt(255);
+        int blue = new Random().nextInt(255);
+        ThemeColors.setNewThemeColor(RantActivity.this, red, green, blue);
+    }
+
+    public void surpriseRant(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        imageViewSurprise.setVisibility(View.GONE);
+        getSurpriseId();
+    }
+
+
+    private void getSurpriseId() { // Get random Rant. Need to make 2 api calls cuz comments don't come with the surprise sadly
+        MethodsRant methods = RetrofitClient.getRetrofitInstance().create(MethodsRant.class);
+        String total_url;
+        if (Account.isLoggedIn()) {
+            total_url = BASE_URL + "devrant/rants/surprise?app=3&token_id="+Account.id()+"&token_key="+Account.key()+"&user_id="+Account.user_id();
+        } else {
+            total_url = BASE_URL + "devrant/rants/surprise?app=3";
+        }
+
+        Call<ModelRant> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelRant>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelRant> call, @NonNull Response<ModelRant> response) {
+                if (response.isSuccessful()) {
+
+                    // Do awesome stuff
+                    assert response.body() != null;
+                    Rants surpriseRantNew = response.body().getRant();
+
+                    openSurpriseRant(surpriseRantNew);
+
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ModelRant> call, @NonNull Throwable t) {
+                Log.d("no network", t.toString());
+            }
+        });
+    }
+
+    public void openSurpriseRant(Rants surpriseRant) {
+        Intent intent = new Intent(RantActivity.this, RantActivity.class);
+        intent.putExtra("id", String.valueOf(surpriseRant.getId()));
+        intent.putExtra("text",surpriseRant.getText());
+        intent.putExtra("username", surpriseRant.getUser_username());
+        intent.putExtra("user_id", String.valueOf(surpriseRant.getUser_id()));
+        intent.putExtra("num_comments",String.valueOf(surpriseRant.getNum_comments()));
+        intent.putExtra("date",getRelativeTimeSpanString(surpriseRant.getCreated_time()* 1000L));
+        if (Account.isLoggedIn()) {
+            intent.putExtra("vote_state",String.valueOf(surpriseRant.getVote_state()));
+        } else {
+            intent.putExtra("vote_state", "0");
+        }
+
+        if (surpriseRant.getUser_score()<0) {
+            intent.putExtra("user_score",String.valueOf(surpriseRant.getUser_score()));
+        } else {
+            intent.putExtra("user_score","+"+ surpriseRant.getUser_score());
+        }
+
+        if (surpriseRant.getScore()<0) {
+            intent.putExtra("score",String.valueOf(surpriseRant.getScore()));
+        } else {
+            intent.putExtra("score","+"+ surpriseRant.getScore());
+        }
+
+        intent.putExtra("user_id",String.valueOf(surpriseRant.getUser_id()));
+        intent.putExtra("b",surpriseRant.getUser_avatar().getB());
+        intent.putExtra("i",surpriseRant.getUser_avatar().getI());
+        intent.putExtra("info","true");
+        intent.putExtra("surprise","true");
+        String url = null;
+        if (surpriseRant.getAttached_image().toString().contains("http")) {
+            url = surpriseRant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+        }
+        intent.putExtra("image",url);
+
+        String[] tags = surpriseRant.getTags();
+        String t = "";
+        for (String tag: tags) {
+            t+=tag+", ";
+        }
+        intent.putExtra("tags",t.substring(0, t.length()-2));
+
+        startActivity(intent);
+        finish();
+    }
 }
