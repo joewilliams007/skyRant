@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.engineerrant.adapters.NotifAdapter;
@@ -38,12 +39,14 @@ import retrofit2.Response;
 public class NotifActivity extends AppCompatActivity {
 
     TextView stats;
+    ImageView imageViewRefresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
         stats = findViewById(R.id.stats);
+        imageViewRefresh = findViewById(R.id.imageViewRefresh);
         startReq();
     }
 
@@ -67,6 +70,7 @@ public class NotifActivity extends AppCompatActivity {
                     NotifUnread unread = response.body().getData().getUnread();
                     Map<Integer, String> username_map = response.body().getData().getUsername_map();
                     createFeedList(items, unread, username_map);
+                    imageViewRefresh.setVisibility(View.VISIBLE);
 
                     String text = ">"+unread.getTotal()+" notifications";
                     String[] t = text.split("");
@@ -170,6 +174,7 @@ public class NotifActivity extends AppCompatActivity {
     }
 
     public void refresh(View view) {
+        imageViewRefresh.setVisibility(View.GONE);
         int red = new Random().nextInt(255);
         int green = new Random().nextInt(255);
         int blue = new Random().nextInt(255);

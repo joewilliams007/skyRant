@@ -64,7 +64,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RantActivity extends AppCompatActivity {
-    ImageView imageViewProfile, imageViewRant, imageViewSurprise;
+    ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh;
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus;
     EditText editTextComment;
 
@@ -194,6 +194,7 @@ public class RantActivity extends AppCompatActivity {
     private void initialize() {
         link_view = findViewById(R.id.link_view);
         progressBar = findViewById(R.id.progressBar);
+        imageViewRefresh = findViewById(R.id.imageViewRefresh);
         imageViewSurprise = findViewById(R.id.imageViewSurprise);
         imageViewProfile = findViewById(R.id.imageViewProfile);
         textViewUsername = findViewById(R.id.textViewUsername);
@@ -320,6 +321,7 @@ public class RantActivity extends AppCompatActivity {
     public void createFeedList(List<Comment> comments){
         ArrayList<CommentItem> menuItems = new ArrayList<>();
 
+
         for (Comment comment : comments){
             String s = comment.getBody();
 
@@ -349,6 +351,8 @@ public class RantActivity extends AppCompatActivity {
 
         }
         build(menuItems);
+        imageViewRefresh.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void build(ArrayList<CommentItem> commentItems) {
@@ -653,6 +657,7 @@ public class RantActivity extends AppCompatActivity {
 
 
     public void refresh(View view) {
+        imageViewRefresh.setVisibility(View.GONE);
         int red = new Random().nextInt(255);
         int green = new Random().nextInt(255);
         int blue = new Random().nextInt(255);
