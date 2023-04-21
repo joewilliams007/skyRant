@@ -39,6 +39,8 @@ this page is pinged in settings to check for updates
 
 https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/phoneclient.json
 
+i don't think i will upload this client to the playstore, as i do not want to deal with the playstore, when installing in apk is that easy. That is why only watch rant client will be available in the playstore, as installing apps on watches is not that convinient.
+
 ### Community Projects
 projects show in the app, add an issue to add another project
 
