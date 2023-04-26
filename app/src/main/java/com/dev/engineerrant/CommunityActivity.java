@@ -18,27 +18,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.dev.engineerrant.adapters.ChangelogAdapter;
-import com.dev.engineerrant.adapters.ChangelogItem;
 import com.dev.engineerrant.adapters.CommunityAdapter;
 import com.dev.engineerrant.adapters.CommunityItem;
+import com.dev.engineerrant.adapters.CommunityMenuAdapter;
+import com.dev.engineerrant.adapters.CommunityMenuItem;
 import com.dev.engineerrant.animations.Tools;
-import com.dev.engineerrant.classes.Changelog;
 import com.dev.engineerrant.classes.Projects;
 import com.dev.engineerrant.methods.MethodsCommunity;
-import com.dev.engineerrant.methods.MethodsUpdate;
 import com.dev.engineerrant.models.ModelCommunity;
-import com.dev.engineerrant.models.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.paulrybitskyi.valuepicker.ValuePickerView;
-import com.paulrybitskyi.valuepicker.model.Item;
-import com.paulrybitskyi.valuepicker.model.Orientation;
-import com.paulrybitskyi.valuepicker.model.PickerItem;
-import com.paulrybitskyi.valuepicker.valueeffects.ValueEffect;
-import com.paulrybitskyi.valuepicker.valueeffects.concrete.NoValueEffect;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,8 +44,11 @@ public class CommunityActivity extends AppCompatActivity {
     TextView filter;
     String os = "all";
     SwitchCompat switchCompat;
-    ValuePickerView valuePickerViewType;
-    ValuePickerView valuePickerViewOs;
+
+    public static int os_menu_selected;
+    public static int os_menu_prev_selected;
+    public static int type_menu_selected;
+    public static int type_menu_prev_selected;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +59,6 @@ public class CommunityActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         filter = findViewById(R.id.filter);
         switchCompat = findViewById(R.id.switchActive);
-        valuePickerViewType = findViewById(R.id.valuePickerViewType);
-        valuePickerViewOs = findViewById(R.id.valuePickerViewOs);
         filter.setText("");
         getLogs();
     }
@@ -94,7 +85,9 @@ public class CommunityActivity extends AppCompatActivity {
                     long last_updated = response.body().getLast_updated();
                     logs = response.body().getProjects();
 
-                    createList();
+                    if (communityMenuItems==null) {
+                        createList();
+                    }
                 } else if (response.code() == 429) {
                     // Handle unauthorized
                     toast("error contacting github error 429");
@@ -155,32 +148,80 @@ public class CommunityActivity extends AppCompatActivity {
         }
 
 
-        // for Os
-        valuePickerViewOs.setOnItemSelectedListener((item) -> {
-            os = item.getTitle();
-            createList();
-        });
-        valuePickerViewOs.setItems(getPickerItems(__os));
-
-        // for types
-        valuePickerViewType.setOnItemSelectedListener((item) -> {
-            type = item.getTitle();
-            createList();
-        });
-        valuePickerViewType.setItems(getPickerItems(__type));
-
+        if (communityMenuItems==null) {
+            createMenuList(__os);
+            createMenuListType(__type);
+        }
 
         build(menuItems);
     }
 
-    private ArrayList<Item> getPickerItems(ArrayList<String> _strings) {
-        final ArrayList<Item> pickerItems = new ArrayList<>(100);
-        int i = 0;
+    ArrayList<CommunityMenuItem> communityMenuItems = null;
+    private void createMenuList(ArrayList<String> _strings) {
+        communityMenuItems = new ArrayList<>();
         for (String str: _strings) {
-            pickerItems.add(new PickerItem(i,str));
-            i++;
+            communityMenuItems.add(new CommunityMenuItem(str,"os"));
         }
-        return pickerItems;
+
+        buildCommunityMenu(communityMenuItems);
+    }
+
+    ArrayList<CommunityMenuItem> communityMenuItemsType = null;
+    private void createMenuListType(ArrayList<String> _strings) {
+        communityMenuItemsType = new ArrayList<>();
+        for (String str: _strings) {
+            communityMenuItemsType.add(new CommunityMenuItem(str,"type"));
+        }
+
+        buildCommunityMenuType(communityMenuItemsType);
+    }
+
+    private void buildCommunityMenuType(ArrayList<CommunityMenuItem> menuItems) {
+        RecyclerView recyclerView = findViewById(R.id.type_menu_view);
+        recyclerView.setHasFixedSize(false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CommunityActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        CommunityMenuAdapter mAdapter = new CommunityMenuAdapter(this, menuItems, new CommunityMenuAdapter.AdapterCallback() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemClicked(Integer menuPosition) {
+                CommunityMenuItem menuItem = communityMenuItemsType.get(menuPosition);
+                progressBar.setVisibility(View.VISIBLE);
+                type = menuItem.getItem();
+                createList();
+            }
+        }) {
+            @Override
+            public void onItemClicked(Integer feedPosition) {
+
+            }
+        };
+
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    private void buildCommunityMenu(ArrayList<CommunityMenuItem> menuItems) {
+        RecyclerView recyclerView = findViewById(R.id.os_menu_view);
+        recyclerView.setHasFixedSize(false);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CommunityActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        CommunityMenuAdapter mAdapter = new CommunityMenuAdapter(this, menuItems, new CommunityMenuAdapter.AdapterCallback() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemClicked(Integer menuPosition) {
+                CommunityMenuItem menuItem = communityMenuItems.get(menuPosition);
+                progressBar.setVisibility(View.VISIBLE);
+                os = menuItem.getItem();
+                createList();
+            }
+        }) {
+            @Override
+            public void onItemClicked(Integer feedPosition) {
+
+            }
+        };
+
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(mAdapter);
     }
 
     private void addItem(Projects item) {

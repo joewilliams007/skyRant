@@ -1,66 +1,43 @@
 package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
-import static com.dev.engineerrant.animations.Tools.isNumeric;
-import static com.dev.engineerrant.app.hideKeyboard;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.dev.engineerrant.adapters.AvatarsAdapter;
 import com.dev.engineerrant.adapters.AvatarsItem;
-import com.dev.engineerrant.adapters.FeedItem;
-import com.dev.engineerrant.adapters.NotifAdapter;
-import com.dev.engineerrant.adapters.NotifItem;
-import com.dev.engineerrant.animations.RantLoadingAnimation;
+import com.dev.engineerrant.adapters.AvatarMenuAdapter;
+import com.dev.engineerrant.adapters.AvatarMenuItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Avatars;
-import com.dev.engineerrant.classes.Counts;
-import com.dev.engineerrant.classes.NotifItems;
+import com.dev.engineerrant.classes.AvatarsMenus;
 import com.dev.engineerrant.classes.Options;
-import com.dev.engineerrant.classes.Rants;
-import com.dev.engineerrant.classes.User_avatar;
 import com.dev.engineerrant.methods.MethodsBuilder;
-import com.dev.engineerrant.methods.MethodsFeed;
 import com.dev.engineerrant.methods.MethodsProfile;
 import com.dev.engineerrant.models.ModelBuilder;
-import com.dev.engineerrant.models.ModelFeed;
 import com.dev.engineerrant.models.ModelProfile;
 import com.dev.engineerrant.models.ModelSuccess;
-import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.DownloadImageTaskProgress;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.BuildClient;
-import com.dev.engineerrant.post.CommentClient;
-import com.paulrybitskyi.valuepicker.ValuePickerView;
-import com.paulrybitskyi.valuepicker.model.Item;
-import com.paulrybitskyi.valuepicker.model.PickerItem;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +50,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BuilderActivity extends AppCompatActivity {
-    ValuePickerView valuePickerView;
+
     TextView textViewUsername, textViewScore;
     ImageView imageViewAvatar;
     String profile_image_url = null;
@@ -82,13 +59,14 @@ public class BuilderActivity extends AppCompatActivity {
     public static int score;
     public static int selected;
     public static int prev_selected;
+    public static int menu_selected;
+    public static int menu_prev_selected;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_builder);
-        valuePickerView = findViewById(R.id.valuePickerView);
         imageViewAvatar = findViewById(R.id.imageViewAvatar);
         textViewUsername = findViewById(R.id.textViewUsername);
         textViewScore = findViewById(R.id.textViewScore);
@@ -96,32 +74,8 @@ public class BuilderActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         requestProfile();
 
-        /*if(Tools.writeStringAsFile("Hello world","avatars")) {
-            toast(Tools.readFileAsString(
-                    "avatars"
-            ));
-        }*/
-
-
-        valuePickerView.setOnItemSelectedListener((item) -> {
-            // Do something with item
-            requestItems(item.getPayload());
-        });
-
-
     }
 
-    private void requestItems(Object payload) {
-        progressBar.setVisibility(View.VISIBLE);
-        Options option = (Options) payload;
-
-        try {
-            request((String) option.getId(),String.valueOf(option.getSub_type()));
-        } catch (Exception e) {
-            request(String.valueOf((double) option.getId()).split("\\.")[0],String.valueOf(option.getSub_type()));
-        }
-
-    }
 
     private void request(String option, String sub_option) {
         progressBar.setVisibility(View.VISIBLE);
@@ -147,9 +101,10 @@ public class BuilderActivity extends AppCompatActivity {
                     //   toast("success: "+success+" size: "+rants.size());
                     selected = 0;
                     createList(response.body().getAvatars());
-                    valuePickerView.setItems(getPickerItems(options));
 
-
+                    if (menuItems==null) {
+                        createMenuList(options);
+                    }
                 } else if (response.code() == 429) {
                     // Handle unauthorized
                     toast("you are not authorized");
@@ -170,6 +125,66 @@ public class BuilderActivity extends AppCompatActivity {
 
 
     }
+    ArrayList<AvatarMenuItem> menuItems = null;
+    private void createMenuList(List<Options> options) {
+        menuItems = new ArrayList<>();
+        for (Options option : options) {
+            menuItems.add(new AvatarMenuItem(new AvatarsMenus(false, option.getLabel(),option.getId(),option.getSub_type())));
+        }
+        // valuePickerView.setSelectedItem(pickerItems.get(0));
+
+        buildMenu(menuItems);
+    }
+
+    private void buildMenu(ArrayList<AvatarMenuItem> menuItems) {
+        RecyclerView recyclerView = findViewById(R.id.menu_view);
+        recyclerView.setHasFixedSize(false);
+
+        recyclerView.getRecycledViewPool().setMaxRecycledViews(0,0);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(BuilderActivity.this,LinearLayoutManager.HORIZONTAL,false);
+
+
+        AvatarMenuAdapter mAdapter = new AvatarMenuAdapter(this, menuItems, new AvatarMenuAdapter.AdapterCallback() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemClicked(Integer menuPosition) {
+                AvatarMenuItem menuItem = menuItems.get(menuPosition);
+                progressBar.setVisibility(View.VISIBLE);
+
+                try {
+                    request((String) menuItem.getMenus().getId(),String.valueOf(menuItem.getMenus().getSub_type()));
+                } catch (Exception e) {
+                    request(String.valueOf((double) menuItem.getMenus().getId()).split("\\.")[0],String.valueOf(menuItem.getMenus().getSub_type()));
+                }
+            }
+        }) {
+            @Override
+            public void onItemClicked(Integer feedPosition) {
+
+            }
+        };
+
+
+        recyclerView.setAlpha(0);
+        recyclerView.setTranslationY(Tools.dpToPx(40));
+        recyclerView.animate().alpha(1).translationY(0).setDuration(300).withLayer();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+                    Log.d("-----","end");
+                    vibrate();
+                }
+            }
+        });
+
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(mAdapter);
+    }
+
 
     private void createList(List<Avatars> avatars) {
         ArrayList<AvatarsItem> menuItems = new ArrayList<>();
@@ -229,18 +244,7 @@ public class BuilderActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    private ArrayList<Item> getPickerItems(List<Options> options) {
-        final ArrayList<Item> pickerItems = new ArrayList<>(100);
 
-        int i = 0;
-        for (Options option : options) {
-            pickerItems.add(new PickerItem(i, option.getLabel(),option));
-            i++;
-        }
-        // valuePickerView.setSelectedItem(pickerItems.get(0));
-
-        return pickerItems;
-    }
 
     private void requestProfile() {
         progressBar.setVisibility(View.VISIBLE);

@@ -56,7 +56,7 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder
     {
 
-        TextView textViewTitle, textViewActive, textViewDate, textViewDesc, textViewType;
+        TextView textViewTitle, textViewActive, textViewDate, textViewDesc, textViewType, textViewGithub, textViewRelated, textViewWebsite;
         ConstraintLayout constraintLayout;
         RecyclerView link_view;
         public RecyclerViewHolder(View view) {
@@ -68,6 +68,10 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
             textViewDesc = view.findViewById(R.id.textViewDesc);
             constraintLayout = view.findViewById(R.id.inside);
             link_view = view.findViewById(R.id.link_view);
+
+            textViewWebsite = view.findViewById(R.id.textViewWebsite);
+            textViewGithub = view.findViewById(R.id.textViewGithub);
+            textViewRelated = view.findViewById(R.id.textViewRelated);
         }
     }
 
@@ -91,51 +95,52 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
             holder.textViewActive.setText("inactive");
         }
 
-
-        /*holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(callback != null) {
-                    callback.onItemClicked(position);
-                }
-            }
-        });*/
-
-        // LINK RECYCLERVIEW
-
-            ArrayList<LinkItem> linkItems = new ArrayList<>();
-
             if (!Objects.equals(data_provider.getGithub(), "")) {
-                linkItems.add(new LinkItem(data_provider.getGithub(),false));
+                holder.textViewGithub.setVisibility(View.VISIBLE);
+                holder.textViewGithub.setText(data_provider.getGithub());
+                holder.textViewGithub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data_provider.getGithub()));
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(browserIntent);
+                    }
+                });
+            } else {
+                holder.textViewGithub.setVisibility(View.GONE);
             }
-            if (!Objects.equals(data_provider.getWebsite(), "")) {
-                linkItems.add(new LinkItem(data_provider.getWebsite(),false));
-            }
-            if (!Objects.equals(data_provider.getRelevant_dr_url(), "")) {
-                linkItems.add(new LinkItem(data_provider.getRelevant_dr_url(),false));
-            }
-            holder.link_view.setHasFixedSize(false);
 
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MyApplication.getAppContext());
-            LinkAdapter mAdapter = new LinkAdapter(MyApplication.getAppContext(), linkItems, new LinkAdapter.AdapterCallback() {
-                @SuppressLint("SetTextI18n")
+        if (!Objects.equals(data_provider.getWebsite(), "")) {
+            holder.textViewWebsite.setVisibility(View.VISIBLE);
+            holder.textViewWebsite.setText(data_provider.getWebsite());
+            holder.textViewWebsite.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClicked(Integer menuPosition) {
-                    LinkItem menuItem = linkItems.get(menuPosition);
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                public void onClick(View view) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data_provider.getWebsite()));
                     browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     MyApplication.getAppContext().startActivity(browserIntent);
                 }
-            }) {
-                @Override
-                public void onItemClicked(Integer feedPosition) {
-
-                }
-            };
-
-            holder.link_view.setLayoutManager(mLayoutManager);
-            holder.link_view.setAdapter(mAdapter);
+            });
+        } else {
+            holder.textViewWebsite.setVisibility(View.GONE);
         }
+
+        if (!Objects.equals(data_provider.getRelevant_dr_url(), "")) {
+            holder.textViewRelated.setText(data_provider.getRelevant_dr_url());
+            holder.textViewRelated.setVisibility(View.VISIBLE);
+            holder.textViewRelated.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data_provider.getRelevant_dr_url()));
+                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(browserIntent);
+                }
+            });
+        } else {
+            holder.textViewRelated.setVisibility(View.GONE);
+        }
+
+    }
 
 
     @Override

@@ -131,9 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 assert response.body() != null;
                 Boolean success = response.body().getSuccess();
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
 
                 toast("login approved");
             } else if (response.code() == 429) {

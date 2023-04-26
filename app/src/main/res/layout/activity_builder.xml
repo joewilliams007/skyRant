@@ -45,24 +45,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.paulrybitskyi.valuepicker.ValuePickerView
-        android:id="@+id/valuePickerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/builder_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:vpv_areDividersEnabled="false"
-        app:vpv_divider="@drawable/custom_divider"
-        app:vpv_dividerColor="?attr/colorOnPrimary"
-        app:vpv_flingSpeedFactor="0.3"
-        app:vpv_isInfiniteScrollEnabled="false"
-        app:vpv_maxVisibleItems="5"
-        app:vpv_orientation="horizontal"
-        app:vpv_textColor="?attr/colorOnPrimary"
-        app:vpv_textTypeface="@font/nunito" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/builder_view"
         android:layout_width="0dp"
@@ -72,11 +54,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menu_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/builder_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/back"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/valuePickerView"
+        app:layout_constraintBottom_toTopOf="@+id/menu_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
