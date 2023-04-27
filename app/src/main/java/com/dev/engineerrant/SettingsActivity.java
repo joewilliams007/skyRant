@@ -133,6 +133,15 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
+    public void themeCoffee(View view) {
+        Account.setTheme("coffee");
+        Intent intent;
+        Tools.setTheme(SettingsActivity.this);
+        intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void themeDark(View view) {
         Account.setTheme("dark");
         Intent intent;
@@ -388,6 +397,11 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(browserIntent);
     }
 
+    public void watchRantLink(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.dev.watchrant"));
+        startActivity(browserIntent);
+    }
+
     public void avatar(View view) {
         if (Account.isLoggedIn()) {
             Intent intent = new Intent(SettingsActivity.this, BuilderActivity.class);
@@ -434,4 +448,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
         toastLong("enable all:\nSetAsDefault/SupportedAddresses");
     }
+
+
+
 }

@@ -177,6 +177,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeDark" />
 
                 <TextView
+                    android:id="@+id/textViewThemeCoffee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="themeCoffee"
+                    android:padding="10dp"
+                    android:text="c o f f e e"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
+
+                <TextView
                     android:id="@+id/textViewThemeGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -200,7 +213,7 @@
                     android:text="d i s c o r d"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeCoffee" />
 
                 <TextView
                     android:id="@+id/textViewSearchTextDesc"
@@ -699,6 +712,21 @@
                     android:textAlignment="center"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewWatchRant" />
+
+                <TextView
+                    android:id="@+id/textViewWatchRant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="watchRantLink"
+                    android:padding="10dp"
+                    android:text="d o w n l o a d\nw a t c h R a n t"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewCommunityIssue" />

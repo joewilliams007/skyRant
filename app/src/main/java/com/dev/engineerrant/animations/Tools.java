@@ -94,6 +94,9 @@ public class Tools {
             case "discord":
                 context.setTheme(R.style.Theme_Discord);
                 break;
+            case "coffee":
+                context.setTheme(R.style.Theme_Coffee);
+                break;
         }
     }
 
