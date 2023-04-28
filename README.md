@@ -29,10 +29,6 @@ not in any way complete!
 
 Or download from here: https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk
 
-### Note
-
-A logged in user may get the error "bad request" upon sigining in -> please update to version >= 1.1.2
-
 ## About
 ### Updates
 this page is pinged in settings to check for updates
