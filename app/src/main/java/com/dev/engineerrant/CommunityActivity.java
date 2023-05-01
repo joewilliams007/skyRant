@@ -1,5 +1,6 @@
 package com.dev.engineerrant;
 
+import static com.dev.engineerrant.CommunityPostActivity.communityItem;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 
@@ -269,20 +270,11 @@ public class CommunityActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(Integer menuPosition) {
                 CommunityItem menuItem = menuItems.get(menuPosition);
-
-                try {
-                    Intent browserIntent;
-                    if (!menuItem.getGithub().equals("")) {
-                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getGithub()));
-                    } else {
-                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getWebsite()));
-                    }
-
-                    startActivity(browserIntent);
-                } catch (Exception e) {
-                    toast("invalid URL");
+                if (!menuItem.getGithub().equals("") && !menuItem.getGithub().contains("gist")){
+                    Intent intent = new Intent(CommunityActivity.this, CommunityPostActivity.class);
+                    communityItem = menuItem;
+                    startActivity(intent);
                 }
-
             }
         }) {
             @Override

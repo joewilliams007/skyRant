@@ -24,9 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dev.engineerrant.DoubleClickListener;
+import com.dev.engineerrant.MainActivity;
 import com.dev.engineerrant.ProfileActivity;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.RantActivity;
+import com.dev.engineerrant.SettingsActivity;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
@@ -149,9 +151,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
 
         if (rantVote == 1) {
             holder.textViewPlus.setTextColor(Color.parseColor("#FFFF0000"));
-            holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
         } else if (rantVote == -1) {
-            holder.textViewPlus.setTextColor(Color.parseColor("#FFFFFF"));
             holder.textViewMinus.setTextColor(Color.parseColor("#FFFF0000"));
         }
 
@@ -265,9 +265,23 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
                 @Override
                 public void onItemClicked(Integer menuPosition) {
                     LinkItem menuItem = linkItems.get(menuPosition);
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
-                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    MyApplication.getAppContext().startActivity(browserIntent);
+
+                    if (menuItem.getLink().contains("github")) {
+                        if (menuItem.getLink().split("github/")[1].contains("/")) {
+                            Intent intent = new Intent(MyApplication.getAppContext(), SettingsActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("repo_url",menuItem.getLink());
+                            MyApplication.getAppContext().startActivity(intent);
+                        } else {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            MyApplication.getAppContext().startActivity(browserIntent);
+                        }
+                    } else {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(browserIntent);
+                    }
                 }
             }) {
                 @Override

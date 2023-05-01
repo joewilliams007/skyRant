@@ -331,8 +331,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void openGithub(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/"+github));
-        startActivity(browserIntent);
+        Intent i = new Intent(ProfileActivity.this, GithubActivity.class);
+        i.putExtra("github_url","https://github.com/"+github);
+        startActivity(i);
     }
 
     public void openProfileIcon(View view) {

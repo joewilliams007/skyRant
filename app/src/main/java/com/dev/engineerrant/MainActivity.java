@@ -41,6 +41,7 @@ import com.dev.engineerrant.adapters.UsersItem;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Profile;
 import com.dev.engineerrant.classes.Projects;
 import com.dev.engineerrant.classes.Rants;
@@ -160,6 +161,20 @@ public class MainActivity extends AppCompatActivity {
                         requestFeed();
                     } else if (data.getPath().split("/")[1].equals("users")) {
                         getUserIdFromNameAndOpenProfile(data.getPath().split("/")[2]);
+                    } else if (data.getHost().contains("github")) {
+                        if (data.getPath().replaceFirst("/","").contains("/")) {
+                            intent = new Intent(MyApplication.getAppContext(), CommunityPostActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("repo_url","https://github.com"+data.getPath());
+                            MyApplication.getAppContext().startActivity(intent);
+                            requestFeed();
+                        } else {
+                            intent = new Intent(MyApplication.getAppContext(), GithubActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("github_url","https://github.com"+data.getPath());
+                            MyApplication.getAppContext().startActivity(intent);
+                            requestFeed();
+                        }
                     }
                 } else if (intent.getStringExtra("searchTag")!=null) {
                     requestSearch(intent.getStringExtra("searchTag"));

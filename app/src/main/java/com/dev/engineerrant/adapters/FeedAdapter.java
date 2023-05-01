@@ -133,9 +133,7 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
 
         if (data_provider.getVote_state() == 1) {
             holder.textViewPlus.setTextColor(Color.parseColor("#FFFF0000"));
-            holder.textViewMinus.setTextColor(Color.parseColor("#FFFFFF"));
         } else if (data_provider.getVote_state() == -1) {
-            holder.textViewPlus.setTextColor(Color.parseColor("#FFFFFF"));
             holder.textViewMinus.setTextColor(Color.parseColor("#FFFF0000"));
         }
 

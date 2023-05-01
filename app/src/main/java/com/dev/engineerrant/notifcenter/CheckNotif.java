@@ -110,7 +110,6 @@ public class CheckNotif extends Service {
             @Override
             public void onFailure(@NonNull Call<ModelNotif> call, @NonNull Throwable t) {
                 Log.d("error_contact", t.toString());
-                toast("no network");
             }
         });
     }

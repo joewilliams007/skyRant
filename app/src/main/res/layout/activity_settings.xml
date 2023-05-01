@@ -75,7 +75,7 @@
                     android:onClick="login"
                     android:padding="10dp"
                     android:text="l o g i n"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -89,7 +89,7 @@
                     android:onClick="avatar"
                     android:padding="10dp"
                     android:text="a v a t a r  b u i l d e r"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +104,7 @@
                     android:onClick="profileOptions"
                     android:padding="10dp"
                     android:text="c h a n g e\np r o f i l e  d e t a i l s"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLogin" />
@@ -145,7 +145,7 @@
                     android:onClick="themeLight"
                     android:padding="10dp"
                     android:text="l i g h t"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -159,7 +159,7 @@
                     android:onClick="themeDark"
                     android:padding="10dp"
                     android:text="d a r k"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
 
@@ -172,7 +172,7 @@
                     android:onClick="themeAmoled"
                     android:padding="10dp"
                     android:text="a m o l e d"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeDark" />
 
@@ -185,7 +185,7 @@
                     android:onClick="themeCoffee"
                     android:padding="10dp"
                     android:text="c o f f e e"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
 
@@ -198,7 +198,7 @@
                     android:onClick="themeGreen"
                     android:padding="10dp"
                     android:text="g r e e n"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeDiscord" />
 
@@ -211,7 +211,7 @@
                     android:onClick="themeDiscord"
                     android:padding="10dp"
                     android:text="d i s c o r d"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewThemeCoffee" />
 
@@ -253,7 +253,7 @@
                     android:padding="10dp"
                     android:text="s a v e"
                     android:layout_margin="10dp"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="@+id/editTextSearchText"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/editTextSearchText" />
@@ -294,7 +294,7 @@
                     android:onClick="updateLog"
                     android:padding="10dp"
                     android:text="c h a n g e l o g"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -351,7 +351,7 @@
                     android:padding="10dp"
                     android:text="u p d a t e"
                     android:onClick="updateOpen"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -408,7 +408,7 @@
                     android:onClick="appNotifSettings"
                     android:padding="10dp"
                     android:text="a l l o w\nn o t i f i c a t i o n s"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -513,7 +513,7 @@
                     android:onClick="appInfo"
                     android:padding="10dp"
                     android:text="t a p  t o\na c t i v a t e   d e e p   l i n k i n g"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -613,10 +613,102 @@
                     android:onClick="saveRantsAmount"
                     android:padding="10dp"
                     android:text="s a v e"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="@+id/editTextRantsAmount"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/editTextRantsAmount" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textViewGithub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="showGithub"
+                android:padding="10dp"
+                android:text=">  g i t h u b"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/github"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewGithub">
+
+                <TextView
+                    android:id="@+id/textViewGithubInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito"
+                    android:text="The Github API has a limit of 60 API requests when not using an API key.\n\nThis can get quite annoying when going through the community page or viewing profiles. This is why you can enter an access key here. The key does not need any special permissions.\n\nYou can generate a key below and enter it here.\n\nYour key wont be shown here for security reasons."
+                    android:textColor="?attr/colorOnPrimary"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewGenerate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="generateKey"
+                    android:text="generate key"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGithubInfo" />
+
+                <TextView
+                    android:id="@+id/textViewRemoveKey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="removeKey"
+                    android:text="remove key"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGithubInfo" />
+
+                <EditText
+                    android:id="@+id/editTextKey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="?attr/colorSurfaceVariant"
+                    android:ems="10"
+                    android:fontFamily="@font/nunito"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textColorHint="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewSaveKey"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGenerate" />
+
+                <TextView
+                    android:id="@+id/textViewSaveKey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="saveGithubKey"
+                    android:padding="10dp"
+                    android:text="s a v e"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextKey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/editTextKey" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -657,7 +749,7 @@
 
 
                 <TextView
-                    android:id="@+id/textViewGithub"
+                    android:id="@+id/textViewGithubSky"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -665,7 +757,7 @@
                     android:onClick="githubSkyRant"
                     android:padding="10dp"
                     android:text="G i t H u b - s k y R a n t"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -680,10 +772,10 @@
                     android:padding="10dp"
                     android:text="i s s u e  t r a c k e r"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewGithub" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGithubSky" />
 
                 <TextView
                     android:id="@+id/textViewCommunityIssue"
@@ -695,7 +787,7 @@
                     android:padding="10dp"
                     android:text="a d d  c o m m u n i t y  p r o j e c t"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewIssues" />
@@ -710,7 +802,7 @@
                     android:padding="10dp"
                     android:text="d e v R a n t  w e b s i t e  \uFE643"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -726,7 +818,7 @@
                     android:padding="10dp"
                     android:text="d o w n l o a d\nw a t c h R a n t"
                     android:textAlignment="center"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewCommunityIssue" />

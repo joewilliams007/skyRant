@@ -44,9 +44,9 @@ import retrofit2.Response;
 public class SettingsActivity extends AppCompatActivity {
 
     TextView textViewLogin,textViewCurrentNr,textViewNewestNr;
-    ConstraintLayout theme, profile, update, features, feed, about, notif;
+    ConstraintLayout theme, profile, update, features, feed, about, notif, github;
     ProgressBar progressBar;
-    EditText editTextRantsAmount, editTextSearchText;
+    EditText editTextRantsAmount, editTextSearchText, editTextKey;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +61,14 @@ public class SettingsActivity extends AppCompatActivity {
         features = findViewById(R.id.features);
         feed = findViewById(R.id.feed);
         about = findViewById(R.id.about);
+        github = findViewById(R.id.github);
         notif = findViewById(R.id.notif);
         textViewCurrentNr = findViewById(R.id.textViewCurrentNr);
         textViewNewestNr = findViewById(R.id.textViewNewestNr);
         progressBar = findViewById(R.id.progressBar);
         editTextRantsAmount = findViewById(R.id.editTextRantsAmount);
         editTextSearchText = findViewById(R.id.editTextSearchText);
-
+        editTextKey = findViewById(R.id.editTextKey);
         setSwitches();
 
         if (Account.isLoggedIn()) {
@@ -262,6 +263,15 @@ public class SettingsActivity extends AppCompatActivity {
             about.setVisibility(View.GONE);
         }
     }
+
+    public void showGithub(View view) {
+        if (github.getVisibility() == View.GONE) {
+            github.setVisibility(View.VISIBLE);
+        } else {
+            github.setVisibility(View.GONE);
+        }
+    }
+
     public void showFeed(View view) {
         if (feed.getVisibility() == View.GONE) {
             editTextRantsAmount.setText(String.valueOf(Account.limit()));
@@ -287,6 +297,18 @@ public class SettingsActivity extends AppCompatActivity {
             hideKeyboard(SettingsActivity.this);
         } else {
             toast("enter a term");
+        }
+    }
+
+    public void saveGithubKey(View view) {
+        String t = editTextKey.getText().toString();
+        if (t.length()>1) {
+            Account.setGithubKey(t);
+            github.setVisibility(View.GONE);
+            hideKeyboard(SettingsActivity.this);
+            editTextKey.setText("");
+        } else {
+            toast("enter a valid key");
         }
     }
 
@@ -382,6 +404,12 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(browserIntent);
     }
 
+
+    public void generateKey(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/settings/tokens"));
+        startActivity(browserIntent);
+    }
+
     public void skyRantIssueTracker(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant/issues"));
         startActivity(browserIntent);
@@ -450,5 +478,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-
+    public void removeKey(View view) {
+        Account.setGithubKey(null);
+        github.setVisibility(View.GONE);
+        toast("removed key");
+    }
 }

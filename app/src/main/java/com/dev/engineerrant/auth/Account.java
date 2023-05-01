@@ -85,6 +85,17 @@ public class Account {
         editor.apply();
     }
 
+    public static String githubKey() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getString("githubKey", null);
+    }
+
+    public static void setGithubKey(String githubKey) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putString("githubKey",githubKey);
+        editor.apply();
+    }
+
     public static Boolean animate() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("animate", true);

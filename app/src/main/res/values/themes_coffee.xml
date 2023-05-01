@@ -4,8 +4,8 @@
     <style name="Theme.Coffee" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="colorPrimary">#FFFFFF</item>
-        <item name="colorPrimaryVariant">#3C2A21</item>
-        <item name="colorOnPrimary">#F1DEC9</item>
+        <item name="colorPrimaryVariant">#F1DEC9</item>
+        <item name="colorOnPrimary">#3C2A21</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#FFFFFF</item>
         <item name="colorSecondaryVariant">#FFFFFF</item>

@@ -261,9 +261,23 @@ public class RantActivity extends AppCompatActivity {
                             @Override
                             public void onItemClicked(Integer menuPosition) {
                                 LinkItem menuItem = linkItems.get(menuPosition);
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
-                                browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                MyApplication.getAppContext().startActivity(browserIntent);
+                                if (menuItem.getLink().contains("github")) {
+                                    if (menuItem.getLink().split("com/")[1].contains("/")) {
+                                        Intent intent = new Intent(MyApplication.getAppContext(), CommunityPostActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.putExtra("repo_url",menuItem.getLink());
+                                        MyApplication.getAppContext().startActivity(intent);
+                                    } else {
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        MyApplication.getAppContext().startActivity(browserIntent);
+                                    }
+                                } else {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(menuItem.getLink()));
+                                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    MyApplication.getAppContext().startActivity(browserIntent);
+                                }
+
                             }
                         }) {
                             @Override

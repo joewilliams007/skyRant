@@ -18,6 +18,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.dev.engineerrant.MainActivity;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
+import com.google.android.material.color.MaterialColors;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +53,6 @@ public class Tools {
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
-
 
 
     private static int screenWidth = 0, screenHeight = 0;

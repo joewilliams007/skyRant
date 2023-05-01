@@ -2,9 +2,12 @@ package com.dev.engineerrant.adapters;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
+import static com.dev.engineerrant.CommunityPostActivity.communityItem;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.engineerrant.BuildConfig;
+import com.dev.engineerrant.CommunityActivity;
+import com.dev.engineerrant.CommunityPostActivity;
+import com.dev.engineerrant.DoubleClickListener;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.MyApplication;
@@ -101,9 +107,16 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
                 holder.textViewGithub.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data_provider.getGithub()));
-                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        MyApplication.getAppContext().startActivity(browserIntent);
+                        if (data_provider.getGithub().contains("gist")) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data_provider.getGithub().replace("https","http")));
+                            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            MyApplication.getAppContext().startActivity(browserIntent);
+                        } else {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(data_provider.getGithub()));
+                            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            MyApplication.getAppContext().startActivity(browserIntent);
+                        }
+
                     }
                 });
             } else {
@@ -124,6 +137,16 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
         } else {
             holder.textViewWebsite.setVisibility(View.GONE);
         }
+
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(callback != null) {
+                    callback.onItemClicked(position);
+                }
+            }
+        });
+
 
         if (!Objects.equals(data_provider.getRelevant_dr_url(), "")) {
             holder.textViewRelated.setText(data_provider.getRelevant_dr_url());
