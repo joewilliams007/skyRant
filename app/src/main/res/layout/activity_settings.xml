@@ -631,7 +631,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
+                app:layout_constraintTop_toBottomOf="@+id/about" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/github"

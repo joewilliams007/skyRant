@@ -15,7 +15,7 @@
         android:onClick="saveAvatarBtn"
         android:padding="10dp"
         android:text="s a v e"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +27,7 @@
         android:onClick="discardAvatarBtn"
         android:padding="10dp"
         android:text="d i s c a r d"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

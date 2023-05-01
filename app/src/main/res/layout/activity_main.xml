@@ -191,7 +191,7 @@
                 android:onClick="clearSearch"
                 android:padding="20dp"
                 android:text="x"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -204,7 +204,7 @@
                 android:onClick="searchBtnStart"
                 android:padding="20dp"
                 android:text="console.log"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textViewClosePrint"
                 app:layout_constraintTop_toTopOf="parent" />

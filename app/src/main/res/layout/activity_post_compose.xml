@@ -31,7 +31,7 @@
         android:padding="10dp"
         android:onClick="uploadPost"
         android:text="U P L O A D"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
