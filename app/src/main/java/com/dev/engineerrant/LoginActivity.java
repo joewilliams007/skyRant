@@ -1,5 +1,6 @@
 package com.dev.engineerrant;
 
+import static com.dev.engineerrant.CommunityPostActivity.communityItem;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
@@ -131,7 +132,9 @@ public class LoginActivity extends AppCompatActivity {
                 assert response.body() != null;
                 Boolean success = response.body().getSuccess();
 
-
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
 
                 toast("login approved");
             } else if (response.code() == 429) {
