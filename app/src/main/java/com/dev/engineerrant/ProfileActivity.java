@@ -7,6 +7,7 @@ import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,14 +32,20 @@ import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Counts;
 import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.classes.User_avatar;
+import com.dev.engineerrant.methods.MethodsGithub;
 import com.dev.engineerrant.methods.MethodsProfile;
+import com.dev.engineerrant.models.ModelGithub;
 import com.dev.engineerrant.models.ModelProfile;
 import com.dev.engineerrant.models.ModelSuccess;
 import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.VoteClient;
+import com.google.android.material.tabs.TabLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -53,7 +60,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     String id, github, website, image = null, _username = null;
     TextView textViewAbout, textViewGithub, textViewUsername, textViewSkills, textViewScore, textViewWebsite, textViewJoined,textViewLocation;
-    ImageView imageViewProfile, imageViewShare;
+    ImageView imageViewProfile, imageViewShare, imageViewProfileAlone, imageViewGithub;
+    CardView cardViewProfile;
+    TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
@@ -64,6 +73,8 @@ public class ProfileActivity extends AppCompatActivity {
         imageViewShare.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         id = intent.getStringExtra("user_id");
+        tabLayout.setVisibility(View.GONE);
+
         requestProfile();
     }
 
@@ -78,6 +89,10 @@ public class ProfileActivity extends AppCompatActivity {
         textViewJoined = findViewById(R.id.textViewJoined);
         imageViewShare = findViewById(R.id.imageViewShare);
         textViewLocation = findViewById(R.id.textViewLocation);
+        imageViewProfileAlone = findViewById(R.id.imageViewProfileAlone);
+        imageViewGithub = findViewById(R.id.imageViewGithub);
+        cardViewProfile = findViewById(R.id.cardViewProfile);
+        tabLayout = findViewById(R.id.tabLayout);
     }
 
     private void requestProfile() {
@@ -115,6 +130,44 @@ public class ProfileActivity extends AppCompatActivity {
                     int favorites_count = counts.getFavorites();
                     int collabs_count = counts.getCollabs();
 
+                    List<Rants> profile_rants = response.body().getProfile().getContent().getContent().getRants();
+                    List<Rants> favorites_rants = response.body().getProfile().getContent().getContent().getFavorites();
+                    List<Rants> upVoted_rants = response.body().getProfile().getContent().getContent().getUpvoted();
+                    List<Rants> comments_rants = response.body().getProfile().getContent().getContent().getComments();
+
+
+                    tabLayout.addTab(tabLayout.newTab().setText(rants_count+"\nRants").setId(0));
+                    tabLayout.addTab(tabLayout.newTab().setText(comments_count+"\nComments").setId(1));
+                    tabLayout.addTab(tabLayout.newTab().setText(upvoted_count+"\n'++s").setId(2));
+                    // tabLayout.addTab(tabLayout.newTab().setText(favorites_count+"\nFavorites").setId(3));
+                    tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                    tabLayout.setVisibility(View.VISIBLE);
+
+                    tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                        @Override
+                        public void onTabSelected(TabLayout.Tab tab) {
+                            if (tab.getId()==0) {
+                                createFeedList(profile_rants);
+                            } else if (tab.getId()==1) {
+                                createFeedList(comments_rants);
+                            } else if (tab.getId()==2) {
+                                createFeedList(upVoted_rants);
+                            } else if (tab.getId()==3) {
+                                createFeedList(favorites_rants);
+                            }
+                        }
+
+                        @Override
+                        public void onTabUnselected(TabLayout.Tab tab) {
+
+                        }
+
+                        @Override
+                        public void onTabReselected(TabLayout.Tab tab) {
+
+                        }
+                    });
+
                     _username = username;
 
                     String text = username;
@@ -125,15 +178,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                     textViewUsername.setText(text);
 
-                    if (location.length()>0) {
-                        textViewLocation.setText(location);
-                    } else {
-                        textViewLocation.setVisibility(View.GONE);
-                    }
 
-                    SpannableString content = new SpannableString(github);
-                    content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                    textViewGithub.setText(content);
 
                     SpannableString contentWeb = new SpannableString(website);
                     contentWeb.setSpan(new UnderlineSpan(), 0, contentWeb.length(), 0);
@@ -151,7 +196,37 @@ public class ProfileActivity extends AppCompatActivity {
 
                     if (github.equals("")) {
                         textViewGithub.setVisibility(View.GONE);
+                        cardViewProfile.setVisibility(View.GONE);
+                        imageViewProfileAlone.setImageDrawable(null);
+                        if (user_avatar!=null) {
+                            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
+                            image = "https://avatars.devrant.com/"+user_avatar;
+                        } else {
+                            imageViewProfileAlone.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+                        }
+
+
+                        if (location.length()>0) {
+                            textViewLocation.setText(location);
+                        } else {
+                            textViewLocation.setVisibility(View.GONE);
+                        }
+                    } else {
+                        SpannableString content = new SpannableString(github);
+                        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+                        textViewGithub.setText(content);
+
+                        imageViewProfileAlone.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+                        imageViewProfileAlone.setVisibility(View.GONE);
+                        imageViewProfile.setImageDrawable(null);
+                        imageViewProfile.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+                        imageViewGithub.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+                        getGithubProfile(github,user_avatar,location);
+
+
                     }
+
+
                     if (about.equals("")) {
                         textViewAbout.setVisibility(View.GONE);
                     }
@@ -168,15 +243,7 @@ public class ProfileActivity extends AppCompatActivity {
                         textViewScore.setText("+"+ score);
                     }
 
-                    imageViewProfile.setImageDrawable(null);
-                    if (user_avatar!=null) {
-                        Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfile);
-                        image = "https://avatars.devrant.com/"+user_avatar;
-                    } else {
-                        imageViewProfile.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
-                    }
 
-                    List<Rants> profile_rants = response.body().getProfile().getContent().getContent().getRants();
 
                     createFeedList(profile_rants);
 
@@ -197,19 +264,115 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void getGithubProfile(String github, String user_avatar, String location) {
+            String total_url;
+            total_url = "https://api.github.com/users/"+github;
+
+            if (total_url.endsWith("/")) {
+                total_url = total_url.substring(0, total_url.length() - 1);
+            }
+
+            MethodsGithub methods = RetrofitClient.getRetrofitInstance().create(MethodsGithub.class);
+
+
+            String header = null;
+            if (Account.githubKey()!=null) {
+                header = "token "+Account.githubKey();
+            }
+
+            Call<ModelGithub> call = methods.getAllData(header,total_url);
+            call.enqueue(new Callback<ModelGithub>() {
+                @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+                @Override
+                public void onResponse(@NonNull Call<ModelGithub> call, @NonNull Response<ModelGithub> response) {
+                    if (response.isSuccessful()) {
+
+                        // Do  awesome stuff
+                        assert response.body() != null;
+
+
+                        if (response.body().getLocation()!=null) {
+                            if (location.length()>0) {
+                                textViewLocation.setText(location);
+                            } else {
+                                textViewLocation.setText(response.body().getLocation());
+                            }
+                        } else {
+                            if (location.length()>0) {
+                                textViewLocation.setText(location);
+                            } else {
+                                textViewLocation.setVisibility(View.GONE);
+                            }
+                        }
+                        if (user_avatar!=null) {
+                            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfile);
+                            image = "https://avatars.devrant.com/"+user_avatar;
+                        }
+
+                        Glide.with(MyApplication.getAppContext()).load(response.body().getAvatar_url()).into(imageViewGithub);
+
+                    } else {
+                        textViewGithub.setVisibility(View.GONE);
+                        cardViewProfile.setVisibility(View.GONE);
+                        imageViewProfileAlone.setImageDrawable(null);
+                        if (user_avatar!=null) {
+                            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
+                            image = "https://avatars.devrant.com/"+user_avatar;
+                        }
+                        imageViewProfileAlone.setVisibility(View.VISIBLE);
+
+                        if (location.length()>0) {
+                            textViewLocation.setText(location);
+                        } else {
+                            textViewLocation.setVisibility(View.GONE);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelGithub> call, @NonNull Throwable t) {
+                    textViewGithub.setVisibility(View.GONE);
+                    cardViewProfile.setVisibility(View.GONE);
+                    imageViewProfileAlone.setImageDrawable(null);
+                    if (user_avatar!=null) {
+                        Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
+                        image = "https://avatars.devrant.com/"+user_avatar;
+                    }
+                    imageViewProfileAlone.setVisibility(View.VISIBLE);
+
+                    if (location.length()>0) {
+                        textViewLocation.setText(location);
+                    } else {
+                        textViewLocation.setVisibility(View.GONE);
+                    }
+                }
+            });
+    }
+
 
     public void createFeedList(List<Rants> rants){
         ArrayList<FeedItem> menuItems = new ArrayList<>();
 
         for (Rants rant : rants){
             String s = rant.getText();
-
-            String url = null;
-            if (rant.getAttached_image().toString().contains("http")) {
-                url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+            if (s == null) {
+                s = rant.getBody();
+            }
+            Integer id = rant.getRant_id();
+            if (rant.getRant_id() == null) {
+                id = rant.getId();
             }
 
-            menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
+            String url = null;
+            if (rant.getAttached_image()!=null) {
+                if (rant.getAttached_image().toString().contains("http")) {
+                    url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+                }
+            }
+
+
+            menuItems.add(new FeedItem(url,s,id,"feed",
                     rant.getScore(),
                     rant.getNum_comments(),
                     rant.getCreated_time(),
@@ -238,58 +401,11 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(Integer menuPosition, String type) {
                 FeedItem menuItem = feedItems.get(menuPosition);
-                switch (type) {
-                    case "upvote":
-                        votePost(1, menuItem.getId());
-                        break;
-                    case "downVote":
-                        votePost(-1, menuItem.getId());
-                        break;
-                    case "removeVote":
-                        votePost(0, menuItem.getId());
-                        break;
-                    case "rant":
-                        Intent intent = new Intent(ProfileActivity.this, RantActivity.class);
-                        intent.putExtra("id", String.valueOf(menuItem.getId()));
-                        intent.putExtra("text", menuItem.getText());
-                        intent.putExtra("username", menuItem.getUsername());
-                        intent.putExtra("user_id", String.valueOf(menuItem.getUser_id()));
-                        intent.putExtra("num_comments", String.valueOf(menuItem.getNumComments()));
-                        intent.putExtra("date", getRelativeTimeSpanString(menuItem.getCreated_time() * 1000L));
-                        if (Account.isLoggedIn()) {
-                            intent.putExtra("vote_state", String.valueOf(menuItem.getVote_state()));
-                        } else {
-                            intent.putExtra("vote_state", "0");
-                        }
+                Intent intent = new Intent(ProfileActivity.this, RantActivity.class);
+                intent.putExtra("id", String.valueOf(menuItem.getId()));
+                intent.putExtra("info", "false");
 
-                        if (menuItem.getUser_score() < 0) {
-                            intent.putExtra("user_score", String.valueOf(menuItem.getUser_score()));
-                        } else {
-                            intent.putExtra("user_score", "+" + menuItem.getUser_score());
-                        }
-
-                        if (menuItem.getScore() < 0) {
-                            intent.putExtra("score", String.valueOf(menuItem.getScore()));
-                        } else {
-                            intent.putExtra("score", "+" + menuItem.getScore());
-                        }
-
-                        intent.putExtra("user_id", String.valueOf(menuItem.getUser_id()));
-                        intent.putExtra("b", menuItem.getB());
-                        intent.putExtra("i", menuItem.getI());
-                        intent.putExtra("info", "true");
-                        intent.putExtra("image", menuItem.getImage());
-
-                        String[] tags = menuItem.getTags();
-                        String t = "";
-                        for (String tag : tags) {
-                            t += tag + ", ";
-                        }
-                        intent.putExtra("tags", t.substring(0, t.length() - 2));
-
-                        startActivity(intent);
-                        break;
-                }
+                startActivity(intent);
             }
         }) {
             @Override
@@ -318,6 +434,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+
+        tabLayout.setVisibility(View.VISIBLE);
     }
 
     public void openWebsite(View view) {

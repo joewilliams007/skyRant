@@ -122,13 +122,16 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
             }
         }
 
-        String s = data_provider.getText();
-        if (s.length()>500) {
-            s = s.substring(0, 500)+"... [read more]";
+        try {
+            String s = data_provider.getText();
+            if (s.length()>500) {
+                s = s.substring(0, 500)+"... [read more]";
+            }
+            holder.textViewText.setText(s);
+        } catch (Exception e) {
+
         }
 
-
-        holder.textViewText.setText(s);
 
 
         if (data_provider.getVote_state() == 1) {
@@ -211,13 +214,18 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
 
 
 
-        String[] tags = data_provider.getTags();
-        String t = "";
-        for (String tag: tags) {
-            t+=tag+", ";
+        if (data_provider.getTags() == null) {
+            holder.textViewTags.setVisibility(View.INVISIBLE);
+        } else {
+            String[] tags = data_provider.getTags();
+            String t = "";
+            for (String tag: tags) {
+                t+=tag+", ";
+            }
+
+            holder.textViewTags.setText(t.substring(0, t.length()-2));
         }
 
-        holder.textViewTags.setText(t.substring(0, t.length()-2));
 
 
         switch (data_provider.getType()) {

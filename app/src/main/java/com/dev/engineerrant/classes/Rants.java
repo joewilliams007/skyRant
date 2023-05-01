@@ -3,7 +3,7 @@ package com.dev.engineerrant.classes;
 import java.util.List;
 
 public class Rants {
-    int id;
+    Integer id;
     int score;
     String text;
     int created_time;
@@ -11,6 +11,17 @@ public class Rants {
     Boolean edited;
     String user_username;
     String link;
+
+    String body; // NOTE ONLY FOR PROFILE COMMENTS
+    Integer rant_id; // NOTE ONLY FOR PROFILE COMMENTS
+
+    public String getBody() {
+        return body;
+    }
+
+    public Integer getRant_id() {
+        return rant_id;
+    }
 
     public String getLink() {
         return link;
@@ -40,7 +51,7 @@ public class Rants {
         return vote_state;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

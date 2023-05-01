@@ -40,10 +40,10 @@ import retrofit2.Response;
 public class GithubActivity extends AppCompatActivity {
     RecyclerView recyclerView, link_view;
     ImageView imageViewProfile;
-    TextView textViewUsername, top, textViewFollowers, textViewFollowing, textViewBio, textViewBlog, textViewCreated, textViewLocation, textViewGithub;
+    TextView textViewUsername, top, textViewFollowers, textViewFollowing, textViewBio, textViewBlog, textViewCreated, textViewLocation, textViewGithub, textViewRepos;
     ProgressBar progressBar;
     Intent intent;
-    String ownerGithub;
+    String ownerGithub, image;
     String blog = null;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,6 +64,7 @@ public class GithubActivity extends AppCompatActivity {
         textViewFollowing = findViewById(R.id.textViewFollowing);
         textViewLocation = findViewById(R.id.textViewLocation);
         textViewGithub = findViewById(R.id.textViewGithub);
+        textViewRepos = findViewById(R.id.textViewRepos);
         getProfile();
     }
 
@@ -103,6 +104,7 @@ public class GithubActivity extends AppCompatActivity {
 
                     textViewFollowers.setText(response.body().getFollowers()+" followers");
                     textViewFollowing.setText(response.body().getFollowing()+" following");
+                    textViewRepos.setText(response.body().getPublic_repos()+" repositories");
 
                     if (response.body().getBio()!=null && !response.body().getBio().equals("")) {
                         textViewBio.setText(response.body().getBio());
@@ -121,6 +123,7 @@ public class GithubActivity extends AppCompatActivity {
                         textViewLocation.setVisibility(View.GONE);
                     }
                     String user_avatar = response.body().getAvatar_url();
+                    image = user_avatar.replace("https","http");
                     if (user_avatar!=null) {
                         Glide.with(MyApplication.getAppContext()).load(user_avatar).into(imageViewProfile);
                     }
@@ -163,7 +166,12 @@ public class GithubActivity extends AppCompatActivity {
     }
 
     public void openBlog(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(blog));
+        Intent browserIntent;
+        if (blog.contains("http")) {
+            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(blog));
+        } else {
+            browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + blog));
+        }
         startActivity(browserIntent);
     }
 
@@ -171,5 +179,12 @@ public class GithubActivity extends AppCompatActivity {
 
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(intent.getStringExtra("github_url").replace("https","http")));
         startActivity(browserIntent);
+    }
+
+    public void openGithubImage(View view) {
+        if (image!=null) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(image));
+            startActivity(browserIntent);
+        }
     }
 }
