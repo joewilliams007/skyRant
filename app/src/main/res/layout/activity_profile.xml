@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/nunito"
-                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toEndOf="@+id/textViewJoined"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
 
@@ -177,17 +177,17 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabTextColor="?attr/colorPrimary"
-                    app:tabIndicatorColor="?attr/colorPrimaryVariant"
-                    app:tabIndicatorAnimationMode="elastic"
-                    app:tabSelectedTextColor="?attr/colorPrimaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewScore" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewScore"
+                    app:tabIndicatorAnimationMode="elastic"
+                    app:tabIndicatorColor="?attr/colorPrimaryVariant"
+                    app:tabSelectedTextColor="?attr/colorPrimaryVariant"
+                    app:tabTextColor="?attr/colorPrimary" />
 
                 <TextView
                     android:id="@+id/textViewJoined"
                     android:layout_width="0dp"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/nunito"
                     android:textColor="?attr/colorOnPrimary"

@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("user_id");
         tabLayout.setVisibility(View.GONE);
-
+        cardViewProfile.setVisibility(View.INVISIBLE);
         requestProfile();
     }
 
@@ -138,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     tabLayout.addTab(tabLayout.newTab().setText(rants_count+"\nRants").setId(0));
                     tabLayout.addTab(tabLayout.newTab().setText(comments_count+"\nComments").setId(1));
-                    tabLayout.addTab(tabLayout.newTab().setText(upvoted_count+"\n'++s").setId(2));
+                    tabLayout.addTab(tabLayout.newTab().setText(upvoted_count+"\n++'s").setId(2));
                     // tabLayout.addTab(tabLayout.newTab().setText(favorites_count+"\nFavorites").setId(3));
                     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                     tabLayout.setVisibility(View.VISIBLE);
@@ -285,6 +285,7 @@ public class ProfileActivity extends AppCompatActivity {
                 @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
                 @Override
                 public void onResponse(@NonNull Call<ModelGithub> call, @NonNull Response<ModelGithub> response) {
+
                     if (response.isSuccessful()) {
 
                         // Do  awesome stuff
@@ -310,7 +311,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
 
                         Glide.with(MyApplication.getAppContext()).load(response.body().getAvatar_url()).into(imageViewGithub);
-
+                        cardViewProfile.setVisibility(View.VISIBLE);
                     } else {
                         textViewGithub.setVisibility(View.GONE);
                         cardViewProfile.setVisibility(View.GONE);
@@ -326,6 +327,7 @@ public class ProfileActivity extends AppCompatActivity {
                         } else {
                             textViewLocation.setVisibility(View.GONE);
                         }
+                        cardViewProfile.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -346,6 +348,7 @@ public class ProfileActivity extends AppCompatActivity {
                     } else {
                         textViewLocation.setVisibility(View.GONE);
                     }
+                    cardViewProfile.setVisibility(View.VISIBLE);
                 }
             });
     }
