@@ -15,6 +15,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -37,15 +38,11 @@ import com.dev.engineerrant.methods.MethodsProfile;
 import com.dev.engineerrant.models.ModelGithub;
 import com.dev.engineerrant.models.ModelProfile;
 import com.dev.engineerrant.models.ModelSuccess;
-import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.post.VoteClient;
 import com.google.android.material.tabs.TabLayout;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -105,7 +102,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
         Call<ModelProfile> call = methods.getAllData(total_url);
         call.enqueue(new Callback<ModelProfile>() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<ModelProfile> call, @NonNull Response<ModelProfile> response) {
                 if (response.isSuccessful()) {
@@ -194,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     textViewJoined.setText(getRelativeTimeSpanString(created_time*1000L));
 
-                    if (github.equals("")) {
+                    if (github.equals("") || github.contains(" ")) {
                         textViewGithub.setVisibility(View.GONE);
                         cardViewProfile.setVisibility(View.GONE);
                         imageViewProfileAlone.setImageDrawable(null);
@@ -222,8 +218,6 @@ public class ProfileActivity extends AppCompatActivity {
                         imageViewProfile.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
                         imageViewGithub.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
                         getGithubProfile(github,user_avatar,location);
-
-
                     }
 
 
@@ -327,7 +321,7 @@ public class ProfileActivity extends AppCompatActivity {
                         } else {
                             textViewLocation.setVisibility(View.GONE);
                         }
-                        cardViewProfile.setVisibility(View.VISIBLE);
+                        cardViewProfile.setVisibility(View.GONE);
                     }
 
                 }
@@ -348,48 +342,78 @@ public class ProfileActivity extends AppCompatActivity {
                     } else {
                         textViewLocation.setVisibility(View.GONE);
                     }
-                    cardViewProfile.setVisibility(View.VISIBLE);
+                    cardViewProfile.setVisibility(View.GONE);
                 }
             });
     }
 
 
+    public static List<Rants> selected;
     public void createFeedList(List<Rants> rants){
-        ArrayList<FeedItem> menuItems = new ArrayList<>();
+        selected = rants;
 
-        for (Rants rant : rants){
-            String s = rant.getText();
-            if (s == null) {
-                s = rant.getBody();
-            }
-            Integer id = rant.getRant_id();
-            if (rant.getRant_id() == null) {
-                id = rant.getId();
-            }
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute(rants);
+    }
 
-            String url = null;
-            if (rant.getAttached_image()!=null) {
-                if (rant.getAttached_image().toString().contains("http")) {
-                    url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+
+    private class AsyncTaskRunner extends AsyncTask<List<Rants>, List<Rants>, String> {
+
+        ArrayList<FeedItem> menuItems;
+
+        @Override
+        protected String doInBackground(List<Rants>... params) {
+            try {
+                menuItems = new ArrayList<>();
+                for (Rants rant : selected){
+                    String s = rant.getText();
+                    if (s == null) {
+                        s = rant.getBody();
+                    }
+                    Integer id = rant.getRant_id();
+                    if (rant.getRant_id() == null) {
+                        id = rant.getId();
+                    }
+
+                    String url = null;
+                    if (rant.getAttached_image()!=null) {
+                        if (rant.getAttached_image().toString().contains("http")) {
+                            url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+                        }
+                    }
+
+
+                    menuItems.add(new FeedItem(url,s,id,"feed",
+                            rant.getScore(),
+                            rant.getNum_comments(),
+                            rant.getCreated_time(),
+                            rant.getUser_username(),
+                            rant.getVote_state(),
+                            rant.getUser_avatar().getB(),
+                            rant.getUser_avatar().getI(),
+                            rant.getTags(),
+                            rant.getUser_score(),
+                            rant.getUser_id()
+                    ));
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-
-            menuItems.add(new FeedItem(url,s,id,"feed",
-                    rant.getScore(),
-                    rant.getNum_comments(),
-                    rant.getCreated_time(),
-                    rant.getUser_username(),
-                    rant.getVote_state(),
-                    rant.getUser_avatar().getB(),
-                    rant.getUser_avatar().getI(),
-                    rant.getTags(),
-                    rant.getUser_score(),
-                    rant.getUser_id()
-            ));
+            return "true";
         }
 
-        build(menuItems);
+
+        @Override
+        protected void onPostExecute(String result) {
+            // execution of result of Long time consuming operation
+            build(menuItems);
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
     }
 
     private void build(ArrayList<FeedItem> feedItems) {

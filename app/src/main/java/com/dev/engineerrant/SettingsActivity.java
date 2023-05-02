@@ -72,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         setSwitches();
 
         if (Account.isLoggedIn()) {
-            textViewLogin.setText("l o g o u t");
+            textViewLogin.setText(R.string.logout);
         }
     }
 
@@ -377,7 +377,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void updateOpen(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant/blob/master/README.md"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/joewilliams007/skyRant/blob/master/README.md"));
         startActivity(browserIntent);
         // String url = "https://github.com/Piashsarker/AndroidAppUpdateLibrary/raw/master/app-debug.apk";
     }
@@ -440,6 +440,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    public void block(View view) {
+        Intent intent = new Intent(SettingsActivity.this, BlockActivity.class);
+        startActivity(intent);
+    }
 
     public void appNotifSettings(View view) {
         Intent intent = new Intent();
@@ -482,5 +486,20 @@ public class SettingsActivity extends AppCompatActivity {
         Account.setGithubKey(null);
         github.setVisibility(View.GONE);
         toast("removed key");
+    }
+
+
+    public void langEn(View view) {
+        Account.setLanguage(null);
+        Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void langDe(View view) {
+        Account.setLanguage("de");
+        Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

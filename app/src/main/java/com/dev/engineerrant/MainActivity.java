@@ -355,44 +355,53 @@ public class MainActivity extends AppCompatActivity {
         menuItems = new ArrayList<>();
 
         ArrayList<UsersItem> profiles = new ArrayList<>();
-        ArrayList<String> _profiles = new ArrayList<>();
+        String[] blockedWords = Account.blockedWords().split(",");
+        String[] blockedUsers = Account.blockedUsers().split(",");
         for (Rants rant : rants){
             String s = rant.getText();
+            String username = rant.getUser_username().toLowerCase();
 
-            String url = null;
-            if (rant.getAttached_image().toString().contains("http")) {
-                url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
-            }
-            /* // This will add users on top of search. no reason though nobody needed this fr now
-            if (profiles.size()<11) {
-                if (search.getVisibility() == View.VISIBLE) {
-                    Profile profile = new Profile();
-                    profile.setUsername(rant.getUser_username());
-                    profile.setAvatar(rant.getUser_avatar());
-                    profile.setScore(rant.getUser_score());
-                    profile.setUser_id(rant.getUser_id());
-                    UsersItem usersItem = new UsersItem(profile);
+            String s_check = s.toLowerCase();
+            boolean containsBlocked = false;
 
-                    if (!_profiles.contains(rant.getUser_username())) {
-                        profiles.add(usersItem);
-                        _profiles.add(rant.getUser_username());
+            if (Account.blockedWords()!=null&&!Account.blockedWords().equals("")) {
+                for (String word : blockedWords) {
+                    if (s_check.contains(word)) {
+                        containsBlocked = true;
+                        break;
                     }
                 }
             }
-            */
+            if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+                for (String user : blockedUsers) {
+                    if (username.equals(user.toLowerCase())) {
+                        containsBlocked = true;
+                        break;
+                    }
+                }
+            }
 
-            menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
-                    rant.getScore(),
-                    rant.getNum_comments(),
-                    rant.getCreated_time(),
-                    rant.getUser_username(),
-                    rant.getVote_state(),
-                    rant.getUser_avatar().getB(),
-                    rant.getUser_avatar().getI(),
-                    rant.getTags(),
-                    rant.getUser_score(),
-                    rant.getUser_id()
-                    ));
+
+            if (!containsBlocked) {
+                String url = null;
+                if (rant.getAttached_image().toString().contains("http")) {
+                    url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+                }
+
+
+                menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
+                        rant.getScore(),
+                        rant.getNum_comments(),
+                        rant.getCreated_time(),
+                        rant.getUser_username(),
+                        rant.getVote_state(),
+                        rant.getUser_avatar().getB(),
+                        rant.getUser_avatar().getI(),
+                        rant.getTags(),
+                        rant.getUser_score(),
+                        rant.getUser_id()
+                ));
+            }
         }
 
         if (search.getVisibility() == View.VISIBLE) {

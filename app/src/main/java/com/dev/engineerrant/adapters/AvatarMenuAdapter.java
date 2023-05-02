@@ -72,9 +72,11 @@ public abstract class AvatarMenuAdapter extends RecyclerView.Adapter<AvatarMenuA
             @Override
             public void onClick(final View v) {
                 if(callback != null) {
+                    if (menu_prev_selected != position)  {
+                        notifyItemChanged(menu_prev_selected);
+                    }
                     holder.viewSelected.setVisibility(View.VISIBLE);
                     menu_selected = position;
-                    notifyItemChanged(menu_prev_selected);
                     menu_prev_selected = position;
                     callback.onItemClicked(position);
                 }

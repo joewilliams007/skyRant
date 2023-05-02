@@ -18,7 +18,7 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:background="?attr/colorSurface"
-        android:text="P r o f i l e"
+        android:text="@string/top_heading_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
         android:fontFamily="@font/nunito"
         android:onClick="saveAccountBtn"
         android:padding="10dp"
-        android:text="s a v e"
+        android:text="@string/save"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
                 android:fontFamily="@font/nunito"
                 android:onClick="showDetails"
                 android:padding="10dp"
-                android:text=">  d e t a i l s"
+                android:text="@string/heading_details"
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
                     android:layout_margin="20dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="a b o u t  ( m a x 2 5 0 )"
+                    android:text="@string/about_max_250"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -127,7 +127,8 @@
                     android:textColorHint="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAbout"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewSkills"
@@ -136,7 +137,7 @@
                     android:layout_margin="20dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="s k i l l s  ( m a x 2 5 0 )"
+                    android:text="@string/skills_max_250"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextAbout" />
@@ -155,7 +156,8 @@
                     android:textColorHint="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewSkills" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewSkills"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewWebsite"
@@ -164,7 +166,7 @@
                     android:layout_margin="20dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="w e b s i t e"
+                    android:text="@string/website"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextSkills" />
@@ -183,7 +185,8 @@
                     android:textColorHint="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewWebsite" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewWebsite"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewGithub"
@@ -192,7 +195,7 @@
                     android:layout_margin="20dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="g i t h u b"
+                    android:text="@string/github"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextWebsite" />
@@ -211,7 +214,8 @@
                     android:textColorHint="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewGithub" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGithub"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textViewLocation"
@@ -221,7 +225,7 @@
                     android:layout_marginStart="32dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="l o c a t i o n"
+                    android:text="@string/location"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextGithub" />
@@ -241,7 +245,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation"
+                    android:importantForAutofill="no"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -14,7 +14,7 @@
         android:fontFamily="@font/nunito"
         android:onClick="saveAvatarBtn"
         android:padding="10dp"
-        android:text="s a v e"
+        android:text="@string/save"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:fontFamily="@font/nunito"
         android:onClick="discardAvatarBtn"
         android:padding="10dp"
-        android:text="d i s c a r d"
+        android:text="@string/discard"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

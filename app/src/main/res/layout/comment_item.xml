@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito"
                 android:padding="10dp"
-                android:text="reply"
+                android:text="@string/reply"
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

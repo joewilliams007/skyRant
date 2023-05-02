@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:background="?attr/colorSurface"
-        android:text="C o m m u n i t y"
+        android:text="@string/top_heading_community"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

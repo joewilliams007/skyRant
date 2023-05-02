@@ -335,34 +335,49 @@ public class RantActivity extends AppCompatActivity {
     public void createFeedList(List<Comment> comments){
         ArrayList<CommentItem> menuItems = new ArrayList<>();
 
-
+        String[] blockedWords = Account.blockedWords().split(",");
+        String[] blockedUsers = Account.blockedUsers().split(",");
         for (Comment comment : comments){
             String s = comment.getBody();
+            String username = comment.getUser_username().toLowerCase();
+            String s_check = s.toLowerCase();
+            boolean containsBlocked = false;
 
-            String url = null;
-            if (comment.getAttached_image()!=null) {
-                url = comment.getAttached_image().toString().replace("{url=","").split(", width")[0].replace("\\\\","");
+            if (Account.blockWordsComments()&&Account.blockedWords()!=null&&!Account.blockedWords().equals("")) {
+                for (String word : blockedWords) {
+                    if (s_check.contains(word)) {
+                        containsBlocked = true;
+                        break;
+                    }
+                }
+            }
+            if (Account.blockUsersComments()&&Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+                for (String user : blockedUsers) {
+                    if (username.equals(user.toLowerCase())) {
+                        containsBlocked = true;
+                        break;
+                    }
+                }
             }
 
-            menuItems.add(new CommentItem(url,s,comment.getId(),"comment",
-                    comment.getScore(),
-                    comment.getCreated_time(),
-                    comment.getUser_username(),
-                    comment.getVote_state(),
-                    comment.getUser_avatar().getB(),
-                    comment.getUser_avatar().getI(),
-                    comment.getUser_score(),
-                    comment.getUser_id(),
-                    comment.getLinks()
-            ));
+            if (!containsBlocked) {
+                String url = null;
+                if (comment.getAttached_image()!=null) {
+                    url = comment.getAttached_image().toString().replace("{url=","").split(", width")[0].replace("\\\\","");
+                }
 
-
-           /* if (rant.getAttached_image().toString().contains("http")) {
-                menuItems.add(new FeedItem(null,s,rant.getId(),"feed",rant.getScore(), rant.getNum_comments(),0,null,rant.getVote_state(),rant.getUser_avatar().getB(),rant.getUser_avatar().getI()));
-                menuItems.add(new FeedItem(null,s,rant.getId(),"image",rant.getScore(), rant.getNum_comments(),0,null,rant.getVote_state(),rant.getUser_avatar().getB(),rant.getUser_avatar().getI()));
-            } else {
-            }*/
-
+                menuItems.add(new CommentItem(url,s,comment.getId(),"comment",
+                        comment.getScore(),
+                        comment.getCreated_time(),
+                        comment.getUser_username(),
+                        comment.getVote_state(),
+                        comment.getUser_avatar().getB(),
+                        comment.getUser_avatar().getI(),
+                        comment.getUser_score(),
+                        comment.getUser_id(),
+                        comment.getLinks()
+                ));
+            }
         }
         build(menuItems);
         imageViewRefresh.setVisibility(View.VISIBLE);

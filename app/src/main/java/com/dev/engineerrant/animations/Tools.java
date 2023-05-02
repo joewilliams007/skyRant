@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import retrofit2.Call;
@@ -99,6 +101,25 @@ public class Tools {
                 context.setTheme(R.style.Theme_Coffee);
                 break;
         }
+
+        if (Account.language()!=null) {
+            Locale locale = new Locale("de");
+            Locale.setDefault(locale);
+
+            Configuration config = new Configuration();
+            config.setLocale(locale);
+            context.getResources().updateConfiguration(config,
+                    context.getResources().getDisplayMetrics());
+        } else {
+            Locale locale = new Locale("en");
+            Locale.setDefault(locale);
+
+            Configuration config = new Configuration();
+            config.setLocale(locale);
+            context.getResources().updateConfiguration(config,
+                    context.getResources().getDisplayMetrics());
+        }
+
     }
 
     public static void highlighter(String text, TextView tv) {

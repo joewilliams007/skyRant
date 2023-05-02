@@ -79,13 +79,17 @@ public abstract class CommunityMenuAdapter extends RecyclerView.Adapter<Communit
                     holder.viewSelected.setVisibility(View.VISIBLE);
                     callback.onItemClicked(position);
                     if (data_provider.getType().equals("os")) {
-                        os_menu_selected = position;
-                        notifyItemChanged(os_menu_prev_selected);
-                        os_menu_prev_selected = position;
+                            if (os_menu_prev_selected != position)  {
+                                notifyItemChanged(os_menu_prev_selected);
+                            }
+                            os_menu_selected = position;
+                            os_menu_prev_selected = position;
                     } else {
-                        type_menu_selected = position;
-                        notifyItemChanged(type_menu_prev_selected);
-                        type_menu_prev_selected = position;
+                            if (type_menu_prev_selected != position)  {
+                                notifyItemChanged(type_menu_prev_selected);
+                            }
+                            type_menu_selected = position;
+                            type_menu_prev_selected = position;
                     }
 
                 }

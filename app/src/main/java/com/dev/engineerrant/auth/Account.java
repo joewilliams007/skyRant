@@ -96,6 +96,59 @@ public class Account {
         editor.apply();
     }
 
+    public static String language() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getString("language", null);
+    }
+
+    public static void setLanguage(String language) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putString("language",language);
+        editor.apply();
+    }
+
+    public static String blockedWords() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getString("blockedWords", "");
+    }
+
+    public static void setBlockedWords(String blockedWords) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putString("blockedWords",blockedWords);
+        editor.apply();
+    }
+    public static String blockedUsers() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getString("blockedUsers", "");
+    }
+
+    public static void setBlockedUsers(String blockedUsers) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putString("blockedUsers",blockedUsers);
+        editor.apply();
+    }
+    public static Boolean blockWordsComments() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("blockWordsComments", false);
+    }
+
+    public static void setBlockWordsComments(Boolean blockWordsComments) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("blockWordsComments",blockWordsComments);
+        editor.apply();
+    }
+
+    public static Boolean blockUsersComments() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("blockUsersComments", false);
+    }
+
+    public static void setBlockUsersComments(Boolean blockUsersComments) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("blockUsersComments",blockUsersComments);
+        editor.apply();
+    }
+
     public static Boolean animate() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("animate", true);

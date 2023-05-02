@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:background="?attr/colorSurface"
-        android:text="C h a n g e l o g"
+        android:text="@string/heading_changelog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

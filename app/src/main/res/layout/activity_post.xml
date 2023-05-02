@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:background="?attr/colorSurface"
-        android:text="N e w  P o s t"
+        android:text="@string/heading_new_post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
         android:fontFamily="@font/nunito"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:text="> s e l e c t  t h e  t y p e  o f  p o s t"
+        android:text="@string/select_the_type_of_post"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

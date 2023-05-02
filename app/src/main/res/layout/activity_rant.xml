@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:background="?attr/colorSurface"
-        android:text="R a n t"
+        android:text="@string/r_a_n_t"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

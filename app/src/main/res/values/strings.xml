@@ -1,3 +1,92 @@
 <resources>
-    <string name="app_name">skyRant</string>
+    <string name="app_name" translatable="false">skyRant</string>
+    <string name="avatar_builder">avatar builder</string>
+    <string name="login">login</string>
+    <string name="blocking">blocking</string>
+    <string name="change_profile_details">change profile details</string>
+    <string name="heading_theme"><![CDATA[> t h e m e]]></string>
+    <string name="theme_light">light</string>
+    <string name="theme_dark">dark</string>
+    <string name="theme_amoled">amoled</string>
+    <string name="theme_coffee">coffee</string>
+    <string name="theme_green">green</string>
+    <string name="theme_discord" translatable="false">discord</string>
+    <string name="search_text_example">search text example: print()</string>
+    <string name="save">save</string>
+    <string name="changelog">changelog</string>
+    <string name="current_version">current version:</string>
+    <string name="placeholder_version" translatable="false">0.0.0</string>
+    <string name="newest_version">newest version</string>
+    <string name="update">update</string>
+    <string name="heading_notif"><![CDATA[> n o t i f]]></string>
+    <string name="allow_notifications">allow notifications</string>
+    <string name="notifications">notifications</string>
+    <string name="heading_features"><![CDATA[> f e a t u r e s]]></string>
+    <string name="animation_simmorsal">animation (SIMMORSAL)</string>
+    <string name="highlight_code">highlight code</string>
+    <string name="surprise_rant">surprise rant</string>
+    <string name="activate_deep_linking">activate deep linking</string>
+    <string name="heading_feed"><![CDATA[> f e e d]]></string>
+    <string name="user_info">user info</string>
+    <string name="autoload_images">autoload images</string>
+    <string name="heading_github" translatable="false"><![CDATA[> g i t h u b]]></string>
+    <string name="generate_key">generate key</string>
+    <string name="remove_key">remove key</string>
+    <string name="heading_about"><![CDATA[> a b o u t]]></string>
+    <string name="github_skyrant" translatable="false">skyRant - Github</string>
+    <string name="issue_tracker">issue tracker</string>
+    <string name="add_community_project">add community project</string>
+    <string name="devrant_website"><![CDATA[devRant website <3]]></string>
+    <string name="heading_top_settings">S e t t i n g s</string>
+    <string name="heading_update"><![CDATA[> u p d a t e]]></string>
+    <string name="rants_per_req">rants per request min 10 - max 50</string>
+    <string name="github_api_help">Extend Github API limit (60/h without key) by entering an access key from your Github Account. Key won\'t be shown here anymore for security reasons.</string>
+    <string name="heading_community"><![CDATA[> c o m m u n i t y]]></string>
+    <string name="watchrant_download">watchRant - download</string>
+    <string name="hint_words" translatable="false">ai, gpt</string>
+    <string name="help_enter_words_to_block">"enter words to block (comma seperated, rants with words containing blocked word will also be blocked) "</string>
+    <string name="switch_block_words">block words in comments as well</string>
+    <string name="switch_block_users">block users in comments as well</string>
+    <string name="heading_blocking">B l o c k i n g</string>
+    <string name="blocked_users">blocked users (comma seperated, enter exact username)</string>
+    <string name="logout">logout</string>
+    <string name="profile"><![CDATA[> p r o f i l e]]></string>
+    <string name="hint_users" translatable="false">AOK, kiki</string>
+    <string name="language">language</string>
+    <string name="english">english</string>
+    <string name="german">german</string>
+    <string name="heading_changelog">C h a n g e l o g</string>
+    <string name="discard">discard</string>
+    <string name="top_heading_community">C o m m u n i t y</string>
+    <string name="heading_details"><![CDATA[> d e t a i l s]]></string>
+    <string name="top_heading_profile">P r o f i l e</string>
+    <string name="about_max_250">about (max 250)</string>
+    <string name="skills_max_250">skills (max 250)</string>
+    <string name="website">website</string>
+    <string name="github" translatable="false">github</string>
+    <string name="location">location</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="btn_login">l o g i n</string>
+    <string name="new_to_devrant_sign_up">new to devRant? Sign up</string>
+    <string name="skip_login">skip login</string>
+    <string name="latest">latest</string>
+    <string name="top">top</string>
+    <string name="algo">algo</string>
+    <string name="search">search</string>
+    <string name="console_log" translatable="false">console.log</string>
+    <string name="x" translatable="false">x</string>
+    <string name="main_notif" translatable="false">N\nO\nT\nI\nF</string>
+    <string name="main_settings" translatable="false">S\nE\nT\nT\nI\nN\nG\nS</string>
+    <string name="heading_notifs" translatable="false">N o t i f s</string>
+    <string name="heading_new_post">N e w P o s t</string>
+    <string name="select_the_type_of_post"><![CDATA[> select the type of post]]></string>
+    <string name="upload">UPLOAD</string>
+    <string name="enter_post"><![CDATA[> enter post]]></string>
+    <string name="tags_comma_seperated"><![CDATA[> tags (comma seperated)]]></string>
+    <string name="the_rant_starts_here">The rant starts here...</string>
+    <string name="hint_tags_comma_seperated">Tags (comma seperated)</string>
+    <string name="r_a_n_t" translatable="false">R a n t</string>
+    <string name="reply">reply</string>
+    <string name="comments">Comments</string>
 </resources>
