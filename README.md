@@ -26,6 +26,7 @@ not in any way complete!
 | ✅ 	| community page (projects, filter) 	|
 | ✅ 	| block (rants/comments with word/from user) 	|
 | ✅ 	| search (limited as per API) 	|
+| ✅ 	| languages (English, German) 	|
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
