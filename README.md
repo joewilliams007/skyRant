@@ -1,9 +1,7 @@
 # skyRant
-skyRant is an android client for devRant with a focus on animations.
+skyRant is an android client for devRant with a focus on animations and features.
 
 skyRant is not in any way affiliated with devRant
-
-not in any way complete!
 
 ## Features
 | Available 	| Feature 	|
