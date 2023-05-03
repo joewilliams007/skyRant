@@ -1,28 +1,30 @@
 # skyRant
-skyRant is an android client for devRant with a focus on animations.
+skyRant is an android client for devRant with a focus on animations and features.
 
 skyRant is not in any way affiliated with devRant
 
-not in any way complete!
-
 ## Features
-- animation of SIMMORSAL https://github.com/SIMMORSAL/DevRantNative
-
-- simple code highlighter
-
-- user information in feed
-
-- surprise rant in main screen
-
-- Link Preview in Comments and on Posts
-
-- resizeable without breaking UI & horizontal view available
-
-- no wait time from [read more] to rant screen
-
-- an implementation of the community projects API
-
-- the Avatar Builder
+| Available 	| Feature 	|
+|---	|---	|
+| ✅ 	| feed (top/recent/algo), limit, userInfo 	|
+| ✅ 	| rant (comments, voting, reply, upload) 	|
+| ✅ 	| comment (not blocking view) 	|
+| ✅ 	| link preview (rants/comments, image, desc, icon) 	|
+| ✅ 	| themes (light, dark, amoled & more) 	|
+| ✅ 	| login/logout/skip 	|
+| ✅ 	| update (change log/check) 	|
+| ✅ 	| notifications (best it can be) & notif page 	|
+| ✅ 	| surpriseRant (main page) 	|
+| ✅ 	| profile (rants/++'s/comment) 	|
+| ✅ 	| GitHub integration (image, repositories, apiKey) 	|
+| ✅ 	| deep linking (rant/profile/GitHub) 	|
+| ✅ 	| animations (no wait time, SIMMORSAL, typing effect)  	|
+| ✅ 	| profile editor (details, avatar) 	|
+| ✅ 	| code highlighter (alpha) 	|
+| ✅ 	| community page (projects, filter) 	|
+| ✅ 	| block (rants/comments with word/from user) 	|
+| ✅ 	| search (limited as per API) 	|
+| ✅ 	| languages (English, German) 	|
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
