@@ -210,8 +210,7 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
                 }
             }
         });
-
-
+        
 
 
         if (data_provider.getTags() == null) {

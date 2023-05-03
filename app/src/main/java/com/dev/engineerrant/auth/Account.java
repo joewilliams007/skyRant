@@ -240,6 +240,18 @@ public class Account {
         editor.apply();
     }
 
+    public static boolean isFeedUsername() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("feed_username", false);
+    }
+
+    public static void setFeedUsername(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("feed_username",b);
+        editor.apply();
+    }
+
     public static long pushNotifTime() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getLong("push_notif_time", 30L);
@@ -261,6 +273,78 @@ public class Account {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong("last_push_notif_time",t);
+        editor.apply();
+    }
+
+    public static boolean isPushNotifCommentVote() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("comment_vote", true);
+    }
+
+    public static void setPushNotifCommentVote(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("comment_vote",b);
+        editor.apply();
+    }
+
+    public static boolean isPushNotifRantVote() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("content_vote", true);
+    }
+
+    public static void setPushNotifRantVote(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("content_vote",b);
+        editor.apply();
+    }
+
+    public static boolean isPushNotifMention() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("comment_mention", true);
+    }
+
+    public static void setPushNotifMention(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("comment_mention",b);
+        editor.apply();
+    }
+
+    public static boolean isPushNotifComment() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("comment_content", true);
+    }
+
+    public static void setPushNotifComment(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("comment_content",b);
+        editor.apply();
+    }
+
+    public static boolean isPushNotifCommentDiscuss() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("comment_discuss", true);
+    }
+
+    public static void setPushNotifCommentDiscuss(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("comment_discuss",b);
+        editor.apply();
+    }
+
+    public static boolean isPushNotifSub() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("rant_sub", true);
+    }
+
+    public static void setPushNotifSub(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("rant_sub",b);
         editor.apply();
     }
 }

@@ -194,8 +194,9 @@ public class SettingsActivity extends AppCompatActivity {
         setSwitches();
     }
 
-    public void switchNotif(View view) {
-        Account.setPushNotif(!Account.isPushNotif());
+
+    public void switchUsername(View view) {
+        Account.setFeedUsername(!Account.isFeedUsername());
         setSwitches();
     }
 
@@ -205,13 +206,34 @@ public class SettingsActivity extends AppCompatActivity {
         SwitchCompat switchHighlight = findViewById(R.id.switchHighlight);
         SwitchCompat switchSurprise = findViewById(R.id.switchSurprise);
         SwitchCompat switchAnimation = findViewById(R.id.switchAnimation);
-        SwitchCompat switchNotif = findViewById(R.id.switchNotifications);
-        switchNotif.setChecked(Account.isPushNotif());
+        SwitchCompat switchUsername = findViewById(R.id.switchUsername);
+        switchUsername.setChecked(Account.isFeedUsername());
         switchSurprise.setChecked(Account.surprise());
         switchAnimation.setChecked(Account.animate());
         switchHighlight.setChecked(Account.highlighter());
         switchAuto.setChecked(Account.autoLoad());
         switchInfo.setChecked(Account.userInfo());
+
+        SwitchCompat switchNotif = findViewById(R.id.switchNotifications);
+        switchNotif.setChecked(Account.isPushNotif());
+
+        SwitchCompat switchNotifCommentVote = findViewById(R.id.switchNotifCommentVote);
+        switchNotifCommentVote.setChecked(Account.isPushNotifCommentVote());
+
+        SwitchCompat switchNotifMention = findViewById(R.id.switchNotifMention);
+        switchNotifMention.setChecked(Account.isPushNotifMention());
+
+        SwitchCompat switchNotifComment = findViewById(R.id.switchNotifComment);
+        switchNotifComment.setChecked(Account.isPushNotifComment());
+
+        SwitchCompat switchNotifRantVote = findViewById(R.id.switchNotifRantVote);
+        switchNotifRantVote.setChecked(Account.isPushNotifRantVote());
+
+        SwitchCompat switchNotifCommentDiscuss = findViewById(R.id.switchNotifCommentDiscuss);
+        switchNotifCommentDiscuss.setChecked(Account.isPushNotifCommentDiscuss());
+
+        SwitchCompat switchNotifSub = findViewById(R.id.switchNotifSub);
+        switchNotifSub.setChecked(Account.isPushNotifSub());
     }
 
 
@@ -406,22 +428,22 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public void generateKey(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/settings/tokens"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/settings/tokens"));
         startActivity(browserIntent);
     }
 
     public void skyRantIssueTracker(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant/issues"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/joewilliams007/skyRant/issues"));
         startActivity(browserIntent);
     }
 
     public void addCommunityProject(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/jsonapi/issues"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/joewilliams007/jsonapi/issues"));
         startActivity(browserIntent);
     }
 
     public void devrantWebsite(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://devrant.com/"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://devrant.com/"));
         startActivity(browserIntent);
     }
 
@@ -501,5 +523,52 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void switchNotif(View view) {
+        Account.setPushNotif(!Account.isPushNotif());
+        Account.setPushNotifComment(Account.isPushNotif());
+        Account.setPushNotifSub(Account.isPushNotif());
+        Account.setPushNotifRantVote(Account.isPushNotif());
+        Account.setPushNotifCommentDiscuss(Account.isPushNotif());
+        Account.setPushNotifCommentVote(Account.isPushNotif());
+        Account.setPushNotifMention(Account.isPushNotif());
+        setSwitches();
+    }
+
+    public void switchNotifCommentVote(View view) {
+        Account.setPushNotifCommentVote(!Account.isPushNotifCommentVote());
+        Account.setPushNotif(true);
+        setSwitches();
+    }
+
+    public void switchNotifMention(View view) {
+        Account.setPushNotifMention(!Account.isPushNotifMention());
+        Account.setPushNotif(true);
+        setSwitches();
+    }
+
+    public void switchNotifComment(View view) {
+        Account.setPushNotifComment(!Account.isPushNotifComment());
+        Account.setPushNotif(true);
+        setSwitches();
+    }
+
+    public void switchNotifRantVote(View view) {
+        Account.setPushNotifRantVote(!Account.isPushNotifRantVote());
+        Account.setPushNotif(true);
+        setSwitches();
+    }
+
+    public void switchNotifCommentDiscuss(View view) {
+        Account.setPushNotifCommentDiscuss(!Account.isPushNotifCommentDiscuss());
+        Account.setPushNotif(true);
+        setSwitches();
+    }
+
+    public void switchNotifSub(View view) {
+        Account.setPushNotifSub(!Account.isPushNotifSub());
+        Account.setPushNotif(true);
+        setSwitches();
     }
 }

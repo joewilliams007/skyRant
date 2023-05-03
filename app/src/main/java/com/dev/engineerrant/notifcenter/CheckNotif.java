@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 
 import com.dev.engineerrant.NotifActivity;
 import com.dev.engineerrant.R;
+import com.dev.engineerrant.RantActivity;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.classes.NotifItems;
 import com.dev.engineerrant.classes.NotifUnread;
@@ -130,41 +131,61 @@ public class CheckNotif extends Service {
 
                 String text = username_map.get(item.getUid());
                 String title = null;
+                String id = String.valueOf(item.getRant_id());
                 switch (item.getType()) {
                     case "comment_vote":
                         text+= " ++'d your comment!";
                         title = "New Like!";
+
+                        if (Account.isPushNotifCommentVote()) {
+                            sendNotification(text, title, id);
+                        }
                         break;
                     case "comment_content":
                         text+= " commented on your rant!";
                         title = "New Comment!";
+                        if (Account.isPushNotifComment()) {
+                            sendNotification(text, title, id);
+                        }
                         break;
                     case "comment_mention":
                         text+= " mentioned you in a comment!";
                         title = "New Mention!";
+                        if (Account.isPushNotifMention()) {
+                            sendNotification(text, title, id);
+                        }
                         break;
                     case "comment_discuss":
                         text+= " (or more) new comments on a rant you commented on!";
                         title = "New Comments!";
+                        if (Account.isPushNotifCommentDiscuss()) {
+                            sendNotification(text, title, id);
+                        }
                         break;
                     case "content_vote":
                         text+= " ++'d your rant!";
                         title = "New Like!";
+                        if (Account.isPushNotifRantVote()) {
+                            sendNotification(text, title, id);
+                        }
                         break;
                     case "rant_sub":
                         text+= " posted a new rant!";
                         title = "New Post!";
+                        if (Account.isPushNotifSub()) {
+                            sendNotification(text, title, id);
+                        }
                         break;
                 }
-
-                sendNotification(text, title);
             }
         }
     }
 
-    private void sendNotification(String text, String title) {
+    private void sendNotification(String text, String title, String id) {
         System.out.println("CREATE NOTIF: "+text);
         String CHANNEL_ID="skyRant-Notif";
+        long notificationId = System.currentTimeMillis();
+
         NotificationChannel notificationChannel= null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationChannel = new NotificationChannel(CHANNEL_ID,"skyRant", NotificationManager.IMPORTANCE_DEFAULT);
@@ -172,7 +193,12 @@ public class CheckNotif extends Service {
 
         PendingIntent pendingIntent= null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,new Intent(this, NotifActivity.class),PendingIntent.FLAG_MUTABLE);
+            pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,new Intent(this, RantActivity.class).putExtra("id",id).putExtra("info","false"),PendingIntent.FLAG_MUTABLE);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), RantActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("id",id).putExtra("info","false");
+            pendingIntent = PendingIntent.getActivity(this, (int) (Math.random() * 100), intent, PendingIntent.FLAG_IMMUTABLE);
         }
         Notification notification= null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -190,7 +216,7 @@ public class CheckNotif extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(notificationChannel);
         }
-        notificationManager.notify(2,notification);
+        notificationManager.notify((int) notificationId,notification);
     }
 
     @Override

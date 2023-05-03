@@ -106,13 +106,18 @@ public class MainActivity extends AppCompatActivity {
 
         handleDeepLinkIntent(); // feed request comes afterwards
 
-        String text = username();
-        String[] t = text.split("");
-        text = "";
-        for (String l:t) {
-            text+=l+"\n";
+        if (!Account.isFeedUsername()) {
+            String text = username();
+            String[] t = text.split("");
+            text = "";
+            for (String l:t) {
+                text+=l+"\n";
+            }
+            textViewUsername.setText(text);
+        } else {
+            textViewUsername.setText("M\nE");
         }
-        textViewUsername.setText(text);
+
 
         System.out.println("LOGGING SESSION\n\n\n\n"+Account.key()+"\n"+Account.id()+"\n"+Account.user_id());
 
@@ -153,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             if(intent != null) {
                 Uri data = intent.getData();
                 if(data != null) {
-                    if (data.getPath().split("/")[1].equals("rants")) {
+                    if (data.getPath().split("/")[1].equals("rants") || data.getPath().split("/")[1].equals("collabs")) {
                         Intent i = new Intent(MainActivity.this, RantActivity.class);
                         i.putExtra("id",data.getPath().split("/")[2]);
                         i.putExtra("info","false");
@@ -166,15 +171,16 @@ public class MainActivity extends AppCompatActivity {
                             intent = new Intent(MyApplication.getAppContext(), CommunityPostActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("repo_url","https://github.com"+data.getPath());
-                            MyApplication.getAppContext().startActivity(intent);
-                            requestFeed();
                         } else {
                             intent = new Intent(MyApplication.getAppContext(), GithubActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("github_url","https://github.com"+data.getPath());
-                            MyApplication.getAppContext().startActivity(intent);
-                            requestFeed();
                         }
+                        MyApplication.getAppContext().startActivity(intent);
+                        requestFeed();
+                    } else {
+                        toast("URL format not supported");
+                        requestFeed();
                     }
                 } else if (intent.getStringExtra("searchTag")!=null) {
                     requestSearch(intent.getStringExtra("searchTag"));

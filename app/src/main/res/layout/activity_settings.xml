@@ -293,7 +293,6 @@
                     android:padding="10dp"
                     android:text="@string/english"
                     android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTextDesc" />
 
@@ -307,9 +306,24 @@
                     android:padding="10dp"
                     android:text="@string/german"
                     android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
                     app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTextDesc" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchUsername"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchUsername"
+                    android:padding="10dp"
+                    android:text="display 'me' instead of 'username' (recommended on smaller phones)"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewEnglish"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -480,6 +494,103 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewNotifSettings"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifCommentVote"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotifCommentVote"
+                    android:padding="10dp"
+                    android:text="++'s on your comments"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchNotifRantVote"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifMention"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotifMention"
+                    android:padding="10dp"
+                    android:text="mentions"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchNotifCommentVote"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifComment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotifComment"
+                    android:padding="10dp"
+                    android:text="comments on your rant"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchNotifMention"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifRantVote"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotifRantVote"
+                    android:padding="10dp"
+                    android:text="++'s on your rants"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchNotifications"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifCommentDiscuss"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotifCommentDiscuss"
+                    android:padding="10dp"
+                    android:text="comments on a rant you commented on"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchNotifComment"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchNotifSub"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchNotifSub"
+                    android:padding="10dp"
+                    android:text="new rant by subscribed person"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchNotifCommentDiscuss"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
