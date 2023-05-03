@@ -318,7 +318,7 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchUsername"
                     android:padding="10dp"
-                    android:text="display 'me' instead of 'username' (recommended on smaller phones)"
+                    android:text="@string/display_me_instead_of_username_recommended_on_smaller_phones"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -520,7 +520,7 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchNotifMention"
                     android:padding="10dp"
-                    android:text="mentions"
+                    android:text="@string/mentions"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -536,7 +536,7 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchNotifComment"
                     android:padding="10dp"
-                    android:text="comments on your rant"
+                    android:text="@string/comments_on_your_rant"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -552,7 +552,7 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchNotifRantVote"
                     android:padding="10dp"
-                    android:text="++'s on your rants"
+                    android:text="@string/s_on_your_rants"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -568,7 +568,7 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchNotifCommentDiscuss"
                     android:padding="10dp"
-                    android:text="comments on a rant you commented on"
+                    android:text="@string/comments_on_a_rant_you_commented_on"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -584,7 +584,7 @@
                     android:fontFamily="@font/nunito"
                     android:onClick="switchNotifSub"
                     android:padding="10dp"
-                    android:text="new rant by subscribed person"
+                    android:text="@string/new_rant_by_subscribed_person"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -795,7 +795,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCommunity" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewSupporters" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/github"
@@ -890,6 +890,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/notif" />
 
             <TextView
+                android:id="@+id/textViewSupporters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="openSupporters"
+                android:padding="10dp"
+                android:text="@string/s_u_p_p_o_r_t_e_r_s"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCommunity" />
+
+            <TextView
                 android:id="@+id/textViewAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -910,7 +924,6 @@
                 android:layout_margin="10dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/textViewAbout">
-
 
                 <TextView
                     android:id="@+id/textViewGithubSky"

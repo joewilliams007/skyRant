@@ -76,4 +76,11 @@
     <string name="hint_tags_comma_seperated">Tags (Komma separiert)</string>
     <string name="reply">antworten</string>
     <string name="comments">Kommentare</string>
+    <string name="s_u_p_p_o_r_t_e_r_s"><![CDATA[> U n t e r s t ü t z e r]]></string>
+    <string name="new_rant_by_subscribed_person">neuer Rant von Personen denen ich folge</string>
+    <string name="comments_on_a_rant_you_commented_on">Kommentare auf Rants auf denen ich kommentiert habe</string>
+    <string name="s_on_your_rants">++\'s auf deinen Rants</string>
+    <string name="comments_on_your_rant">Kommentare auf deinen Rants</string>
+    <string name="mentions">Erwähnungen</string>
+    <string name="display_me_instead_of_username_recommended_on_smaller_phones">zeige \'me\' auf der Startseite anstelle des Benutzernamens an (für kleine Bildschirme)</string>
 </resources>

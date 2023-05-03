@@ -18,6 +18,9 @@
         android:theme="@style/Theme.EngineerRant"
         tools:targetApi="31">
         <activity
+            android:name=".SupporterActivity"
+            android:exported="false" />
+        <activity
             android:name=".BlockActivity"
             android:exported="false" />
         <activity
@@ -124,16 +127,6 @@
                 <data
                     android:host="devrant.io"
                     android:pathPattern="\/collabs\/.*"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter android:label="Github">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data
-                    android:host="github.com"
                     android:scheme="https" />
             </intent-filter>
         </activity>

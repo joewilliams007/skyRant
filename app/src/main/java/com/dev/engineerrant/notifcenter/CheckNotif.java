@@ -216,7 +216,7 @@ public class CheckNotif extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(notificationChannel);
         }
-        notificationManager.notify((int) notificationId,notification);
+        notificationManager.notify((int) notificationId+Integer.parseInt(id),notification);
     }
 
     @Override

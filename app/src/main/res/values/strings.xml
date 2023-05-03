@@ -89,4 +89,11 @@
     <string name="r_a_n_t" translatable="false">R a n t</string>
     <string name="reply">reply</string>
     <string name="comments">Comments</string>
+    <string name="s_u_p_p_o_r_t_e_r_s"><![CDATA[> s u p p o r t e r s]]></string>
+    <string name="new_rant_by_subscribed_person">new rant by subscribed person</string>
+    <string name="comments_on_a_rant_you_commented_on">comments on a rant you commented on</string>
+    <string name="s_on_your_rants">++\'s on your rants</string>
+    <string name="comments_on_your_rant">comments on your rant</string>
+    <string name="mentions">mentions</string>
+    <string name="display_me_instead_of_username_recommended_on_smaller_phones">display \'me\' instead of \'username\' (recommended on smaller phones)</string>
 </resources>

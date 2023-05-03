@@ -421,6 +421,10 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openSupporters(View view) {
+        Intent intent = new Intent(SettingsActivity.this, SupporterActivity.class);
+        startActivity(intent);
+    }
     public void githubSkyRant(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant"));
         startActivity(browserIntent);
