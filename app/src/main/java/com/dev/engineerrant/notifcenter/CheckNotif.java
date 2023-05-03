@@ -193,9 +193,9 @@ public class CheckNotif extends Service {
 
         PendingIntent pendingIntent= null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,new Intent(this, RantActivity.class).putExtra("id",id).putExtra("info","false"),PendingIntent.FLAG_MUTABLE);
+            pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,new Intent(this, NotifActivity.class).putExtra("id",id).putExtra("info","false"),PendingIntent.FLAG_MUTABLE);
         } else {
-            Intent intent = new Intent(getApplicationContext(), RantActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NotifActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("id",id).putExtra("info","false");
             pendingIntent = PendingIntent.getActivity(this, (int) (Math.random() * 100), intent, PendingIntent.FLAG_IMMUTABLE);
