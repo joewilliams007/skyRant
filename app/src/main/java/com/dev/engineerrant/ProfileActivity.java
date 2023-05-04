@@ -592,13 +592,13 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
             popupMenu.getMenu().add(0,0,0,"follow"); // groupId, itemId, order, title
         }
 
-        if (github!=null) {
+        if (github!=null && !github.equals("")) {
             popupMenu.getMenu().add(0,4,4,"copy GitHub link"); // groupId, itemId, order, title
         }
-        if (website!=null) {
+        if (website!=null && !website.equals("")) {
             popupMenu.getMenu().add(0,5,5,"copy website link"); // groupId, itemId, order, title
         }
-        if (user_avatar!=null) {
+        if (user_avatar!=null && !user_avatar.equals("")) {
             popupMenu.getMenu().add(0,6,6,"copy avatar link"); // groupId, itemId, order, title
             popupMenu.getMenu().add(0,7,7,"download avatar image"); // groupId, itemId, order, title
         }
