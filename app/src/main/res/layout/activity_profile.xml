@@ -98,6 +98,7 @@
                         android:id="@+id/imageViewProfileAlone"
                         android:layout_width="90dp"
                         android:layout_height="90dp"
+                        android:onClick="openProfileIcon"
                         android:background="?attr/colorSurface"
                         android:scaleType="centerCrop" />
 
@@ -223,5 +224,17 @@
         android:scaleType="centerCrop"
         android:src="@drawable/paper_plane"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewOptions"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/colorSurface"
+        android:onClick="showOptions"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/settings"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

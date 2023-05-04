@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,19 +16,14 @@ import android.widget.ProgressBar;
 
 import com.dev.engineerrant.adapters.ChangelogAdapter;
 import com.dev.engineerrant.adapters.ChangelogItem;
-import com.dev.engineerrant.adapters.NotifAdapter;
-import com.dev.engineerrant.adapters.NotifItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.classes.Changelog;
-import com.dev.engineerrant.classes.NotifItems;
-import com.dev.engineerrant.classes.NotifUnread;
-import com.dev.engineerrant.methods.MethodsUpdate;
-import com.dev.engineerrant.models.ModelUpdate;
+import com.dev.engineerrant.network.methods.MethodsUpdate;
+import com.dev.engineerrant.network.models.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;

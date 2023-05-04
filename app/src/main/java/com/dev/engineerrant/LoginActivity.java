@@ -1,6 +1,5 @@
 package com.dev.engineerrant;
 
-import static com.dev.engineerrant.CommunityPostActivity.communityItem;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
@@ -18,14 +17,11 @@ import android.widget.ProgressBar;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.Rants;
-import com.dev.engineerrant.methods.MethodsFeed;
-import com.dev.engineerrant.models.ModelFeed;
-import com.dev.engineerrant.models.ModelLogin;
+import com.dev.engineerrant.network.methods.MethodsFeed;
+import com.dev.engineerrant.network.models.ModelFeed;
+import com.dev.engineerrant.network.models.ModelLogin;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.post.LoginClient;
-
-import java.util.List;
+import com.dev.engineerrant.network.post.LoginClient;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

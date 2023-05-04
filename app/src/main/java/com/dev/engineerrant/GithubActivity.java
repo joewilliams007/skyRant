@@ -18,19 +18,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.dev.engineerrant.adapters.CommunityPostItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.methods.MethodsGithub;
-import com.dev.engineerrant.methods.MethodsRepo;
-import com.dev.engineerrant.models.ModelGithub;
-import com.dev.engineerrant.models.ModelRepo;
+import com.dev.engineerrant.network.methods.MethodsGithub;
+import com.dev.engineerrant.network.models.ModelGithub;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import retrofit2.Call;

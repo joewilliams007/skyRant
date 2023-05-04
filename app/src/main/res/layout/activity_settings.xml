@@ -795,7 +795,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSupporters" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewFollowing" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/github"
@@ -902,6 +902,20 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCommunity" />
+
+            <TextView
+                android:id="@+id/textViewFollowing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="openFollowing"
+                android:padding="10dp"
+                android:text="@string/f_o_l_l_o_w_i_n_g"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSupporters" />
 
             <TextView
                 android:id="@+id/textViewAbout"

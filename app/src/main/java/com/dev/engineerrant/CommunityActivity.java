@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +24,8 @@ import com.dev.engineerrant.adapters.CommunityMenuAdapter;
 import com.dev.engineerrant.adapters.CommunityMenuItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.classes.Projects;
-import com.dev.engineerrant.methods.MethodsCommunity;
-import com.dev.engineerrant.models.ModelCommunity;
+import com.dev.engineerrant.network.methods.MethodsCommunity;
+import com.dev.engineerrant.network.models.ModelCommunity;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;

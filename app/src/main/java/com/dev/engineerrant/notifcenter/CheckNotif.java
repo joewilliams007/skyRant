@@ -18,21 +18,18 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Process;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.dev.engineerrant.NotifActivity;
 import com.dev.engineerrant.R;
-import com.dev.engineerrant.RantActivity;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.classes.NotifItems;
 import com.dev.engineerrant.classes.NotifUnread;
-import com.dev.engineerrant.methods.MethodsNotif;
-import com.dev.engineerrant.models.ModelNotif;
+import com.dev.engineerrant.network.methods.MethodsNotif;
+import com.dev.engineerrant.network.models.ModelNotif;
 import com.dev.engineerrant.network.RetrofitClient;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

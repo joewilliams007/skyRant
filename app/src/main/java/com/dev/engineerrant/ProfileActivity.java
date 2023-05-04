@@ -12,16 +12,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,13 +40,13 @@ import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Counts;
 import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.classes.User_avatar;
-import com.dev.engineerrant.methods.MethodsGithub;
-import com.dev.engineerrant.methods.MethodsProfile;
-import com.dev.engineerrant.models.ModelGithub;
-import com.dev.engineerrant.models.ModelProfile;
-import com.dev.engineerrant.models.ModelSuccess;
+import com.dev.engineerrant.network.methods.MethodsGithub;
+import com.dev.engineerrant.network.methods.MethodsProfile;
+import com.dev.engineerrant.network.models.ModelGithub;
+import com.dev.engineerrant.network.models.ModelProfile;
+import com.dev.engineerrant.network.models.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.post.VoteClient;
+import com.dev.engineerrant.network.post.VoteClient;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -53,21 +60,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
-    String id, github, website, image = null, _username = null;
+    String id, github = null, website = null, image = null, _username = null, user_avatar = null ,color;
     TextView textViewAbout, textViewGithub, textViewUsername, textViewSkills, textViewScore, textViewWebsite, textViewJoined,textViewLocation;
-    ImageView imageViewProfile, imageViewShare, imageViewProfileAlone, imageViewGithub;
+    ImageView imageViewProfile, imageViewShare, imageViewProfileAlone, imageViewGithub, imageViewOptions;
     CardView cardViewProfile;
     TabLayout tabLayout;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         initialize();
         imageViewShare.setVisibility(View.INVISIBLE);
+        imageViewOptions.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         id = intent.getStringExtra("user_id");
         tabLayout.setVisibility(View.GONE);
@@ -90,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
         imageViewGithub = findViewById(R.id.imageViewGithub);
         cardViewProfile = findViewById(R.id.cardViewProfile);
         tabLayout = findViewById(R.id.tabLayout);
+        imageViewOptions = findViewById(R.id.imageViewOptions);
     }
 
     private void requestProfile() {
@@ -109,7 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
                     // Do awesome stuff
                     assert response.body() != null;
 
-                    String user_avatar = response.body().getProfile().getAvatar().getI();
+                    user_avatar = response.body().getProfile().getAvatar().getI();
                     String username = response.body().getProfile().getUsername();
                     int score = response.body().getProfile().getScore();
                     String about = response.body().getProfile().getAbout();
@@ -190,6 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     textViewJoined.setText(getRelativeTimeSpanString(created_time*1000L));
 
+                    color = "#"+avatar.getB();
                     if (github.equals("") || github.contains(" ")) {
                         textViewGithub.setVisibility(View.GONE);
                         cardViewProfile.setVisibility(View.GONE);
@@ -242,6 +252,7 @@ public class ProfileActivity extends AppCompatActivity {
                     createFeedList(profile_rants);
 
                     imageViewShare.setVisibility(View.VISIBLE);
+                    imageViewOptions.setVisibility(View.VISIBLE);
                 } else if (response.code() == 429) {
                     // Handle unauthorized
                 } else {
@@ -355,6 +366,7 @@ public class ProfileActivity extends AppCompatActivity {
         AsyncTaskRunner runner = new AsyncTaskRunner();
         runner.execute(rants);
     }
+
 
 
     private class AsyncTaskRunner extends AsyncTask<List<Rants>, List<Rants>, String> {
@@ -549,6 +561,115 @@ public class ProfileActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             toast(e.toString());
+        }
+    }
+
+    public void showOptions(View view) {
+        PopupMenu popupMenu = new PopupMenu(this,view);
+        popupMenu.setOnMenuItemClickListener(this);
+
+        String[] blockedUsers = Account.blockedUsers().toLowerCase().split(",");
+
+        if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+            Boolean blocked = false;
+            for (String user : blockedUsers) {
+                if (_username.toLowerCase().equals(user)) {
+                    popupMenu.getMenu().add(0,3,8,"unblock"); // groupId, itemId, order, title
+                    blocked = true;
+                    break;
+                }
+            }
+            if (!blocked) {
+                popupMenu.getMenu().add(0,2,8,"block"); // groupId, itemId, order, title
+            }
+        } else {
+            popupMenu.getMenu().add(0,2,8,"block"); // groupId, itemId, order, title
+        }
+
+        if (Account.isFollow(id)) {
+            popupMenu.getMenu().add(0,1,0,"unfollow"); // groupId, itemId, order, title
+        } else {
+            popupMenu.getMenu().add(0,0,0,"follow"); // groupId, itemId, order, title
+        }
+
+        if (github!=null) {
+            popupMenu.getMenu().add(0,4,4,"copy GitHub link"); // groupId, itemId, order, title
+        }
+        if (website!=null) {
+            popupMenu.getMenu().add(0,5,5,"copy website link"); // groupId, itemId, order, title
+        }
+        if (user_avatar!=null) {
+            popupMenu.getMenu().add(0,6,6,"copy avatar link"); // groupId, itemId, order, title
+            popupMenu.getMenu().add(0,7,7,"download avatar image"); // groupId, itemId, order, title
+        }
+
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip;
+        switch (menuItem.getItemId()) {
+            case 0:
+                Account.follow(id, _username, color, user_avatar);
+                toast("following");
+                return true;
+            case 1:
+                Account.unfollow(id);
+                toast("unfollowed");
+                return true;
+            case 2: // block
+                toast("blocked");
+                if (Account.blockedUsers()==null || Account.blockedUsers().equals("")) {
+                    Account.setBlockedUsers(_username);
+                } else {
+                    Account.setBlockedUsers(Account.blockedUsers()+","+_username);
+                }
+                return true;
+            case 3: // unblock
+                String[] blockedUsers = Account.blockedUsers().split(",");
+                String new_blocked_users = null;
+                for (String user : blockedUsers) {
+                    if (!_username.equals(user.toLowerCase())) {
+                        new_blocked_users += user.toLowerCase()+",";
+                    }
+                }
+                if (new_blocked_users!=null) {
+                    Account.setBlockedUsers(new_blocked_users.substring(0, new_blocked_users.length() - 1).replaceFirst("null",""));
+                } else {
+                    Account.setBlockedUsers(null);
+                }
+                toast("unblocked");
+                return true;
+            case 4: // copy github
+                clip = ClipData.newPlainText("GitHub of "+_username, "https://github.com/"+github);
+                clipboard.setPrimaryClip(clip);
+                return true;
+            case 5: // copy website
+                clip = ClipData.newPlainText("website of "+_username, website);
+                clipboard.setPrimaryClip(clip);
+                return true;
+            case 6: // copy avatar
+                clip = ClipData.newPlainText("avatar link of "+_username, "https://avatars.devrant.com/"+user_avatar);
+                clipboard.setPrimaryClip(clip);
+                return true;
+            case 7: // download avatar
+                    DownloadManager downloadManager =
+                        (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri.parse("https://avatars.devrant.com/"+user_avatar);
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setNotificationVisibility
+                            (DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setTitle("starspace");
+                    request.setDescription("image downloaded");
+                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,_username+".png");
+                    downloadManager.enqueue(request);
+                    toast("downloaded image");
+                return true;
+
+            default:
+                return false;
         }
     }
 }

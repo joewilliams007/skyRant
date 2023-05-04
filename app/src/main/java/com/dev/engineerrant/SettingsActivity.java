@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -24,18 +23,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.classes.Changelog;
-import com.dev.engineerrant.methods.MethodsUpdate;
-import com.dev.engineerrant.models.ModelUpdate;
+import com.dev.engineerrant.network.methods.MethodsUpdate;
+import com.dev.engineerrant.network.models.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -425,6 +422,12 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SettingsActivity.this, SupporterActivity.class);
         startActivity(intent);
     }
+
+    public void openFollowing(View view) {
+        Intent intent = new Intent(SettingsActivity.this, FollowingActivity.class);
+        startActivity(intent);
+    }
+
     public void githubSkyRant(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant"));
         startActivity(browserIntent);
@@ -575,4 +578,6 @@ public class SettingsActivity extends AppCompatActivity {
         Account.setPushNotif(true);
         setSwitches();
     }
+
+
 }

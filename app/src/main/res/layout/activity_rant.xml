@@ -22,6 +22,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/chill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="chill"
+        android:onClick="chillRant"
+        android:textColor="?attr/colorPrimaryVariant"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSurprise"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageViewBack"
         android:layout_width="40dp"

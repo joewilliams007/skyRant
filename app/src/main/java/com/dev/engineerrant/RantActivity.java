@@ -8,7 +8,6 @@ import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,8 +26,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dev.engineerrant.adapters.CommentAdapter;
 import com.dev.engineerrant.adapters.CommentItem;
-import com.dev.engineerrant.adapters.FeedAdapter;
-import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.adapters.LinkAdapter;
 import com.dev.engineerrant.adapters.LinkItem;
 import com.dev.engineerrant.animations.Tools;
@@ -37,22 +34,17 @@ import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Comment;
 import com.dev.engineerrant.classes.Links;
 import com.dev.engineerrant.classes.Rants;
-import com.dev.engineerrant.methods.MethodsFeed;
-import com.dev.engineerrant.methods.MethodsRant;
-import com.dev.engineerrant.models.ModelFeed;
-import com.dev.engineerrant.models.ModelRant;
-import com.dev.engineerrant.models.ModelSuccess;
+import com.dev.engineerrant.network.methods.MethodsRant;
+import com.dev.engineerrant.network.models.ModelRant;
+import com.dev.engineerrant.network.models.ModelSuccess;
 import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.post.CommentClient;
-import com.dev.engineerrant.post.VoteClient;
-import com.dev.engineerrant.post.VoteCommentClient;
-import com.nguyencse.URLEmbeddedData;
-import com.nguyencse.URLEmbeddedView;
+import com.dev.engineerrant.network.post.CommentClient;
+import com.dev.engineerrant.network.post.VoteClient;
+import com.dev.engineerrant.network.post.VoteCommentClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import okhttp3.MediaType;
@@ -65,7 +57,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RantActivity extends AppCompatActivity {
     ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh;
-    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus;
+    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill;
     EditText editTextComment;
 
     ProgressBar progressBar;
@@ -102,6 +94,17 @@ public class RantActivity extends AppCompatActivity {
                 textViewText.setText(intent.getStringExtra("text"));
             }
 
+            rant_text = intent.getStringExtra("text");
+            int upper_case = 0;
+            for (char ch: intent.getStringExtra("text").replaceAll(" ","").toCharArray()) {
+                if (Character.isUpperCase(ch)) {
+                    upper_case++;
+                }
+            }
+            if (intent.getStringExtra("text").replaceAll(" ","").length()/2.5 < upper_case) {
+                chill.setVisibility(View.VISIBLE);
+            }
+
             Tools.textTagsHighlighter(intent.getStringExtra("tags"),textViewTags);
             textViewDate.setText(intent.getStringExtra("date"));
             user_id = intent.getStringExtra("user_id");
@@ -133,12 +136,38 @@ public class RantActivity extends AppCompatActivity {
         }
     }
 
+    Boolean chilled = false;
+    public void chillRant(View view) {
+        if (chilled) {
+            textViewText.setText(rant_text);
+            chilled = false;
+            chill.setText(R.string.chill);
+        } else {
+            textViewText.setText(rant_text.toLowerCase());
+            chilled = true;
+            chill.setText(R.string.revert);
+        }
+
+    }
+
+    String rant_text = null;
     @SuppressLint("SetTextI18n")
     private void setRantPulled(Rants rants) { // If Rant could not be pulled from previous activity
         textViewUsername.setText(rants.getUser_username());
         textViewText.setText(rants.getText());
-        textViewDate.setText(getRelativeTimeSpanString(rants.getCreated_time()* 1000L));
+        rant_text = rants.getText();
 
+        int upper_case = 0;
+        for (char ch: rants.getText().replaceAll(" ","").toCharArray()) {
+            if (Character.isUpperCase(ch)) {
+                upper_case++;
+            }
+        }
+        if (rants.getText().replaceAll(" ","").length()/2.5 < upper_case) {
+            chill.setVisibility(View.VISIBLE);
+        }
+
+        textViewDate.setText(getRelativeTimeSpanString(rants.getCreated_time()* 1000L));
 
 
         if (rants.getUser_score()<0) {
@@ -209,6 +238,9 @@ public class RantActivity extends AppCompatActivity {
         editTextComment = findViewById(R.id.editTextComment);
         imageViewRant = findViewById(R.id.imageViewRant);
         view_container = findViewById(R.id.view_container);
+        chill = findViewById(R.id.chill);
+
+        chill.setVisibility(View.GONE);
 
         view_container.setOnClickListener(new DoubleClickListener() {
             @Override
@@ -783,4 +815,6 @@ public class RantActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

@@ -13,26 +13,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.dev.engineerrant.adapters.NotifAdapter;
-import com.dev.engineerrant.adapters.NotifItem;
 import com.dev.engineerrant.adapters.SupporterAdapter;
 import com.dev.engineerrant.adapters.SupporterItem;
 import com.dev.engineerrant.animations.Tools;
-import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.NotifItems;
-import com.dev.engineerrant.classes.NotifUnread;
 import com.dev.engineerrant.classes.SupporterItems;
-import com.dev.engineerrant.methods.MethodsNotif;
-import com.dev.engineerrant.methods.MethodsSupporters;
-import com.dev.engineerrant.models.ModelNotif;
-import com.dev.engineerrant.models.ModelSupporters;
+import com.dev.engineerrant.network.methods.MethodsSupporters;
+import com.dev.engineerrant.network.models.ModelSupporters;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;

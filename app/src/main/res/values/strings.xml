@@ -96,4 +96,9 @@
     <string name="comments_on_your_rant">comments on your rant</string>
     <string name="mentions">mentions</string>
     <string name="display_me_instead_of_username_recommended_on_smaller_phones">display \'me\' instead of \'username\' (recommended on smaller phones)</string>
+    <string name="clear">clear</string>
+    <string name="chill">chill</string>
+    <string name="revert">revert</string>
+    <string name="f_o_l_l_o_w_i_n_g"><![CDATA[> f o l l o w i n g]]></string>
+    <string name="heading_f_o_l_l_o_w_i_n_g">F o l l o w i n g</string>
 </resources>

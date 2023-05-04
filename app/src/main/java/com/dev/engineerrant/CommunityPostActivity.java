@@ -2,7 +2,6 @@ package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 import static com.dev.engineerrant.app.toast;
-import static com.dev.engineerrant.auth.Account.vibrate;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,8 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.dev.engineerrant.adapters.ChangelogAdapter;
-import com.dev.engineerrant.adapters.ChangelogItem;
 import com.dev.engineerrant.adapters.CommunityItem;
 import com.dev.engineerrant.adapters.CommunityPostAdapter;
 import com.dev.engineerrant.adapters.CommunityPostItem;
@@ -31,19 +27,14 @@ import com.dev.engineerrant.adapters.LinkItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.classes.Changelog;
-import com.dev.engineerrant.classes.Links;
-import com.dev.engineerrant.methods.MethodsRepo;
-import com.dev.engineerrant.methods.MethodsUpdate;
-import com.dev.engineerrant.models.ModelRepo;
-import com.dev.engineerrant.models.ModelUpdate;
+import com.dev.engineerrant.network.methods.MethodsRepo;
+import com.dev.engineerrant.network.models.ModelRepo;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

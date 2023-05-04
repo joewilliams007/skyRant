@@ -10,31 +10,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.classes.Counts;
-import com.dev.engineerrant.classes.Rants;
-import com.dev.engineerrant.classes.User_avatar;
-import com.dev.engineerrant.methods.MethodsProfile;
-import com.dev.engineerrant.models.ModelProfile;
-import com.dev.engineerrant.models.ModelSuccess;
+import com.dev.engineerrant.network.methods.MethodsProfile;
+import com.dev.engineerrant.network.models.ModelProfile;
+import com.dev.engineerrant.network.models.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.post.AccountClient;
-import com.dev.engineerrant.post.CommentClient;
-
-import java.util.List;
+import com.dev.engineerrant.network.post.AccountClient;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -43,7 +32,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Part;
 
 public class EditProfileActivity extends AppCompatActivity {
 
