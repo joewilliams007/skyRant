@@ -190,7 +190,10 @@ public class SettingsActivity extends AppCompatActivity {
         Account.setSurprise(!Account.surprise());
         setSwitches();
     }
-
+    public void switchFollowing(View view) {
+        Account.setFollowBtn(!Account.followBtn());
+        setSwitches();
+    }
 
     public void switchUsername(View view) {
         Account.setFeedUsername(!Account.isFeedUsername());
@@ -204,6 +207,8 @@ public class SettingsActivity extends AppCompatActivity {
         SwitchCompat switchSurprise = findViewById(R.id.switchSurprise);
         SwitchCompat switchAnimation = findViewById(R.id.switchAnimation);
         SwitchCompat switchUsername = findViewById(R.id.switchUsername);
+        SwitchCompat switchFollowing = findViewById(R.id.switchFollowing);
+        switchFollowing.setChecked(Account.followBtn());
         switchUsername.setChecked(Account.isFeedUsername());
         switchSurprise.setChecked(Account.surprise());
         switchAnimation.setChecked(Account.animate());

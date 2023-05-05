@@ -24,17 +24,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewEdit"
+        android:id="@+id/textViewBackup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
         android:onClick="showEdit"
         android:padding="10dp"
         android:layout_marginStart="10dp"
-        android:text="edit / backup"
+        android:text="backup / restore"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:onClick="showEditBtn"
+        android:padding="10dp"
+        android:text="edit"
+        android:textColor="?attr/colorPrimaryVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit"
         android:layout_width="match_parent"
@@ -54,10 +67,10 @@
             android:fontFamily="@font/nunito"
             android:hint="id username #HEX imageUrl"
             android:inputType="textMultiLine"
+            android:maxLines="3"
             android:padding="10dp"
             android:textColor="?attr/colorOnPrimary"
             android:textColorHint="?attr/colorPrimaryVariant"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textViewSave"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewHint" />
@@ -75,6 +88,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/editTextFollowing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editTextFollowing" />
+
+        <TextView
+            android:id="@+id/textViewCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/nunito"
+            android:onClick="copyFollowing"
+            android:padding="10dp"
+            android:text="copy"
+            android:textColor="?attr/colorPrimaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextFollowing" />
 
         <TextView
             android:id="@+id/textViewHint"

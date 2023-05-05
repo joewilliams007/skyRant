@@ -666,6 +666,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/switchHighlight"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchFollowing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchFollowing"
+                    android:padding="10dp"
+                    android:text="follows btn on feed"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchSurprise"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
                 <TextView
                     android:id="@+id/textViewDeep"
                     android:layout_width="wrap_content"
@@ -680,7 +696,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchSurprise" />
+                    app:layout_constraintTop_toBottomOf="@+id/switchFollowing" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

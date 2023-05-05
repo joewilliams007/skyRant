@@ -66,9 +66,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
-    TextView textViewUsername, textViewSetting, textViewNotif, textViewSurprise,textViewSearch;
+    TextView textViewUsername, textViewSetting, textViewNotif, textViewSurprise,textViewSearch,follow_feed;
     EditText editTextSearch;
     String sort = "recent";
+    Boolean follow = false;
     Rants surpriseRant = null;
     RantLoadingAnimation rantLoadingAnimation;
     RecyclerView users_view;
@@ -94,8 +95,14 @@ public class MainActivity extends AppCompatActivity {
         textViewSearch.setText(Account.search());
         users_view = findViewById(R.id.users_view);
         users_view.setVisibility(View.GONE);
+        follow_feed = findViewById(R.id.follow_feed);
 
+        follow = false;
         handleDeepLinkIntent(); // feed request comes afterwards
+
+        if (!Account.followBtn()) {
+            follow_feed.setVisibility(View.GONE);
+        }
 
         if (!Account.isFeedUsername()) {
             String text = username();
@@ -265,8 +272,11 @@ public class MainActivity extends AppCompatActivity {
         users_view.setVisibility(View.GONE);
         scrollLayout.setVisibility(View.INVISIBLE);
         if (search.getVisibility() == View.VISIBLE) {
+            app.hideKeyboard(MainActivity.this);
+            editTextSearch.setText(null);
             search.setVisibility(View.GONE);
-            hideKeyboard(MainActivity.this);
+            textViewNotif.setVisibility(View.VISIBLE);
+            textViewSetting.setVisibility(View.VISIBLE);
         }
 
         if (Account.animate()) {
@@ -385,19 +395,36 @@ public class MainActivity extends AppCompatActivity {
                     url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
                 }
 
+                if (follow) {
+                    if (Account.isFollow(String.valueOf(rant.getUser_id()))) {
+                        menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
+                                rant.getScore(),
+                                rant.getNum_comments(),
+                                rant.getCreated_time(),
+                                rant.getUser_username(),
+                                rant.getVote_state(),
+                                rant.getUser_avatar().getB(),
+                                rant.getUser_avatar().getI(),
+                                rant.getTags(),
+                                rant.getUser_score(),
+                                rant.getUser_id()
+                        ));
+                    }
+                } else {
+                    menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
+                            rant.getScore(),
+                            rant.getNum_comments(),
+                            rant.getCreated_time(),
+                            rant.getUser_username(),
+                            rant.getVote_state(),
+                            rant.getUser_avatar().getB(),
+                            rant.getUser_avatar().getI(),
+                            rant.getTags(),
+                            rant.getUser_score(),
+                            rant.getUser_id()
+                    ));
+                }
 
-                menuItems.add(new FeedItem(url,s,rant.getId(),"feed",
-                        rant.getScore(),
-                        rant.getNum_comments(),
-                        rant.getCreated_time(),
-                        rant.getUser_username(),
-                        rant.getVote_state(),
-                        rant.getUser_avatar().getB(),
-                        rant.getUser_avatar().getI(),
-                        rant.getTags(),
-                        rant.getUser_score(),
-                        rant.getUser_id()
-                ));
             }
         }
 
@@ -405,6 +432,9 @@ public class MainActivity extends AppCompatActivity {
             buildProfileSearch(profiles);
         }
 
+        if (follow && menuItems.size()==0) {
+            toast("no recent rants by users you follow");
+        }
         build(menuItems);
     }
 
@@ -573,19 +603,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void latestFeed(View view) {
         sort = "recent";
+        follow = false;
         requestFeed();
     }
 
     public void topFeed(View view) {
         sort = "top";
+        follow = false;
         requestFeed();
     }
 
     public void algoFeed(View view) {
         sort = "algo";
+        follow = false;
         requestFeed();
     }
 
+    public void algoFollow(View view) {
+        sort = "latest";
+        follow = true;
+        requestFeed();
+    }
 
     private void getSurpriseId() { // Get random Rant. Need to make 2 api calls cuz comments don't come with the surprise sadly
         MethodsRant methods = RetrofitClient.getRetrofitInstance().create(MethodsRant.class);
@@ -812,4 +850,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

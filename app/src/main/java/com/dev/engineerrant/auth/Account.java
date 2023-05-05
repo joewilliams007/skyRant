@@ -219,6 +219,17 @@ public class Account {
         editor.apply();
     }
 
+    public static Boolean followBtn() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("followBtn", true);
+    }
+
+    public static void setFollowBtn(Boolean followBtn) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("followBtn",followBtn);
+        editor.apply();
+    }
+
     public static Boolean highlighter() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("highlighter", false);

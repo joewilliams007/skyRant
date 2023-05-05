@@ -2,6 +2,8 @@ package com.dev.engineerrant.adapters;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
+import static com.dev.engineerrant.FollowingActivity.showFollowingRemoveBtn;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
@@ -28,7 +30,7 @@ public abstract class FollowingAdapter extends RecyclerView.Adapter<FollowingAda
     public abstract void onItemClicked(Integer feedPosition);
 
     public interface AdapterCallback{
-        void onItemClicked(Integer menuPosition);
+        void onItemClicked(Integer menuPosition, String open);
     }
     private final AdapterCallback callback;
 
@@ -53,12 +55,13 @@ public abstract class FollowingAdapter extends RecyclerView.Adapter<FollowingAda
     {
 
         ImageView imageViewProfile;
-        TextView textViewUsername;
+        TextView textViewUsername,textViewUnfollow;
         ConstraintLayout constraintLayout;
         public RecyclerViewHolder(View view) {
             super(view);
             imageViewProfile = view.findViewById(R.id.imageViewProfile);
             textViewUsername = view.findViewById(R.id.textViewUsername);
+            textViewUnfollow = view.findViewById(R.id.textViewUnfollow);
             constraintLayout = view.findViewById(R.id.item);
         }
     }
@@ -78,11 +81,26 @@ public abstract class FollowingAdapter extends RecyclerView.Adapter<FollowingAda
             holder.textViewUsername.setText(data_provider.getUsername()+"\nINVALID HEX COLOR");
         }
 
+        if (showFollowingRemoveBtn) {
+            holder.textViewUnfollow.setVisibility(View.VISIBLE);
+        } else {
+            holder.textViewUnfollow.setVisibility(View.GONE);
+        }
+
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if(callback != null) {
-                    callback.onItemClicked(position);
+                    callback.onItemClicked(position,"open");
+                }
+            }
+        });
+
+        holder.textViewUnfollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(callback != null) {
+                    callback.onItemClicked(position,"unfollow");
                 }
             }
         });

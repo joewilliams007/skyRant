@@ -57,11 +57,22 @@
                 android:fontFamily="@font/nunito"
                 android:text="jonas-w"
                 android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewUnfollow"
                 app:layout_constraintStart_toEndOf="@+id/cardViewProfile"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
+            <TextView
+                android:id="@+id/textViewUnfollow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:text="remove"
+                android:padding="10dp"
+                android:textColor="?attr/colorPrimaryVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
