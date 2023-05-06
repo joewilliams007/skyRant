@@ -38,7 +38,7 @@
         android:fontFamily="@font/nunito"
         android:gravity="center"
         android:padding="10dp"
-        android:text="this allows you to easily find them again\nyou can also view the latest rants of your following only!"
+        android:text="this allows you to easily find them again.\nyou can also view the latest rants of your following only!"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
