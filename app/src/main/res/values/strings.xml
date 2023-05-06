@@ -101,4 +101,11 @@
     <string name="revert">revert</string>
     <string name="f_o_l_l_o_w_i_n_g"><![CDATA[> f o l l o w i n g]]></string>
     <string name="heading_f_o_l_l_o_w_i_n_g">F o l l o w i n g</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="fml">fml</string>
+    <string name="devrant_text_widget_description">devRant text</string>
+    <string name="stress_ball_widget_description">stress ball</string>
+    <string name="devrant_widget_description">devRant</string>
 </resources>

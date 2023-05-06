@@ -11,8 +11,8 @@ android {
         applicationId "com.dev.engineerrant"
         minSdk 24
         targetSdk 33
-        versionCode 25
-        versionName "1.1.10.4"
+        versionCode 26
+        versionName "1.1.10.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,7 +43,9 @@ android {
         exclude("META-INF/*.kotlin_module")
         exclude 'META-INF/*'
     }
-
+    buildFeatures {
+        viewBinding true
+    }
 
 
 }

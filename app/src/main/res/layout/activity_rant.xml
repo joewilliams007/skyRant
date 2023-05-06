@@ -123,6 +123,7 @@
 
                 </androidx.cardview.widget.CardView>
 
+
                 <ImageView
                     android:id="@+id/imageViewRant"
                     android:layout_width="0dp"
