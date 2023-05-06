@@ -89,6 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     Account.setExpire_time(0);
                                     Account.setUser_id(0);
                                     Account.setId(0);
+                                    Account.setUsername(null);
 
                                     Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
                                     startActivity(intent);
@@ -433,6 +434,11 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openIntro(View view) {
+        Intent intent = new Intent(SettingsActivity.this, IntroActivity.class);
+        startActivity(intent);
+    }
+
     public void githubSkyRant(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant"));
         startActivity(browserIntent);
@@ -583,6 +589,7 @@ public class SettingsActivity extends AppCompatActivity {
         Account.setPushNotif(true);
         setSwitches();
     }
+
 
 
 }

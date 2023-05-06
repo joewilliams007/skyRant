@@ -121,58 +121,79 @@ public class CheckNotif extends Service {
         int subs = unread.getSubs();
         int total = unread.getTotal();
 
+        String[] blockedUsers = Account.blockedUsers().split(",");
         for (NotifItems item : items){
             if (item.getCreated_time()>Account.lastPushNotifTime())
             {
-                Account.setLastPushNotifTime(item.getCreated_time());
+                Boolean containsBlocked = false;
+                try {
+                    if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+                        for (String user : blockedUsers) {
+                            if (username_map.get(item.getUid()).equals(user.toLowerCase())) {
+                                containsBlocked = true;
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {
 
-                String text = username_map.get(item.getUid());
-                String title = null;
-                String id = String.valueOf(item.getRant_id());
-                switch (item.getType()) {
-                    case "comment_vote":
-                        text+= " ++'d your comment!";
-                        title = "New Like!";
+                }
 
-                        if (Account.isPushNotifCommentVote()) {
-                            sendNotification(text, title, id);
-                        }
-                        break;
-                    case "comment_content":
-                        text+= " commented on your rant!";
-                        title = "New Comment!";
-                        if (Account.isPushNotifComment()) {
-                            sendNotification(text, title, id);
-                        }
-                        break;
-                    case "comment_mention":
-                        text+= " mentioned you in a comment!";
-                        title = "New Mention!";
-                        if (Account.isPushNotifMention()) {
-                            sendNotification(text, title, id);
-                        }
-                        break;
-                    case "comment_discuss":
-                        text+= " (or more) new comments on a rant you commented on!";
-                        title = "New Comments!";
-                        if (Account.isPushNotifCommentDiscuss()) {
-                            sendNotification(text, title, id);
-                        }
-                        break;
-                    case "content_vote":
-                        text+= " ++'d your rant!";
-                        title = "New Like!";
-                        if (Account.isPushNotifRantVote()) {
-                            sendNotification(text, title, id);
-                        }
-                        break;
-                    case "rant_sub":
-                        text+= " posted a new rant!";
-                        title = "New Post!";
-                        if (Account.isPushNotifSub()) {
-                            sendNotification(text, title, id);
-                        }
-                        break;
+
+                if (!containsBlocked) {
+                    Account.setLastPushNotifTime(item.getCreated_time());
+
+                    String text = username_map.get(item.getUid());
+                    String title = null;
+                    String id = String.valueOf(item.getRant_id());
+                    switch (item.getType()) {
+                        case "comment_vote":
+                            if (Account.isPushNotifCommentVote()) {
+                                text += " ++'d your comment!";
+                                title = "New Like!";
+                                sendNotification(text, title, id);
+                            }
+                            break;
+                        case "comment_content":
+                            if (Account.isPushNotifComment()) {
+                                text += " commented on your rant!";
+                                title = "New Comment!";
+                                sendNotification(text, title, id);
+                            }
+                            break;
+                        case "comment_mention":
+                            if (Account.isPushNotifMention()) {
+                                text += " mentioned you in a comment!";
+                                title = "New Mention!";
+
+                                sendNotification(text, title, id);
+                            }
+                            break;
+                        case "comment_discuss":
+                            if (Account.isPushNotifCommentDiscuss()) {
+                                text += " (or more) new comments on a rant you commented on!";
+                                title = "New Comments!";
+
+                                sendNotification(text, title, id);
+                            }
+                            break;
+                        case "content_vote":
+                            if (Account.isPushNotifRantVote()) {
+                                text += " ++'d your rant!";
+                                title = "New Like!";
+
+                                sendNotification(text, title, id);
+                            }
+                            break;
+                        case "rant_sub":
+                            if (Account.isPushNotifSub()) {
+                                text += " posted a new rant!";
+                                title = "New Post!";
+
+                                sendNotification(text, title, id);
+                            }
+                            break;
+                    }
                 }
             }
         }

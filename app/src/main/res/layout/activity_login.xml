@@ -111,6 +111,20 @@
         app:layout_constraintTop_toBottomOf="@+id/bottom" />
 
     <TextView
+        android:id="@+id/textViewIntro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:onClick="intro"
+        android:padding="10dp"
+        android:text="view intro"
+        android:textColor="?attr/colorOnPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
+        app:layout_constraintStart_toStartOf="@+id/editTextPassword" />
+
+    <TextView
         android:id="@+id/textViewSkip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

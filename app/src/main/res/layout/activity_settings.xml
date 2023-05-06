@@ -934,6 +934,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewSupporters" />
 
             <TextView
+                android:id="@+id/textViewIntro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="openIntro"
+                android:padding="10dp"
+                android:text="> i n t r o"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/about" />
+
+            <TextView
                 android:id="@+id/textViewAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

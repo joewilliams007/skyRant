@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    tools:context=".IntroActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        android:id="@+id/constraintLayout">
+
+    <ViewStub
+        android:id="@+id/layout_stub"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ViewStub
+        android:id="@+id/layout_stub1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ViewStub
+        android:id="@+id/layout_stub2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ViewStub
+        android:id="@+id/layout_stub3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ViewStub
+        android:id="@+id/layout_stub4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ViewStub
+        android:id="@+id/layout_stub5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ViewStub
+        android:id="@+id/layout_stub6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:inflatedId="@+id/message_layout"
+        android:layout="@layout/intro_block"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNext"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkip"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N E X T"
+        android:padding="10dp"
+        android:onClick="nextIntro"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/nunito"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/nunito"
+        android:padding="10dp"
+        android:text="skip"
+        android:onClick="skip"
+        android:textColor="?attr/colorPrimaryVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
+        android:max="6"
+        android:progress="4"
+        android:progressBackgroundTint="#FF7F50"
+        android:progressTint="#FF7F50"
+        android:thumbTint="#FF7F50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/blockade"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:onClick="doNothing"
+        app:layout_constraintBottom_toBottomOf="@+id/seekBar"
+        app:layout_constraintTop_toTopOf="@+id/seekBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

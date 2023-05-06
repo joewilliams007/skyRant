@@ -19,10 +19,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dev.engineerrant.BuildConfig;
-import com.dev.engineerrant.CommunityActivity;
-import com.dev.engineerrant.CommunityPostActivity;
-import com.dev.engineerrant.DoubleClickListener;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.MyApplication;

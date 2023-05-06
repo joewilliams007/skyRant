@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EngineerRant"
         tools:targetApi="31">
+        <activity
+            android:name=".IntroActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".widget.DevRantWidget"
             android:exported="false">

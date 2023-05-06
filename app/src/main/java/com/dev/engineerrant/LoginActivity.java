@@ -158,4 +158,9 @@ public class LoginActivity extends AppCompatActivity {
     public void skip(View view) {
         finish();
     }
+
+    public void intro(View view) {
+        Intent intent = new Intent(LoginActivity.this, IntroActivity.class);
+        startActivity(intent);
+    }
 }

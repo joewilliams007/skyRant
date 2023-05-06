@@ -304,6 +304,8 @@ public class Account {
         return preferences.getBoolean("feed_username", false);
     }
 
+
+
     public static void setFeedUsername(boolean b) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         SharedPreferences.Editor editor = preferences.edit();
