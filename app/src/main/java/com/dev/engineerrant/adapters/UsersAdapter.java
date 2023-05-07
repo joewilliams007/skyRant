@@ -7,6 +7,7 @@ import static com.dev.engineerrant.app.toast;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -26,12 +29,12 @@ import java.util.ArrayList;
 
 public abstract class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.RecyclerViewHolder> {
 
-    private ArrayList<UsersItem> dataSource = new ArrayList<UsersItem>();
+    private ArrayList<FollowingItem> dataSource = new ArrayList<FollowingItem>();
 
     public abstract void onItemClicked(Integer feedPosition);
 
     public interface AdapterCallback{
-        void onItemClicked(Integer menuPosition);
+        void onItemClicked(Integer menuPosition,Boolean profile);
     }
     private final AdapterCallback callback;
 
@@ -39,7 +42,7 @@ public abstract class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Rec
     private final Context context;
 
 
-    public UsersAdapter(Context context, ArrayList<UsersItem> dataArgs, AdapterCallback callback){
+    public UsersAdapter(Context context, ArrayList<FollowingItem> dataArgs, AdapterCallback callback){
         this.context = context;
         this.dataSource = dataArgs;
         this.callback = callback;
@@ -70,33 +73,40 @@ public abstract class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Rec
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        UsersItem data_provider = dataSource.get(position);
+        FollowingItem data_provider = dataSource.get(position);
 
-        holder.textViewUsername.setText(data_provider.getProfile().getUsername());
+        holder.textViewUsername.setText(data_provider.getUsername());
 
-        // This code works, but i need to make it less resource demanding in order to be smooth. at least async
-       /* holder.imageViewProfile.setImageDrawable(null);
-        if (data_provider.getProfile().getAvatar().getI()!=null) {
-            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+data_provider.getProfile().getAvatar().getI()).into(holder.imageViewProfile);
-        } else {
-            holder.imageViewProfile.setBackgroundColor(Color.parseColor("#"+data_provider.getProfile().getAvatar().getB()));
+        holder.imageViewProfile.setImageDrawable(null);
+
+        if (!data_provider.getAvatar().equals("null")) {
+            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+data_provider.getAvatar()).into(holder.imageViewProfile);
         }
 
-        if (data_provider.getProfile().getScore()<0) {
-            holder.textViewScore.setText(String.valueOf(data_provider.getProfile().getScore()));
+        if (data_provider.getId().equals("0")) {
+            holder.imageViewProfile.setImageDrawable(ContextCompat.getDrawable(MyApplication.getAppContext(), R.drawable.stress_ball));
         } else {
-            holder.textViewScore.setText("+"+data_provider.getProfile().getScore());
-        } */
+            holder.imageViewProfile.setBackgroundColor(Color.parseColor(data_provider.getColor()));
+        }
+
 
         holder.avatarsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 if(callback != null) {
-                    if (selected != position) {
-                        callback.onItemClicked(position);
-                    }
+                        callback.onItemClicked(position, false);
                 }
 
+            }
+        });
+
+        holder.avatarsLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if(callback != null) {
+                        callback.onItemClicked(position, true);
+                }
+                return true;
             }
         });
     }

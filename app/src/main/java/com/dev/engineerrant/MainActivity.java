@@ -13,43 +13,56 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
+import com.dev.engineerrant.adapters.FollowingItem;
 import com.dev.engineerrant.adapters.UsersAdapter;
 import com.dev.engineerrant.adapters.UsersItem;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
+import com.dev.engineerrant.classes.Counts;
 import com.dev.engineerrant.classes.Rants;
+import com.dev.engineerrant.classes.User_avatar;
 import com.dev.engineerrant.network.methods.MethodsFeed;
 import com.dev.engineerrant.network.methods.MethodsId;
+import com.dev.engineerrant.network.methods.MethodsProfile;
 import com.dev.engineerrant.network.methods.MethodsRant;
 import com.dev.engineerrant.network.methods.MethodsSearch;
 import com.dev.engineerrant.network.models.ModelFeed;
 import com.dev.engineerrant.network.models.ModelId;
+import com.dev.engineerrant.network.models.ModelProfile;
 import com.dev.engineerrant.network.models.ModelRant;
 import com.dev.engineerrant.network.models.ModelSearch;
 import com.dev.engineerrant.network.models.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.notifcenter.AlarmReceiver;
 import com.dev.engineerrant.network.post.VoteClient;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -361,7 +374,10 @@ public class MainActivity extends AppCompatActivity {
     public void createFeedList(List<Rants> rants){
         menuItems = new ArrayList<>();
 
-        ArrayList<UsersItem> profiles = new ArrayList<>();
+        if (!follow) {
+            users_view.setVisibility(View.GONE);
+        }
+
         String[] blockedWords = Account.blockedWords().split(",");
         String[] blockedUsers = Account.blockedUsers().split(",");
         for (Rants rant : rants){
@@ -388,6 +404,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            if (!follow) {
+                textViewUsername.setVisibility(View.VISIBLE);
+                users_view.setVisibility(View.GONE);
+            }
 
             if (!containsBlocked) {
                 String url = null;
@@ -428,8 +448,36 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (search.getVisibility() == View.VISIBLE) {
-            buildProfileSearch(profiles);
+        if (follow && users_view.getVisibility()==View.GONE) {
+            users_view.setVisibility(View.VISIBLE);
+            ArrayList<FollowingItem> menuItems = new ArrayList<>();
+
+            String[] following = Account.following().split("\n");
+            try {
+                menuItems.add(new FollowingItem(
+                        "0",
+                        "all",
+                        "#FF7F50",
+                        "null"
+                ));
+
+                for (String item : following){
+                    String[] args = item.split(" ");
+                    menuItems.add(new FollowingItem(
+                            args[0],
+                            args[1],
+                            args[2],
+                            args[3]
+                    ));
+                }
+            } catch (Exception e) {
+
+            }
+            buildProfileSearch(menuItems);
+        } else {
+            if (!follow) {
+                users_view.setVisibility(View.GONE);
+            }
         }
 
         if (follow && menuItems.size()==0) {
@@ -438,7 +486,7 @@ public class MainActivity extends AppCompatActivity {
         build(menuItems);
     }
 
-    private void buildProfileSearch(ArrayList<UsersItem> profiles) {
+    private void buildProfileSearch(ArrayList<FollowingItem> profiles) {
         users_view.setHasFixedSize(false);
         users_view.setVisibility(View.VISIBLE);
         users_view.getRecycledViewPool().setMaxRecycledViews(0,0);
@@ -448,11 +496,23 @@ public class MainActivity extends AppCompatActivity {
         UsersAdapter mAdapter = new UsersAdapter(this, profiles, new UsersAdapter.AdapterCallback() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onItemClicked(Integer menuPosition) {
-                UsersItem menuItem = profiles.get(menuPosition);
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                intent.putExtra("user_id",String.valueOf(menuItem.getProfile().getUser_id()));
-                startActivity(intent);
+            public void onItemClicked(Integer menuPosition, Boolean profile) {
+                FollowingItem menuItem = profiles.get(menuPosition);
+
+                if (menuItem.getId().equals("0")) {
+                    requestFeed();
+                } else {
+                    if (profile) {
+                        vibrate();
+                        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        intent.putExtra("user_id",String.valueOf(menuItem.getId()));
+                        startActivity(intent);
+                    } else {
+                        requestRantsOfProfile(String.valueOf(menuItem.getId()));
+                    }
+                }
+
+
             }
         }) {
             @Override
@@ -468,6 +528,47 @@ public class MainActivity extends AppCompatActivity {
 
         users_view.setLayoutManager(mLayoutManager);
         users_view.setAdapter(mAdapter);
+    }
+
+    private void requestRantsOfProfile(String id) {
+            MethodsProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsProfile.class);
+            String total_url;
+            if (Account.isLoggedIn()){
+                total_url = BASE_URL + "users/"+id+"?app=3&token_id="+Account.id()+"&token_key="+Account.key()+"&user_id="+Account.user_id();
+            } else {
+                total_url = BASE_URL + "users/"+id+"?app=3";
+            }
+            Call<ModelProfile> call = methods.getAllData(total_url);
+            call.enqueue(new Callback<ModelProfile>() {
+                @Override
+                public void onResponse(@NonNull Call<ModelProfile> call, @NonNull Response<ModelProfile> response) {
+                    if (response.isSuccessful()) {
+
+                        // Do awesome stuff
+                        assert response.body() != null;
+
+                        String user_avatar = response.body().getProfile().getAvatar().getI();
+
+                        List<Rants> profile_rants = response.body().getProfile().getContent().getContent().getRants();
+                        List<Rants> favorites_rants = response.body().getProfile().getContent().getContent().getFavorites();
+                        List<Rants> upVoted_rants = response.body().getProfile().getContent().getContent().getUpvoted();
+                        List<Rants> comments_rants = response.body().getProfile().getContent().getContent().getComments();
+
+                        createFeedList(profile_rants);
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                    } else {
+                        toast(response.message());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelProfile> call, @NonNull Throwable t) {
+                    Log.d("error_contact", t.toString());
+                    toast(t.toString());
+                }
+            });
     }
 
     private void build(ArrayList<FeedItem> feedItems) {
@@ -563,7 +664,35 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+
+        //Your view which you would like to animate
+        //The initial height of that view
+        if (follow) {
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (follow) {
+                        if (System.currentTimeMillis()-lastUserItemVisibilityChange>200) {
+                            if (dy > 25) {
+                                users_view.setVisibility(View.GONE);
+                            } else if (dy < -25) {
+                                users_view.setVisibility(View.VISIBLE);
+                            }
+                            lastUserItemVisibilityChange = System.currentTimeMillis();
+                        }
+
+                        if (!recyclerView.canScrollVertically(-1)) {
+                            users_view.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            });
+        }
+
     }
+    long lastUserItemVisibilityChange = 0;
 
     public void openMyProfile(View view) {
         if (Account.isLoggedIn()) {
@@ -620,7 +749,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void algoFollow(View view) {
-        sort = "latest";
+        sort = "recent";
         follow = true;
         requestFeed();
     }
@@ -777,6 +906,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showSearch(View view) {
         if (search.getVisibility() == View.GONE) {
+            follow = false;
             textViewNotif.setVisibility(View.GONE);
             textViewSetting.setVisibility(View.GONE);
             search.setVisibility(View.VISIBLE);

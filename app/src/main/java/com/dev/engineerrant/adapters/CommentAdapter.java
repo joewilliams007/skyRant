@@ -4,6 +4,8 @@ import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
 import static com.dev.engineerrant.auth.Account.vibrate;
 
+import static java.lang.Integer.toBinaryString;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -219,6 +221,10 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
             holder.textViewScore.setText(String.valueOf(data_provider.getUser_score()));
         } else {
             holder.textViewScore.setText("+"+data_provider.getUser_score());
+
+            if (Account.binary()) {
+                holder.textViewScore.setText("+"+toBinaryString(data_provider.getUser_score()));
+            }
         }
 
         switch (data_provider.getType()) {

@@ -233,7 +233,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topLayout" />
 
@@ -354,28 +354,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
+        android:onClick="openMyProfile"
+        android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp"
-        android:paddingStart="20dp"
-        android:onClick="openMyProfile"
         android:textAlignment="center"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/feed_view" />
+        app:layout_constraintTop_toBottomOf="@+id/topLayout" />
 
     <TextView
         android:id="@+id/notif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
+        android:onClick="openNotifs"
+        android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="10dp"
-        android:paddingStart="20dp"
         android:text="@string/main_notif"
         android:textAlignment="center"
-        android:onClick="openNotifs"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/setting"
         app:layout_constraintEnd_toEndOf="parent" />

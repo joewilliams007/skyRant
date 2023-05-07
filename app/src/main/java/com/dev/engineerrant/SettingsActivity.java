@@ -191,6 +191,10 @@ public class SettingsActivity extends AppCompatActivity {
         Account.setSurprise(!Account.surprise());
         setSwitches();
     }
+    public void switchBinary(View view) {
+        Account.setBinary(!Account.binary());
+        setSwitches();
+    }
     public void switchFollowing(View view) {
         Account.setFollowBtn(!Account.followBtn());
         setSwitches();
@@ -209,6 +213,8 @@ public class SettingsActivity extends AppCompatActivity {
         SwitchCompat switchAnimation = findViewById(R.id.switchAnimation);
         SwitchCompat switchUsername = findViewById(R.id.switchUsername);
         SwitchCompat switchFollowing = findViewById(R.id.switchFollowing);
+        SwitchCompat switchBinary = findViewById(R.id.switchBinary);
+        switchBinary.setChecked(Account.binary());
         switchFollowing.setChecked(Account.followBtn());
         switchUsername.setChecked(Account.isFeedUsername());
         switchSurprise.setChecked(Account.surprise());
@@ -446,22 +452,22 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public void generateKey(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/settings/tokens"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/settings/tokens"));
         startActivity(browserIntent);
     }
 
     public void skyRantIssueTracker(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/joewilliams007/skyRant/issues"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/skyRant/issues"));
         startActivity(browserIntent);
     }
 
     public void addCommunityProject(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/joewilliams007/jsonapi/issues"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/jsonapi/issues"));
         startActivity(browserIntent);
     }
 
     public void devrantWebsite(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://devrant.com/"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://devrant.com/"));
         startActivity(browserIntent);
     }
 
@@ -469,7 +475,10 @@ public class SettingsActivity extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.dev.watchrant"));
         startActivity(browserIntent);
     }
-
+    public void swagStore(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://swag.devrant.com/"));
+        startActivity(browserIntent);
+    }
     public void avatar(View view) {
         if (Account.isLoggedIn()) {
             Intent intent = new Intent(SettingsActivity.this, BuilderActivity.class);

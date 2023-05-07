@@ -667,6 +667,22 @@
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchBinary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="switchBinary"
+                    android:padding="10dp"
+                    android:text="@string/binary_user_scores"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/switchSurprise"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchFollowing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -679,7 +695,7 @@
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/switchSurprise"
+                    app:layout_constraintTop_toBottomOf="@+id/switchBinary"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <TextView
@@ -1027,7 +1043,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewWatchRant" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewSwag" />
 
                 <TextView
                     android:id="@+id/textViewWatchRant"
@@ -1043,6 +1059,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewCommunityIssue" />
+
+                <TextView
+                    android:id="@+id/textViewSwag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/nunito"
+                    android:onClick="swagStore"
+                    android:padding="10dp"
+                    android:text="Swag"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewWatchRant" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

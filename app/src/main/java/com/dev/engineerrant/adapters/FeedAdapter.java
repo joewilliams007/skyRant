@@ -2,6 +2,8 @@ package com.dev.engineerrant.adapters;
 
 import static com.dev.engineerrant.app.toast;
 
+import static java.lang.Integer.toBinaryString;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
@@ -106,7 +108,13 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
                 holder.textViewScore.setText(String.valueOf(data_provider.getUser_score()));
             } else {
                 holder.textViewScore.setText("+"+data_provider.getUser_score());
+
+
+                if (Account.binary()) {
+                    holder.textViewScore.setText("+"+toBinaryString(data_provider.getUser_score()));
+                }
             }
+
         } else {
             holder.userInfo.setVisibility(View.INVISIBLE);
         }

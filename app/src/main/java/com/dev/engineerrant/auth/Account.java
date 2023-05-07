@@ -219,6 +219,17 @@ public class Account {
         editor.apply();
     }
 
+    public static Boolean binary() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("binary", false);
+    }
+
+    public static void setBinary(Boolean binary) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("binary",binary);
+        editor.apply();
+    }
+
     public static Boolean followBtn() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("followBtn", true);

@@ -6,6 +6,8 @@ import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
+import static java.lang.Integer.toBinaryString;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,6 +48,7 @@ import com.dev.engineerrant.network.post.VoteCommentClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -87,6 +90,10 @@ public class RantActivity extends AppCompatActivity {
         if (intent.getStringExtra("info").equals("true")) {
             textViewUsername.setText(intent.getStringExtra("username"));
             textViewScore.setText(intent.getStringExtra("user_score"));
+
+            if (Account.binary()) {
+                textViewScore.setText("+"+toBinaryString(Integer.parseInt(intent.getStringExtra("user_score").replaceAll("\\+",""))));
+            }
 
             if(Account.highlighter()) {
                 Tools.highlighter(intent.getStringExtra("text"),textViewText);
@@ -174,7 +181,12 @@ public class RantActivity extends AppCompatActivity {
             textViewScore.setText(String.valueOf(rants.getUser_score()));
         } else {
             textViewScore.setText("+"+ rants.getUser_score());
+
+            if (Account.binary()) {
+                textViewScore.setText("+"+toBinaryString(rants.getUser_score()));
+            }
         }
+
 
         String[] tags = rants.getTags();
         StringBuilder t = new StringBuilder();
