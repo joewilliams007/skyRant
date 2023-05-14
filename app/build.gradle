@@ -11,8 +11,8 @@ android {
         applicationId "com.dev.engineerrant"
         minSdk 24
         targetSdk 33
-        versionCode 28
-        versionName "1.1.10.7"
+        versionCode 29
+        versionName "1.1.10.8"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

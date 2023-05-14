@@ -36,6 +36,7 @@ import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.Comment;
 import com.dev.engineerrant.classes.Links;
 import com.dev.engineerrant.classes.Rants;
+import com.dev.engineerrant.classes.Weekly;
 import com.dev.engineerrant.network.methods.MethodsRant;
 import com.dev.engineerrant.network.models.ModelRant;
 import com.dev.engineerrant.network.models.ModelSuccess;
@@ -60,7 +61,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RantActivity extends AppCompatActivity {
     ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh;
-    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill;
+    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly;
     EditText editTextComment;
 
     ProgressBar progressBar;
@@ -251,9 +252,9 @@ public class RantActivity extends AppCompatActivity {
         imageViewRant = findViewById(R.id.imageViewRant);
         view_container = findViewById(R.id.view_container);
         chill = findViewById(R.id.chill);
-
+        textViewWeekly = findViewById(R.id.textViewWeekly);
         chill.setVisibility(View.GONE);
-
+        textViewWeekly.setVisibility(View.GONE);
         view_container.setOnClickListener(new DoubleClickListener() {
             @Override
             public void onSingleClick(View v) {
@@ -289,6 +290,30 @@ public class RantActivity extends AppCompatActivity {
 
                     List<Comment> comments = response.body().getComments();
                     List<Links> links = response.body().getRant().getLinks();
+
+                    Weekly weekly = response.body().getRant().getWeekly();
+                    if (weekly!=null) {
+                        textViewWeekly.setVisibility(View.VISIBLE);
+                        textViewWeekly.setText(weekly.getTopic());
+                        textViewWeekly.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (Account.isLoggedIn()) {
+                                    Intent intent = new Intent(RantActivity.this, PostComposeActivity.class);
+                                    intent.putExtra("weekly","wk"+weekly.getWeek());
+                                    intent.putExtra("type", "1");
+                                    intent.putExtra("typeName", "R a n t / S t o r y");
+                                    startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                    } else {
+                        textViewWeekly.setVisibility(View.GONE);
+                    }
+
                     if (links!=null) {
                         // LINK RECYCLERVIEW
                         ArrayList<LinkItem> linkItems = new ArrayList<>();

@@ -46,6 +46,26 @@ public class PostComposeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         textViewTop.setText(intent.getStringExtra("typeName"));
         _type = intent.getStringExtra("type");
+
+        if (intent.getStringExtra("weekly")!=null) {
+            editTextTags.setText(intent.getStringExtra("weekly"));
+        }
+        if (composed != null) {
+            editTextPost.setText(composed);
+        }
+    }
+
+    public static String composed = null;
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        composed = editTextPost.getText().toString();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        composed = editTextPost.getText().toString();
     }
 
     public void uploadPost(View view) {

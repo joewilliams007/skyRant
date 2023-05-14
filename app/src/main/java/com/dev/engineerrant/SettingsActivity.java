@@ -600,5 +600,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-
+    public void openWeekly(View view) {
+        Intent intent = new Intent(SettingsActivity.this, WeeklyActivity.class);
+        startActivity(intent);
+    }
 }

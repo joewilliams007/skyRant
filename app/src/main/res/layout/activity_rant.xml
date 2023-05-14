@@ -59,12 +59,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textViewWeekly"
+        android:layout_width="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/editTextComment"
-        app:layout_constraintTop_toBottomOf="@+id/top">
+        app:layout_constraintTop_toBottomOf="@+id/textViewWeekly">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,8 +100,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito"
-                    android:padding="10dp"
                     android:linksClickable="true"
+                    android:padding="10dp"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -107,10 +121,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:onClick="openProfile"
                     android:orientation="vertical"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp"
-                    android:onClick="openProfile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -119,7 +133,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="?attr/colorSurface"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -131,8 +145,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
                     android:onClick="openImage"
+                    android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewText" />
@@ -143,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                   android:textColor="?attr/colorOnPrimary"
+                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toEndOf="@+id/textViewPlus"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -229,7 +243,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/link_view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             <androidx.recyclerview.widget.RecyclerView

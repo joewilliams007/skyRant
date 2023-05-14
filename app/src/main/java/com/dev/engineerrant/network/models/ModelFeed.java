@@ -1,6 +1,7 @@
 package com.dev.engineerrant.network.models;
 
 
+import com.dev.engineerrant.classes.News;
 import com.dev.engineerrant.classes.Rants;
 import com.dev.engineerrant.classes.Unread;
 
@@ -12,6 +13,11 @@ public class ModelFeed {
     Boolean success;
     int num_notifs;
     Unread unread;
+    News news;
+
+    public News getNews() {
+        return news;
+    }
 
     public Unread getUnread() {
         return unread;

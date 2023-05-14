@@ -11,6 +11,7 @@ public class Rants {
     Boolean edited;
     String user_username;
     String link;
+    Weekly weekly;
 
     String body; // NOTE ONLY FOR PROFILE COMMENTS
     Integer rant_id; // NOTE ONLY FOR PROFILE COMMENTS
@@ -28,6 +29,11 @@ public class Rants {
     }
 
     int user_score;
+
+    public Weekly getWeekly() {
+        return weekly;
+    }
+
     int user_id;
     User_avatar user_avatar;
     Object attached_image;
