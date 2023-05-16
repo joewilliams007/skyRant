@@ -661,7 +661,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     DownloadManager.Request request = new DownloadManager.Request(uri);
                     request.setNotificationVisibility
                             (DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    request.setTitle("starspace");
+                    request.setTitle("skyRant");
                     request.setDescription("image downloaded");
                     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,_username+".png");
                     downloadManager.enqueue(request);

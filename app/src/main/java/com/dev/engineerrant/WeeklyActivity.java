@@ -39,13 +39,14 @@ public class WeeklyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly);
         textViewWeekly = findViewById(R.id.textViewDesc);
+        news = null;
         startReq();
     }
     private void startReq() {
         MethodsFeed methods = RetrofitClient.getRetrofitInstance().create(MethodsFeed.class);
         String total_url;
             total_url = BASE_URL
-                    + "devrant/rants?app=3&limit="+Account.limit()+"&sort=recent&range=day&skip=0/";
+                    + "devrant/rants?app=3&limit=1&sort=recent&range=all&skip=0/";
 
         Call<ModelFeed> call = methods.getAllData(total_url);
         call.enqueue(new Callback<ModelFeed>() {

@@ -14,14 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -59,7 +66,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RantActivity extends AppCompatActivity {
+public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh;
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly;
     EditText editTextComment;
@@ -68,9 +75,8 @@ public class RantActivity extends AppCompatActivity {
     RecyclerView link_view;
     View view_container;
     int rantVote = 0;
-    String id;
-    String user_id;
-    String image;
+    String id, user_id, image, _username, user_avatar, color, text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
@@ -126,6 +132,10 @@ public class RantActivity extends AppCompatActivity {
                 textViewMinus.setTextColor(Color.parseColor("#FFFF0000"));
             }
 
+            _username = intent.getStringExtra("username");
+            user_avatar = intent.getStringExtra("i");
+            color = "#" + intent.getStringExtra("b");
+
             imageViewProfile.setImageDrawable(null);
             if (intent.getStringExtra("i") != null) {
                 Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/" + intent.getStringExtra("i")).into(imageViewProfile);
@@ -146,6 +156,10 @@ public class RantActivity extends AppCompatActivity {
 
     Boolean chilled = false;
     public void chillRant(View view) {
+        setChillRant();
+    }
+
+    private void setChillRant() {
         if (chilled) {
             textViewText.setText(rant_text);
             chilled = false;
@@ -155,7 +169,6 @@ public class RantActivity extends AppCompatActivity {
             chilled = true;
             chill.setText(R.string.revert);
         }
-
     }
 
     String rant_text = null;
@@ -164,6 +177,11 @@ public class RantActivity extends AppCompatActivity {
         textViewUsername.setText(rants.getUser_username());
         textViewText.setText(rants.getText());
         rant_text = rants.getText();
+
+
+        _username = rants.getUser_username();
+        user_avatar = rants.getUser_avatar().getI();
+        color = "#"+rants.getUser_avatar().getB();
 
         int upper_case = 0;
         for (char ch: rants.getText().replaceAll(" ","").toCharArray()) {
@@ -742,6 +760,10 @@ public class RantActivity extends AppCompatActivity {
     }
 
     public void sharePost(View view) {
+       share();
+    }
+
+    private void share() {
         /*Create an ACTION_SEND Intent*/
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         /*The type of the content is text, obviously.*/
@@ -755,6 +777,10 @@ public class RantActivity extends AppCompatActivity {
 
 
     public void refresh(View view) {
+       refreshRant();
+    }
+
+    private void refreshRant() {
         imageViewRefresh.setVisibility(View.GONE);
         int red = new Random().nextInt(255);
         int green = new Random().nextInt(255);
@@ -763,6 +789,10 @@ public class RantActivity extends AppCompatActivity {
     }
 
     public void surpriseRant(View view) {
+        getSurprise();
+    }
+
+    private void getSurprise() {
         progressBar.setVisibility(View.VISIBLE);
         imageViewSurprise.setVisibility(View.GONE);
         getSurpriseId();
@@ -854,4 +884,149 @@ public class RantActivity extends AppCompatActivity {
     }
 
 
+    public void showOptions(View view) {
+        PopupMenu popupMenu = new PopupMenu(this,view);
+        popupMenu.setOnMenuItemClickListener(this);
+
+        String[] blockedUsers = Account.blockedUsers().toLowerCase().split(",");
+
+        if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+            Boolean blocked = false;
+            for (String user : blockedUsers) {
+                if (_username.toLowerCase().equals(user)) {
+                    popupMenu.getMenu().add(0,3,20,"unblock "+_username); // groupId, itemId, order, title
+                    blocked = true;
+                    break;
+                }
+            }
+            if (!blocked) {
+                popupMenu.getMenu().add(0,2,20,"block "+_username); // groupId, itemId, order, title
+            }
+        } else {
+            popupMenu.getMenu().add(0,2,20,"block "+_username); // groupId, itemId, order, title
+        }
+
+        if (Account.isFollow(id)) {
+            popupMenu.getMenu().add(0,1,0,"unfollow "+_username); // groupId, itemId, order, title
+        } else {
+            popupMenu.getMenu().add(0,0,0,"follow "+_username); // groupId, itemId, order, title
+        }
+
+        popupMenu.getMenu().add(0,10,1,"share"); // groupId, itemId, order, title
+
+        popupMenu.getMenu().add(0,11,2,"surprise rant"); // groupId, itemId, order, title
+
+        if (chilled) {
+            popupMenu.getMenu().add(0,12,3,"revert chill rant"); // groupId, itemId, order, title
+        } else {
+            popupMenu.getMenu().add(0,12,3,"chill rant"); // groupId, itemId, order, title
+        }
+        popupMenu.getMenu().add(0,13,4,"refresh"); // groupId, itemId, order, title
+
+        popupMenu.getMenu().add(0,14,5,"copy rant text"); // groupId, itemId, order, title
+
+        if (user_avatar!=null && !user_avatar.equals("")) {
+            popupMenu.getMenu().add(0,6,6,"copy avatar link"); // groupId, itemId, order, title
+            popupMenu.getMenu().add(0,7,7,"download avatar image"); // groupId, itemId, order, title
+        }
+        if (image!=null && !image.equals("")) {
+            popupMenu.getMenu().add(0,8,8,"copy rant image link"); // groupId, itemId, order, title
+            popupMenu.getMenu().add(0,9,9,"download rant image"); // groupId, itemId, order, title
+        }
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip;
+        DownloadManager.Request request;
+        DownloadManager downloadManager;
+        Uri uri;
+        switch (menuItem.getItemId()) {
+            case 0:
+                Account.follow(user_id, _username, color, user_avatar);
+                toast("following");
+                return true;
+            case 1:
+                Account.unfollow(id);
+                toast("unfollowed");
+                return true;
+            case 2: // block
+                toast("blocked");
+                if (Account.blockedUsers()==null || Account.blockedUsers().equals("")) {
+                    Account.setBlockedUsers(_username);
+                } else {
+                    Account.setBlockedUsers(Account.blockedUsers()+","+_username);
+                }
+                return true;
+            case 3: // unblock
+                String[] blockedUsers = Account.blockedUsers().split(",");
+                String new_blocked_users = null;
+                for (String user : blockedUsers) {
+                    if (!_username.equals(user.toLowerCase())) {
+                        new_blocked_users += user.toLowerCase()+",";
+                    }
+                }
+                if (new_blocked_users!=null) {
+                    Account.setBlockedUsers(new_blocked_users.substring(0, new_blocked_users.length() - 1).replaceFirst("null",""));
+                } else {
+                    Account.setBlockedUsers(null);
+                }
+                toast("unblocked");
+                return true;
+            case 6: // copy avatar
+                clip = ClipData.newPlainText("avatar link of "+_username, "https://avatars.devrant.com/"+user_avatar);
+                clipboard.setPrimaryClip(clip);
+                return true;
+            case 7: // download avatar
+                downloadManager =
+                        (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+                uri = Uri.parse("https://avatars.devrant.com/"+user_avatar);
+                request = new DownloadManager.Request(uri);
+                request.setNotificationVisibility
+                        (DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setTitle("skyRant");
+                request.setDescription("image downloaded");
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,_username+".png");
+                downloadManager.enqueue(request);
+                toast("downloaded image");
+                return true;
+            case 8: // copy image
+                clip = ClipData.newPlainText("image link of rant "+id, image);
+                clipboard.setPrimaryClip(clip);
+                return true;
+            case 9: // download image
+                downloadManager =
+                        (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+                uri = Uri.parse(image);
+                request = new DownloadManager.Request(uri);
+                request.setNotificationVisibility
+                        (DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setTitle("skyRant");
+                request.setDescription("image downloaded");
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,id+".png");
+                downloadManager.enqueue(request);
+                toast("downloaded image");
+                return true;
+            case 10: // share
+                share();
+                return true;
+            case 11: // surprise
+                getSurprise();
+                return true;
+            case 12: // chill
+                setChillRant();
+                return true;
+            case 13: // refresh
+                refreshRant();
+                return true;
+            case 14: // copy rant text
+                clip = ClipData.newPlainText("text of rant "+id, textViewText.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                return true;
+            default:
+                return false;
+        }
+    }
 }

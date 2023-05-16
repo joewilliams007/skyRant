@@ -916,6 +916,7 @@
                 android:onClick="openWeekly"
                 android:padding="10dp"
                 android:text="@string/w_e_e_k_l_y"
+                android:visibility="gone"
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

@@ -28,23 +28,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
         android:gravity="center_horizontal"
+        android:onClick="chillRant"
         android:padding="10dp"
         android:text="chill"
-        android:onClick="chillRant"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintStart_toEndOf="@+id/imageViewSurprise"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageViewBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="?attr/colorSurface"
-        android:padding="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/back"
-        android:onClick="finish"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -291,11 +279,24 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="enterComment"
-        android:padding="10dp"
+        android:padding="12dp"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
-        app:srcCompat="@drawable/rants" />
+        app:srcCompat="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/imageViewOptions"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/colorSurface"
+        android:onClick="showOptions"
+        android:padding="11dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/rants"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageViewRefresh"
@@ -319,7 +320,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/surprise"
         app:layout_constraintBottom_toBottomOf="@+id/top"
-        app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+        app:layout_constraintStart_toEndOf="@+id/imageViewOptions"
         app:layout_constraintTop_toTopOf="@+id/top"
         app:layout_constraintVertical_bias="0.0" />
 
