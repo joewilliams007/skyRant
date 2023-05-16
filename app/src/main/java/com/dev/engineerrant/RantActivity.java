@@ -906,7 +906,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             popupMenu.getMenu().add(0,2,20,"block "+_username); // groupId, itemId, order, title
         }
 
-        if (Account.isFollow(id)) {
+        if (Account.isFollow(user_id)) {
             popupMenu.getMenu().add(0,1,0,"unfollow "+_username); // groupId, itemId, order, title
         } else {
             popupMenu.getMenu().add(0,0,0,"follow "+_username); // groupId, itemId, order, title
@@ -949,7 +949,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 toast("following");
                 return true;
             case 1:
-                Account.unfollow(id);
+                Account.unfollow(user_id);
                 toast("unfollowed");
                 return true;
             case 2: // block
