@@ -11,8 +11,8 @@ android {
         applicationId "com.dev.engineerrant"
         minSdk 24
         targetSdk 33
-        versionCode 30
-        versionName "1.1.10.9"
+        versionCode 31
+        versionName "1.1.11.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,4 +75,7 @@ dependencies {
 
     implementation 'com.github.nguyencse:urlembeddedview:1.0.2'
 
+    implementation 'com.kcthota:emoji4j:6.0'
+
+    implementation "com.vanniktech:emoji-ios:0.16.0"
 }

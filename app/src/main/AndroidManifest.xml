@@ -16,7 +16,33 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.EngineerRant"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ReactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BackupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SkyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SkyLoginActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".widget.surprise_rant_widget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/surprise_rant_widget_info" />
+        </receiver>
+
         <activity
             android:name=".WeeklyActivity"
             android:exported="false" />

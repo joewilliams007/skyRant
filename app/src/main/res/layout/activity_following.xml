@@ -112,7 +112,7 @@
             android:fontFamily="@font/nunito"
             android:onClick="saveFollowing"
             android:padding="10dp"
-            android:text="please only edit carefully. following people can be done under their profile. to backup or when switching phones, you can copy the text to restore it.\n\nformat:\n\nuser_id username #HEX image_url/null [next line]"
+            android:text="please only edit carefully. following people can be done under their profile. to backup or when switching phones, you can copy the text to restore it.\n\nif you want to backup and restore to sky severs, navigate to settings/sky/backupAndRestore\n\nformat:\n\nuser_id username #HEX image_url/null [next line]"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

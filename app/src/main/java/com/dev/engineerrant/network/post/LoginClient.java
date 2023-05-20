@@ -1,6 +1,6 @@
 package com.dev.engineerrant.network.post;
 
-import com.dev.engineerrant.network.models.ModelLogin;
+import com.dev.engineerrant.network.models.dev.ModelLogin;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;

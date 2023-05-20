@@ -17,9 +17,9 @@ import android.widget.ProgressBar;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.network.methods.MethodsFeed;
-import com.dev.engineerrant.network.models.ModelFeed;
-import com.dev.engineerrant.network.models.ModelLogin;
+import com.dev.engineerrant.network.methods.dev.MethodsFeed;
+import com.dev.engineerrant.network.models.dev.ModelFeed;
+import com.dev.engineerrant.network.models.dev.ModelLogin;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.post.LoginClient;
 

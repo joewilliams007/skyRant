@@ -110,4 +110,5 @@
     <string name="devrant_widget_description">devRant</string>
     <string name="binary_user_scores">binary user scores</string>
     <string name="w_e_e_k_l_y"><![CDATA[> w e e k l y]]></string>
+    <string name="profile_info">profile</string>
 </resources>

@@ -27,8 +27,8 @@ import com.dev.engineerrant.adapters.LinkItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.network.methods.MethodsRepo;
-import com.dev.engineerrant.network.models.ModelRepo;
+import com.dev.engineerrant.network.methods.git.MethodsRepo;
+import com.dev.engineerrant.network.models.git.ModelRepo;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.text.ParseException;

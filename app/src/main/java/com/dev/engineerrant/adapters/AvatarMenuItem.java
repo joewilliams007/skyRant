@@ -1,6 +1,6 @@
 package com.dev.engineerrant.adapters;
 
-import com.dev.engineerrant.classes.AvatarsMenus;
+import com.dev.engineerrant.classes.dev.AvatarsMenus;
 
 public class AvatarMenuItem {
     private final AvatarsMenus menus;

@@ -21,8 +21,8 @@ import com.bumptech.glide.Glide;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.network.methods.MethodsGithub;
-import com.dev.engineerrant.network.models.ModelGithub;
+import com.dev.engineerrant.network.methods.git.MethodsGithub;
+import com.dev.engineerrant.network.models.git.ModelGithub;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.text.ParseException;

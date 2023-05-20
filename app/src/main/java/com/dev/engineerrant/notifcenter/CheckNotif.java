@@ -24,10 +24,10 @@ import androidx.annotation.NonNull;
 import com.dev.engineerrant.NotifActivity;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.NotifItems;
-import com.dev.engineerrant.classes.NotifUnread;
-import com.dev.engineerrant.network.methods.MethodsNotif;
-import com.dev.engineerrant.network.models.ModelNotif;
+import com.dev.engineerrant.classes.dev.NotifItems;
+import com.dev.engineerrant.classes.dev.NotifUnread;
+import com.dev.engineerrant.network.methods.dev.MethodsNotif;
+import com.dev.engineerrant.network.models.dev.ModelNotif;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.List;

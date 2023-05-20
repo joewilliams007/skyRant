@@ -1,6 +1,6 @@
 package com.dev.engineerrant.adapters;
 
-import com.dev.engineerrant.classes.Links;
+import com.dev.engineerrant.classes.dev.Links;
 
 import java.util.List;
 

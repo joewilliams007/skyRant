@@ -1,6 +1,7 @@
 package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
+import static com.dev.engineerrant.RantActivity.widget_rant_id;
 import static com.dev.engineerrant.app.hideKeyboard;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.username;
@@ -13,56 +14,46 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.adapters.FollowingItem;
 import com.dev.engineerrant.adapters.UsersAdapter;
-import com.dev.engineerrant.adapters.UsersItem;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.classes.Counts;
-import com.dev.engineerrant.classes.Rants;
-import com.dev.engineerrant.classes.User_avatar;
-import com.dev.engineerrant.network.methods.MethodsFeed;
-import com.dev.engineerrant.network.methods.MethodsId;
-import com.dev.engineerrant.network.methods.MethodsProfile;
-import com.dev.engineerrant.network.methods.MethodsRant;
-import com.dev.engineerrant.network.methods.MethodsSearch;
-import com.dev.engineerrant.network.models.ModelFeed;
-import com.dev.engineerrant.network.models.ModelId;
-import com.dev.engineerrant.network.models.ModelProfile;
-import com.dev.engineerrant.network.models.ModelRant;
-import com.dev.engineerrant.network.models.ModelSearch;
-import com.dev.engineerrant.network.models.ModelSuccess;
+import com.dev.engineerrant.classes.dev.Rants;
+import com.dev.engineerrant.network.methods.dev.MethodsFeed;
+import com.dev.engineerrant.network.methods.dev.MethodsId;
+import com.dev.engineerrant.network.methods.dev.MethodsProfile;
+import com.dev.engineerrant.network.methods.dev.MethodsRant;
+import com.dev.engineerrant.network.methods.dev.MethodsSearch;
+import com.dev.engineerrant.network.models.dev.ModelFeed;
+import com.dev.engineerrant.network.models.dev.ModelId;
+import com.dev.engineerrant.network.models.dev.ModelProfile;
+import com.dev.engineerrant.network.models.dev.ModelRant;
+import com.dev.engineerrant.network.models.dev.ModelSearch;
+import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.notifcenter.AlarmReceiver;
 import com.dev.engineerrant.network.post.VoteClient;
-import com.google.android.material.tabs.TabLayout;
+import com.vanniktech.emoji.EmojiManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +66,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import com.vanniktech.emoji.ios.IosEmojiProvider;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        EmojiManager.install(new IosEmojiProvider());
 
         scrollLayout = findViewById(R.id.scroll);
 
@@ -164,6 +159,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleDeepLinkIntent() {
+        if (widget_rant_id != null) {
+            Intent i = new Intent(MainActivity.this, RantActivity.class);
+            String id = String.valueOf(widget_rant_id);
+            i.putExtra("id",id);
+            i.putExtra("info","false");
+            startActivity(i);
+            requestFeed();
+            return;
+        }
         try {
             Intent intent = getIntent();
             if(intent != null) {

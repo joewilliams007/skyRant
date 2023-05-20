@@ -17,9 +17,9 @@ import android.util.Log;
 import com.dev.engineerrant.adapters.SupporterAdapter;
 import com.dev.engineerrant.adapters.SupporterItem;
 import com.dev.engineerrant.animations.Tools;
-import com.dev.engineerrant.classes.SupporterItems;
-import com.dev.engineerrant.network.methods.MethodsSupporters;
-import com.dev.engineerrant.network.models.ModelSupporters;
+import com.dev.engineerrant.classes.dev.SupporterItems;
+import com.dev.engineerrant.network.methods.dev.MethodsSupporters;
+import com.dev.engineerrant.network.models.dev.ModelSupporters;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;

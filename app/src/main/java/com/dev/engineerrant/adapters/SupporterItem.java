@@ -1,6 +1,6 @@
 package com.dev.engineerrant.adapters;
 
-import com.dev.engineerrant.classes.SupporterItems;
+import com.dev.engineerrant.classes.dev.SupporterItems;
 
 public class SupporterItem {
     private final SupporterItems supporterItems;

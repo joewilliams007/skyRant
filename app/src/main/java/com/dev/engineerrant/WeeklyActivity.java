@@ -16,13 +16,10 @@ import android.widget.TextView;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.classes.News;
-import com.dev.engineerrant.classes.Rants;
+import com.dev.engineerrant.classes.dev.News;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.network.methods.MethodsFeed;
-import com.dev.engineerrant.network.models.ModelFeed;
-
-import java.util.List;
+import com.dev.engineerrant.network.methods.dev.MethodsFeed;
+import com.dev.engineerrant.network.models.dev.ModelFeed;
 
 import retrofit2.Call;
 import retrofit2.Callback;

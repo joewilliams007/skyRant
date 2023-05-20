@@ -40,18 +40,32 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewProfile"
+                android:id="@+id/textViewSky"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:fontFamily="@font/nunito"
-                android:onClick="showProfile"
-                android:text="@string/profile"
+                android:onClick="skyRant"
+                android:text="> s k y"
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="showProfile"
+                android:padding="10dp"
+                android:text="@string/profile"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSky" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout

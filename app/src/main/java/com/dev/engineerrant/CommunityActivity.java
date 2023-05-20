@@ -23,9 +23,9 @@ import com.dev.engineerrant.adapters.CommunityItem;
 import com.dev.engineerrant.adapters.CommunityMenuAdapter;
 import com.dev.engineerrant.adapters.CommunityMenuItem;
 import com.dev.engineerrant.animations.Tools;
-import com.dev.engineerrant.classes.Projects;
-import com.dev.engineerrant.network.methods.MethodsCommunity;
-import com.dev.engineerrant.network.models.ModelCommunity;
+import com.dev.engineerrant.classes.dev.Projects;
+import com.dev.engineerrant.network.methods.git.MethodsCommunity;
+import com.dev.engineerrant.network.models.git.ModelCommunity;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;

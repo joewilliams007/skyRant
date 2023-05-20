@@ -21,27 +21,20 @@ import com.dev.engineerrant.adapters.NotifAdapter;
 import com.dev.engineerrant.adapters.NotifItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.NotifItems;
-import com.dev.engineerrant.classes.NotifUnread;
-import com.dev.engineerrant.network.methods.MethodsNotif;
-import com.dev.engineerrant.network.models.ModelNotif;
+import com.dev.engineerrant.classes.dev.NotifItems;
+import com.dev.engineerrant.classes.dev.NotifUnread;
+import com.dev.engineerrant.network.methods.dev.MethodsNotif;
+import com.dev.engineerrant.network.models.dev.ModelNotif;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.network.models.ModelSuccess;
-import com.dev.engineerrant.network.post.RantClient;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NotifActivity extends AppCompatActivity {
 

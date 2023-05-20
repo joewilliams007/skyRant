@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
+    android:id="@+id/rootView"
+    android:animateLayoutChanges="true"
     tools:context=".RantActivity">
 
     <TextView
@@ -77,158 +79,224 @@
                 android:id="@+id/inside"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:background="@drawable/rounded_corner"
+                android:layout_margin="10dp"
+                android:animateLayoutChanges="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top">
 
-                <TextView
-                    android:id="@+id/textViewText"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/insideRant"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito"
-                    android:linksClickable="true"
-                    android:padding="10dp"
-                    android:textColor="?attr/colorOnPrimary"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/rounded_corner"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardViewProfile" />
-
-                <View
-                    android:id="@+id/view_container"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardViewProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:onClick="openProfile"
-                    android:orientation="vertical"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <TextView
+                        android:id="@+id/textViewText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:linksClickable="true"
+                        android:padding="10dp"
+                        android:textColor="?attr/colorOnPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardViewProfile" />
+
+                    <View
+                        android:id="@+id/view_container"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:onClick="openProfile"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageViewProfile"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="?attr/colorSurface"
+                            android:scaleType="centerCrop" />
+
+                    </androidx.cardview.widget.CardView>
+
+
                     <ImageView
-                        android:id="@+id/imageViewProfile"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="?attr/colorSurface"
-                        android:scaleType="centerCrop" />
+                        android:id="@+id/imageViewRant"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:adjustViewBounds="true"
+                        android:onClick="openImage"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewText" />
 
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/textViewScoreRant"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:padding="10dp"
+                        android:textColor="?attr/colorOnPrimary"
+                        app:layout_constraintStart_toEndOf="@+id/textViewPlus"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewPlus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:onClick="upvote"
+                        android:padding="10dp"
+                        android:text="+ +"
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewMinus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:onClick="downVote"
+                        android:padding="10dp"
+                        android:text="- -"
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textViewScoreRant"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/nunito"
+                        android:onClick="openProfile"
+                        android:textColor="?attr/colorOnPrimary"
+                        app:layout_constraintEnd_toStartOf="@+id/cardViewProfile"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:onClick="openProfile"
+                        android:textColor="?attr/colorPrimaryVariant"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewUsername"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/link_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageViewRant" />
 
 
-                <ImageView
-                    android:id="@+id/imageViewRant"
+                    <TextView
+                        android:id="@+id/textViewTags"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/nunito"
+                        android:textColor="?attr/colorPrimaryVariant"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textViewDate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/link_view" />
+
+                    <TextView
+                        android:id="@+id/textViewDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/nunito"
+                        android:gravity="right"
+                        android:textColor="?attr/colorPrimaryVariant"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/link_view" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textViewReactions"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:adjustViewBounds="true"
-                    android:onClick="openImage"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewText" />
-
-                <TextView
-                    android:id="@+id/textViewScoreRant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintStart_toEndOf="@+id/textViewPlus"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewPlus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="upvote"
-                    android:padding="10dp"
-                    android:text="+ +"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewMinus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="downVote"
-                    android:padding="10dp"
-                    android:text="- -"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/textViewScoreRant"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewUsername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="openProfile"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toStartOf="@+id/cardViewProfile"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="openProfile"
+                    android:text="EMOJIE1, EMOJIE2"
+                    android:onClick="viewReactions"
                     android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toEndOf="@+id/textViewUsername"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/link_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintEnd_toStartOf="@+id/textViewEmojiPlus"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewRant" />
+                    app:layout_constraintTop_toBottomOf="@+id/insideRant" />
 
-
-                <TextView
-                    android:id="@+id/textViewTags"
+                <com.vanniktech.emoji.EmojiEditText
+                    android:id="@+id/editTextReaction"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:textColor="?attr/colorPrimaryVariant"
+                    android:background="@drawable/rounded_corner"
+                    android:imeOptions="actionSend"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:padding="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textViewDate"
+                    app:layout_constraintEnd_toStartOf="@+id/imageViewSendEmojie"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/link_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewEmojiPlus" />
 
                 <TextView
-                    android:id="@+id/textViewDate"
+                    android:id="@+id/textViewEmojiPlus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:fontFamily="@font/nunito"
                     android:gravity="right"
+                    android:onClick="addEmoji"
+                    android:padding="10dp"
+                    android:text="react"
                     android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/link_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/insideRant" />
+
+                <ImageView
+                    android:id="@+id/imageViewSendEmojie"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:onClick="sendEmoji"
+                    android:padding="12dp"
+                    android:rotation="180"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextReaction"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewEmojiPlus"
+                    app:layout_constraintTop_toTopOf="@+id/editTextReaction"
+                    app:srcCompat="@drawable/back" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -290,7 +358,6 @@
         android:id="@+id/imageViewOptions"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="?attr/colorSurface"
         android:onClick="showOptions"
         android:padding="11dp"
         android:scaleType="centerCrop"

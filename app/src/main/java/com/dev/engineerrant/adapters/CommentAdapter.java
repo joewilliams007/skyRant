@@ -2,8 +2,6 @@ package com.dev.engineerrant.adapters;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
-import static com.dev.engineerrant.auth.Account.vibrate;
-
 import static java.lang.Integer.toBinaryString;
 
 import android.annotation.SuppressLint;
@@ -11,8 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dev.engineerrant.DoubleClickListener;
-import com.dev.engineerrant.MainActivity;
-import com.dev.engineerrant.ProfileActivity;
 import com.dev.engineerrant.R;
-import com.dev.engineerrant.RantActivity;
 import com.dev.engineerrant.SettingsActivity;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.classes.Comment;
-import com.dev.engineerrant.classes.Links;
+import com.dev.engineerrant.classes.dev.Links;
 import com.dev.engineerrant.network.DownloadImageTask;
 
 import java.util.ArrayList;

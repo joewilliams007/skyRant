@@ -419,4 +419,15 @@ public class Account {
         editor.putBoolean("rant_sub",b);
         editor.apply();
     }
+
+    public static Boolean isSessionSkyVerified() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("sessionSkyVerified", false);
+    }
+
+    public static void setSessionSkyVerified(Boolean verified) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("sessionSkyVerified",verified);
+        editor.apply();
+    }
 }

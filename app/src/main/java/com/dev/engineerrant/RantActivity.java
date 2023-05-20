@@ -1,15 +1,18 @@
 package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
+import static com.dev.engineerrant.ReactionActivity.reactions;
 import static com.dev.engineerrant.app.hideKeyboard;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
+import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import static java.lang.Integer.toBinaryString;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,23 +43,28 @@ import com.dev.engineerrant.adapters.LinkItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
-import com.dev.engineerrant.classes.Comment;
-import com.dev.engineerrant.classes.Links;
-import com.dev.engineerrant.classes.Rants;
-import com.dev.engineerrant.classes.Weekly;
-import com.dev.engineerrant.network.methods.MethodsRant;
-import com.dev.engineerrant.network.models.ModelRant;
-import com.dev.engineerrant.network.models.ModelSuccess;
+import com.dev.engineerrant.classes.dev.Comment;
+import com.dev.engineerrant.classes.dev.Links;
+import com.dev.engineerrant.classes.dev.Rants;
+import com.dev.engineerrant.classes.sky.Reactions;
+import com.dev.engineerrant.classes.dev.Weekly;
+import com.dev.engineerrant.network.methods.dev.MethodsRant;
+import com.dev.engineerrant.network.methods.sky.MethodsSkyPost;
+import com.dev.engineerrant.network.methods.sky.MethodsVerifySkyKey;
+import com.dev.engineerrant.network.models.dev.ModelRant;
+import com.dev.engineerrant.network.models.sky.ModelSkyPost;
+import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.RetrofitClient;
+import com.dev.engineerrant.network.models.sky.ModelVerifySkyKey;
 import com.dev.engineerrant.network.post.CommentClient;
 import com.dev.engineerrant.network.post.VoteClient;
 import com.dev.engineerrant.network.post.VoteCommentClient;
+import com.vanniktech.emoji.EmojiPopup;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -67,9 +75,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh;
-    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly;
-    EditText editTextComment;
+    ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh, imageViewSendEmoji;
+    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly, textViewEmojiPlus,textViewReactions;
+    EditText editTextComment, editTextReaction;
 
     ProgressBar progressBar;
     RecyclerView link_view;
@@ -77,19 +85,69 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     int rantVote = 0;
     String id, user_id, image, _username, user_avatar, color, text;
 
+    public static Integer widget_rant_id = null;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rant);
         initialize();
+        intent = getIntent();
+        if (widget_rant_id != null) {
+            id = String.valueOf(widget_rant_id);
+            widget_rant_id = null;
+        }
+
         setRant();
         requestComments();
+        getReactions();
+    }
+
+    private void getReactions() {
+        MethodsSkyPost methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyPost.class);
+        String total_url = SKY_SERVER_URL+"post/"+id;
+
+        Call<ModelSkyPost> call = methods.getAllData(total_url);
+
+        call.enqueue(new Callback<ModelSkyPost>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelSkyPost> call, @NonNull Response<ModelSkyPost> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+
+                    reactions = response.body().getReactions();
+                    String s_reactions = "";
+                    for (Reactions reaction : reactions){
+                        s_reactions += reaction.getReaction()+" ";
+                    }
+                    if (s_reactions.length()>0) {
+                        textViewReactions.setVisibility(View.VISIBLE);
+                        textViewReactions.setText(s_reactions);
+                    } else {
+                        textViewReactions.setVisibility(View.GONE);
+                    }
+                    textViewEmojiPlus.setVisibility(View.VISIBLE);
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                    toast("you are not authorized");
+                } else {
+                    toast("no success "+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ModelSkyPost> call, @NonNull Throwable t) {
+                Log.d("error_contact", t.toString());
+                textViewReactions.setVisibility(View.GONE);
+                textViewEmojiPlus.setVisibility(View.GONE);
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
     private void setRant() { // If rant was already loaded in previous Activity
-        Intent intent = getIntent();
         id = intent.getStringExtra("id");
         if (intent.getStringExtra("surprise")==null) {
             imageViewSurprise.setVisibility(View.GONE);
@@ -270,9 +328,19 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         imageViewRant = findViewById(R.id.imageViewRant);
         view_container = findViewById(R.id.view_container);
         chill = findViewById(R.id.chill);
+
         textViewWeekly = findViewById(R.id.textViewWeekly);
         chill.setVisibility(View.GONE);
         textViewWeekly.setVisibility(View.GONE);
+
+        editTextReaction = findViewById(R.id.editTextReaction);
+        textViewReactions = findViewById(R.id.textViewReactions);
+        imageViewSendEmoji = findViewById(R.id.imageViewSendEmojie);
+        editTextReaction.setVisibility(View.GONE);
+        textViewEmojiPlus = findViewById(R.id.textViewEmojiPlus);
+        imageViewSendEmoji.setVisibility(View.GONE);
+        textViewReactions.setVisibility(View.GONE);
+        textViewEmojiPlus.setVisibility(View.GONE);
         view_container.setOnClickListener(new DoubleClickListener() {
             @Override
             public void onSingleClick(View v) {
@@ -1028,5 +1096,107 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             default:
                 return false;
         }
+    }
+    EmojiPopup emojiPopup = null;
+    public void addEmoji(View view) {
+        if (emojiPopup!=null && emojiPopup.isShowing()) {
+            emojiPopup.toggle();
+            editTextReaction.setVisibility(View.GONE);
+            imageViewSendEmoji.setVisibility(View.GONE);
+        } else {
+            if (Account.isLoggedIn()) {
+                if (Account.isSessionSkyVerified()) {
+                    ConstraintLayout rootView = findViewById(R.id.rootView);
+                    emojiPopup = new EmojiPopup(rootView,
+                            editTextReaction
+                    );
+
+                    emojiPopup.toggle(); // Toggles visibility of the Popup.
+                    //emojiPopup.dismiss(); // Dismisses the Popup.
+                    //emojiPopup.isShowing(); // Returns true when Popup is showing.
+                    editTextReaction.setVisibility(View.VISIBLE);
+                    imageViewSendEmoji.setVisibility(View.VISIBLE);
+                } else {
+                    Intent intent = new Intent(RantActivity.this, SkyLoginActivity.class);
+                    startActivity(intent);
+                }
+            } else {
+                Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    public void sendEmoji(View view) {
+        String reaction = editTextReaction.getText().toString();
+
+        if (reaction.length()<1) {
+            toast("enter emoji");
+            return;
+        }
+
+        if (reaction.length()>3) {
+            toast("enter one emoji only");
+            return;
+        }
+
+        if (reaction.contains("u")) {
+            if (reaction.replaceFirst("u","").contains("u")) {
+                toast("enter only one emoji");
+                return;
+            }
+        }
+
+        editTextReaction.setVisibility(View.GONE);
+        imageViewSendEmoji.setVisibility(View.GONE);
+
+        emojiPopup.dismiss();
+
+        editTextReaction.setText(null);
+
+        String total_url = SKY_SERVER_URL+"react_post/"+Account.user_id()+"/"+Account.id()+"/"+id+"/"+reaction;
+        MethodsVerifySkyKey methods = RetrofitClient.getRetrofitInstance().create(MethodsVerifySkyKey.class);
+
+        Call<ModelVerifySkyKey> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelVerifySkyKey>() {
+            @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+            @Override
+            public void onResponse(@NonNull Call<ModelVerifySkyKey> call, @NonNull Response<ModelVerifySkyKey> response) {
+                if (response.isSuccessful()) {
+
+                    // Do  awesome stuff
+                    assert response.body() != null;
+
+                    Boolean success = response.body().getSuccess();
+                    Boolean error = response.body().getError();
+                    String message = response.body().getMessage();
+
+                    if (success) {
+                        getReactions();
+                    }
+
+                    if (error) {
+                        toast(message);
+                        getReactions();
+                    }
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                    toast("error contacting github error 429");
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ModelVerifySkyKey> call, @NonNull Throwable t) {
+                Log.d("error_contact", t.toString());
+                toast("no network");
+            }
+        });
+    }
+
+    public void viewReactions(View view) {
+        Intent intent = new Intent(RantActivity.this, ReactionActivity.class);
+        startActivity(intent);
     }
 }

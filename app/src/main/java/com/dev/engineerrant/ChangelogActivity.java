@@ -17,9 +17,9 @@ import android.widget.ProgressBar;
 import com.dev.engineerrant.adapters.ChangelogAdapter;
 import com.dev.engineerrant.adapters.ChangelogItem;
 import com.dev.engineerrant.animations.Tools;
-import com.dev.engineerrant.classes.Changelog;
-import com.dev.engineerrant.network.methods.MethodsUpdate;
-import com.dev.engineerrant.network.models.ModelUpdate;
+import com.dev.engineerrant.classes.dev.Changelog;
+import com.dev.engineerrant.network.methods.git.MethodsUpdate;
+import com.dev.engineerrant.network.models.sky.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.ArrayList;

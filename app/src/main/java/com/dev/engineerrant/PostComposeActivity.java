@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.network.models.ModelSuccess;
+import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.post.RantClient;
 
 import okhttp3.MediaType;

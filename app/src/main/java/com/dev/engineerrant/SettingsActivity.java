@@ -27,9 +27,9 @@ import android.widget.TextView;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.Changelog;
-import com.dev.engineerrant.network.methods.MethodsUpdate;
-import com.dev.engineerrant.network.models.ModelUpdate;
+import com.dev.engineerrant.classes.dev.Changelog;
+import com.dev.engineerrant.network.methods.git.MethodsUpdate;
+import com.dev.engineerrant.network.models.sky.ModelUpdate;
 import com.dev.engineerrant.network.RetrofitClient;
 
 import java.util.List;
@@ -90,6 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     Account.setUser_id(0);
                                     Account.setId(0);
                                     Account.setUsername(null);
+                                    Account.setSessionSkyVerified(false);
 
                                     Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
                                     startActivity(intent);
@@ -603,5 +604,20 @@ public class SettingsActivity extends AppCompatActivity {
     public void openWeekly(View view) {
         Intent intent = new Intent(SettingsActivity.this, WeeklyActivity.class);
         startActivity(intent);
+    }
+
+    public void skyRant(View view) {
+        if (Account.isLoggedIn()) {
+            if (Account.isSessionSkyVerified()) {
+                Intent intent = new Intent(SettingsActivity.this, SkyActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(SettingsActivity.this, SkyLoginActivity.class);
+                startActivity(intent);
+            }
+        } else {
+            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }

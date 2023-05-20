@@ -1,7 +1,5 @@
 package com.dev.engineerrant.adapters;
 
-import com.dev.engineerrant.classes.Avatars;
-
 public class LinkItem {
     private final String link;
     private final Boolean image;

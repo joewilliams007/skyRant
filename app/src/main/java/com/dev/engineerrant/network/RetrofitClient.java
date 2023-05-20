@@ -9,7 +9,7 @@ public class RetrofitClient {
 
     private static Retrofit retrofit;
     public static final String BASE_URL = "https://www.devrant.io/api/";
-
+    public static final String SKY_SERVER_URL = "http://stardash.de:2002/";
     public static Retrofit getRetrofitInstance(){
         if (retrofit == null){
 

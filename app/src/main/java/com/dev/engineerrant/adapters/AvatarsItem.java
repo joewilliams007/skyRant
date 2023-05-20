@@ -1,6 +1,6 @@
 package com.dev.engineerrant.adapters;
 
-import com.dev.engineerrant.classes.Avatars;
+import com.dev.engineerrant.classes.dev.Avatars;
 
 public class AvatarsItem {
     private final Avatars avatars;

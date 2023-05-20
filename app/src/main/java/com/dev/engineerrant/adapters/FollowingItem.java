@@ -1,7 +1,5 @@
 package com.dev.engineerrant.adapters;
 
-import com.dev.engineerrant.classes.SupporterItems;
-
 public class FollowingItem {
     private final String id, username, avatar, color;
 
