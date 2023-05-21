@@ -218,7 +218,6 @@
         android:id="@+id/imageViewShare"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="?attr/colorSurface"
         android:onClick="sharePost"
         android:padding="10dp"
         android:scaleType="centerCrop"
