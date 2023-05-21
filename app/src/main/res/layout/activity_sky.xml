@@ -143,7 +143,7 @@
         android:fontFamily="@font/nunito"
         android:gravity="center"
         android:padding="10dp"
-        android:text="powered by raspberry pi 4\nopen source (github/joewiliiams007/skyAPI)\nbased in germany"
+        android:text="powered by raspberry pi 4\nopen source (github/joewilliams007/skyAPI)\nbased in germany"
         android:textColor="?attr/colorPrimaryVariant"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"

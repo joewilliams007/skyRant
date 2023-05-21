@@ -245,7 +245,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
+                <com.vanniktech.emoji.EmojiTextView
                     android:id="@+id/textViewReactions"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

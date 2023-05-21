@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toEndOf="@+id/cardViewProfile"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.vanniktech.emoji.EmojiTextView
                 android:id="@+id/textViewReaction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
