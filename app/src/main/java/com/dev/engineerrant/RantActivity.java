@@ -498,7 +498,13 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             String s_check = s.toLowerCase();
             boolean containsBlocked = false;
 
-            if (Account.blockWordsComments()&&Account.blockedWords()!=null&&!Account.blockedWords().equals("")) {
+            if (Account.blockGreenDot()) {
+                if (comment.getUser_avatar().getI()==null) {
+                    containsBlocked = true;
+                }
+            }
+
+            if (Account.blockWordsComments()&&Account.blockedWords()!=null&&!Account.blockedWords().equals("") && !containsBlocked) {
                 for (String word : blockedWords) {
                     if (s_check.contains(word)) {
                         containsBlocked = true;
@@ -506,7 +512,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     }
                 }
             }
-            if (Account.blockUsersComments()&&Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+            if (Account.blockUsersComments()&&Account.blockedUsers()!=null&&!Account.blockedUsers().equals("") && !containsBlocked) {
                 for (String user : blockedUsers) {
                     if (username.equals(user.toLowerCase())) {
                         containsBlocked = true;

@@ -388,10 +388,22 @@ public class MainActivity extends AppCompatActivity {
             String s = rant.getText();
             String username = rant.getUser_username().toLowerCase();
 
-            String s_check = s.toLowerCase();
+            String[] tags = rant.getTags();
+            String t = "";
+            for (String tag: tags) {
+                t+=tag;
+            }
+
+            String s_check = s.toLowerCase()+t.toLowerCase();
             boolean containsBlocked = false;
 
-            if (Account.blockedWords()!=null&&!Account.blockedWords().equals("")) {
+            if (Account.blockGreenDot()) {
+                if (rant.getUser_avatar().getI()==null) {
+                    containsBlocked = true;
+                }
+            }
+
+            if (Account.blockedWords()!=null&&!Account.blockedWords().equals("") && !containsBlocked) {
                 for (String word : blockedWords) {
                     if (s_check.contains(word)) {
                         containsBlocked = true;
@@ -399,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
+            if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("") && !containsBlocked) {
                 for (String user : blockedUsers) {
                     if (username.equals(user.toLowerCase())) {
                         containsBlocked = true;

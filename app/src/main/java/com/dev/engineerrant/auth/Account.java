@@ -197,6 +197,17 @@ public class Account {
         editor.apply();
     }
 
+    public static Boolean blockGreenDot() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("blockGreenDot", false);
+    }
+
+    public static void setBlockGreenDot(Boolean blockGreenDot) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("blockGreenDot",blockGreenDot);
+        editor.apply();
+    }
+
     public static Boolean animate() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getBoolean("animate", true);

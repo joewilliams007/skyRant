@@ -230,7 +230,6 @@
         android:id="@+id/imageViewOptions"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="?attr/colorSurface"
         android:onClick="showOptions"
         android:padding="14dp"
         android:scaleType="centerCrop"

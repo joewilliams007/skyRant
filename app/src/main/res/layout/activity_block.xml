@@ -33,6 +33,22 @@
         app:layout_constraintTop_toBottomOf="@+id/block">
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchGreen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checked="true"
+            android:fontFamily="@font/nunito"
+            android:onClick="switchGreen"
+            android:padding="10dp"
+            android:text="block green dot users"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUsers"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchUsers"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,7 +61,7 @@
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextUsers"
+            app:layout_constraintTop_toBottomOf="@+id/switchGreen"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         <androidx.appcompat.widget.SwitchCompat

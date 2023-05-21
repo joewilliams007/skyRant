@@ -15,7 +15,7 @@ import com.dev.engineerrant.auth.Account;
 public class BlockActivity extends AppCompatActivity {
 
     EditText editTextWords, editTextUsers;
-    SwitchCompat switchWords, switchUsers;
+    SwitchCompat switchWords, switchUsers, switchGreen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);
@@ -28,12 +28,14 @@ public class BlockActivity extends AppCompatActivity {
         editTextUsers.setText(Account.blockedUsers());
         switchUsers = findViewById(R.id.switchUsers);
         switchWords = findViewById(R.id.switchWords);
+        switchGreen = findViewById(R.id.switchGreen);
         setSwitches();
     }
 
     private void setSwitches() {
         switchWords.setChecked(Account.blockWordsComments());
         switchUsers.setChecked(Account.blockUsersComments());
+        switchGreen.setChecked(Account.blockGreenDot());
     }
 
     public void saveWords(View view) {
@@ -60,5 +62,10 @@ public class BlockActivity extends AppCompatActivity {
         editTextUsers.setText(users);
         toast("saved");
         app.hideKeyboard(BlockActivity.this);
+    }
+
+    public void switchGreen(View view) {
+        Account.setBlockGreenDot(!Account.blockGreenDot());
+        setSwitches();
     }
 }
