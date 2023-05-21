@@ -18,6 +18,7 @@ skyRant is not in any way affiliated with devRant
 - [x] profile editor (details, avatar) 
 - [x] community page (projects, filter) 
 - [x] block (rants/comments with word/from user) 
+- [ ] chat (skyAPI)
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
