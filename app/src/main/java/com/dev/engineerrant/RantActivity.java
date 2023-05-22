@@ -105,45 +105,49 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void getReactions() {
-        MethodsSkyPost methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyPost.class);
-        String total_url = SKY_SERVER_URL+"post/"+id;
+        try {
+            MethodsSkyPost methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyPost.class);
+            String total_url = SKY_SERVER_URL+"post/"+id;
 
-        Call<ModelSkyPost> call = methods.getAllData(total_url);
+            Call<ModelSkyPost> call = methods.getAllData(total_url);
 
-        call.enqueue(new Callback<ModelSkyPost>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(@NonNull Call<ModelSkyPost> call, @NonNull Response<ModelSkyPost> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+            call.enqueue(new Callback<ModelSkyPost>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onResponse(@NonNull Call<ModelSkyPost> call, @NonNull Response<ModelSkyPost> response) {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
 
-                    reactions = response.body().getReactions();
-                    String s_reactions = "";
-                    for (Reactions reaction : reactions){
-                        s_reactions += reaction.getReaction()+" ";
-                    }
-                    if (s_reactions.length()>0) {
-                        textViewReactions.setVisibility(View.VISIBLE);
-                        textViewReactions.setText(s_reactions);
+                        reactions = response.body().getReactions();
+                        String s_reactions = "";
+                        for (Reactions reaction : reactions){
+                            s_reactions += reaction.getReaction()+" ";
+                        }
+                        if (s_reactions.length()>0) {
+                            textViewReactions.setVisibility(View.VISIBLE);
+                            textViewReactions.setText(s_reactions);
+                        } else {
+                            textViewReactions.setVisibility(View.GONE);
+                        }
+                        textViewEmojiPlus.setVisibility(View.VISIBLE);
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        toast("you are not authorized");
                     } else {
-                        textViewReactions.setVisibility(View.GONE);
+                        toast("no success "+response.message());
                     }
-                    textViewEmojiPlus.setVisibility(View.VISIBLE);
-                } else if (response.code() == 429) {
-                    // Handle unauthorized
-                    toast("you are not authorized");
-                } else {
-                    toast("no success "+response.message());
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ModelSkyPost> call, @NonNull Throwable t) {
-                Log.d("error_contact", t.toString());
-                textViewReactions.setVisibility(View.GONE);
-                textViewEmojiPlus.setVisibility(View.GONE);
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ModelSkyPost> call, @NonNull Throwable t) {
+                    Log.d("error_contact", t.toString());
+                    textViewReactions.setVisibility(View.GONE);
+                    textViewEmojiPlus.setVisibility(View.GONE);
+                }
+            });
+        } catch (Exception e) {
+
+        }
     }
 
     @SuppressLint("SetTextI18n")

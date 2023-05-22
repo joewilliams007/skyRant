@@ -59,39 +59,43 @@ public class SkyActivity extends AppCompatActivity {
     }
 
     private void getProfile() {
-        MethodsSkyProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfile.class);
-        String total_url = SKY_SERVER_URL+"my_profile/"+ Account.user_id()+"/"+Account.id();
+        try {
+            MethodsSkyProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfile.class);
+            String total_url = SKY_SERVER_URL+"my_profile/"+ Account.user_id()+"/"+Account.id();
 
-        Call<ModelSkyProfile> call = methods.getAllData(total_url);
+            Call<ModelSkyProfile> call = methods.getAllData(total_url);
 
-        call.enqueue(new Callback<ModelSkyProfile>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(@NonNull Call<ModelSkyProfile> call, @NonNull Response<ModelSkyProfile> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
+            call.enqueue(new Callback<ModelSkyProfile>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onResponse(@NonNull Call<ModelSkyProfile> call, @NonNull Response<ModelSkyProfile> response) {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
 
-                    SkyProfile profile = response.body().getProfile();
-                    textViewUsedScoreAmount.setText(String.valueOf(profile.getUsed_score()));
-                    textViewUsername.setText(profile.getUsername());
-                    textViewDate.setText("registered to sky "+getRelativeTimeSpanString(profile.getTimestamp()* 1000L));
-                    progressBar.setVisibility(View.GONE);
-                } else if (response.code() == 429) {
-                    // Handle unauthorized
-                    toast("you are not authorized");
-                } else {
-                    toast("no success "+response.message());
+                        SkyProfile profile = response.body().getProfile();
+                        textViewUsedScoreAmount.setText(String.valueOf(profile.getUsed_score()));
+                        textViewUsername.setText(profile.getUsername());
+                        textViewDate.setText("registered to sky "+getRelativeTimeSpanString(profile.getTimestamp()* 1000L));
+                        progressBar.setVisibility(View.GONE);
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        toast("you are not authorized");
+                    } else {
+                        toast("no success "+response.message());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ModelSkyProfile> call, @NonNull Throwable t) {
-                Log.d("error_contact", t.toString());
-                progressBar.setVisibility(View.GONE);
-                finish();
-                toast("either you have no data or server is offline :')");
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ModelSkyProfile> call, @NonNull Throwable t) {
+                    Log.d("error_contact", t.toString());
+                    progressBar.setVisibility(View.GONE);
+                    finish();
+                    toast("either you have no data or server is offline :')");
+                }
+            });
+        } catch (Exception e) {
+
+        }
     }
 
     public void verifyAgain(View view) {
