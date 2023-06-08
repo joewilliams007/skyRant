@@ -19,7 +19,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UploadProjectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityUploadActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileReactionActivity"
             android:exported="false" />
         <activity
             android:name=".BackupActivity"
@@ -30,8 +39,6 @@
         <activity
             android:name=".SkyLoginActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".WeeklyActivity"
             android:exported="false" />

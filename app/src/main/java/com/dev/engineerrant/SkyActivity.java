@@ -19,20 +19,13 @@ import android.widget.TextView;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
-import com.dev.engineerrant.classes.dev.Profile;
-import com.dev.engineerrant.classes.sky.Reactions;
 import com.dev.engineerrant.classes.sky.SkyProfile;
+import com.dev.engineerrant.classes.sky.SkyProfileAuth;
 import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.network.methods.dev.MethodsProfile;
-import com.dev.engineerrant.network.methods.sky.MethodsSkyPost;
-import com.dev.engineerrant.network.methods.sky.MethodsSkyProfile;
-import com.dev.engineerrant.network.models.sky.ModelSkyPost;
-import com.dev.engineerrant.network.models.sky.ModelSkyProfile;
+import com.dev.engineerrant.network.methods.sky.MethodsSkyProfileAuth;
+import com.dev.engineerrant.network.models.sky.ModelSkyProfileAuth;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
-import com.dev.engineerrant.network.post.sky.BackupClient;
 import com.dev.engineerrant.network.post.sky.DeleteAccountClient;
-
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -60,19 +53,19 @@ public class SkyActivity extends AppCompatActivity {
 
     private void getProfile() {
         try {
-            MethodsSkyProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfile.class);
+            MethodsSkyProfileAuth methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfileAuth.class);
             String total_url = SKY_SERVER_URL+"my_profile/"+ Account.user_id()+"/"+Account.id();
 
-            Call<ModelSkyProfile> call = methods.getAllData(total_url);
+            Call<ModelSkyProfileAuth> call = methods.getAllData(total_url);
 
-            call.enqueue(new Callback<ModelSkyProfile>() {
+            call.enqueue(new Callback<ModelSkyProfileAuth>() {
                 @SuppressLint("SetTextI18n")
                 @Override
-                public void onResponse(@NonNull Call<ModelSkyProfile> call, @NonNull Response<ModelSkyProfile> response) {
+                public void onResponse(@NonNull Call<ModelSkyProfileAuth> call, @NonNull Response<ModelSkyProfileAuth> response) {
                     if (response.isSuccessful()) {
                         assert response.body() != null;
 
-                        SkyProfile profile = response.body().getProfile();
+                        SkyProfileAuth profile = response.body().getProfile();
                         textViewUsedScoreAmount.setText(String.valueOf(profile.getUsed_score()));
                         textViewUsername.setText(profile.getUsername());
                         textViewDate.setText("registered to sky "+getRelativeTimeSpanString(profile.getTimestamp()* 1000L));
@@ -86,8 +79,7 @@ public class SkyActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<ModelSkyProfile> call, @NonNull Throwable t) {
-                    Log.d("error_contact", t.toString());
+                public void onFailure(@NonNull Call<ModelSkyProfileAuth> call, @NonNull Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     finish();
                     toast("either you have no data or server is offline :')");

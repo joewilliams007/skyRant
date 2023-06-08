@@ -1,9 +1,6 @@
 package com.dev.engineerrant.network.models.sky;
 
-import com.dev.engineerrant.classes.sky.Reactions;
 import com.dev.engineerrant.classes.sky.SkyProfile;
-
-import java.util.List;
 
 // works for register & login
 public class ModelSkyProfile {

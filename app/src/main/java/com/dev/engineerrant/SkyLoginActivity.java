@@ -118,47 +118,52 @@ public class SkyLoginActivity extends AppCompatActivity {
     }
 
     private void getSkyVerifyKey() {
-        String total_url = SKY_SERVER_URL+"verify_key/"+Account.user_id()+"/"+Account.id();
-        MethodsVerifySkyKey methods = RetrofitClient.getRetrofitInstance().create(MethodsVerifySkyKey.class);
+        try {
+            String total_url = SKY_SERVER_URL+"verify_key/"+Account.user_id()+"/"+Account.id();
+            MethodsVerifySkyKey methods = RetrofitClient.getRetrofitInstance().create(MethodsVerifySkyKey.class);
 
-        Call<ModelVerifySkyKey> call = methods.getAllData(total_url);
-        call.enqueue(new Callback<ModelVerifySkyKey>() {
-            @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
-            @Override
-            public void onResponse(@NonNull Call<ModelVerifySkyKey> call, @NonNull Response<ModelVerifySkyKey> response) {
-                if (response.isSuccessful()) {
+            Call<ModelVerifySkyKey> call = methods.getAllData(total_url);
+            call.enqueue(new Callback<ModelVerifySkyKey>() {
+                @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+                @Override
+                public void onResponse(@NonNull Call<ModelVerifySkyKey> call, @NonNull Response<ModelVerifySkyKey> response) {
+                    if (response.isSuccessful()) {
 
-                    // Do  awesome stuff
-                    assert response.body() != null;
-                    
-                    Boolean success = response.body().getSuccess();
-                    Boolean error = response.body().getError();
-                    String verify_key = response.body().getVerify_key();
-                    String message = response.body().getMessage();
-                    String verify_post_id = response.body().getVerify_post_id();
+                        // Do  awesome stuff
+                        assert response.body() != null;
 
-                    if (error || !success) {
-                        message(message);
+                        Boolean success = response.body().getSuccess();
+                        Boolean error = response.body().getError();
+                        String verify_key = response.body().getVerify_key();
+                        String message = response.body().getMessage();
+                        String verify_post_id = response.body().getVerify_post_id();
+
+                        if (error || !success) {
+                            message(message);
+                        } else {
+                           uploadC(verify_post_id,verify_key);
+                        }
+
+
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        toast("error contacting github error 429");
                     } else {
-                       uploadC(verify_post_id,verify_key);
+
                     }
-
-
-                } else if (response.code() == 429) {
-                    // Handle unauthorized
-                    toast("error contacting github error 429");
-                } else {
-
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ModelVerifySkyKey> call, @NonNull Throwable t) {
-                Log.d("error_contact", t.toString());
-                toast("no network");
-                message(t.toString());
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ModelVerifySkyKey> call, @NonNull Throwable t) {
+                    Log.d("error_contact", t.toString());
+                    toast("no network");
+                    message(t.toString());
+                }
+            });
+        } catch (Exception e) {
+            toast("error connecting to sky. please retry");
+            message(e.toString());
+        }
     }
 
     private void message(String message) {
@@ -222,51 +227,56 @@ public class SkyLoginActivity extends AppCompatActivity {
     }
 
     private void askSkyToVerifyComment() {
-        String total_url = SKY_SERVER_URL+"verify_comment/"+Account.user_id()+"/"+Account.id();
-        MethodsVerifySkyKey methods = RetrofitClient.getRetrofitInstance().create(MethodsVerifySkyKey.class);
+        try {
+            String total_url = SKY_SERVER_URL+"verify_comment/"+Account.user_id()+"/"+Account.id();
+            MethodsVerifySkyKey methods = RetrofitClient.getRetrofitInstance().create(MethodsVerifySkyKey.class);
 
-        Call<ModelVerifySkyKey> call = methods.getAllData(total_url);
-        call.enqueue(new Callback<ModelVerifySkyKey>() {
-            @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
-            @Override
-            public void onResponse(@NonNull Call<ModelVerifySkyKey> call, @NonNull Response<ModelVerifySkyKey> response) {
-                if (response.isSuccessful()) {
+            Call<ModelVerifySkyKey> call = methods.getAllData(total_url);
+            call.enqueue(new Callback<ModelVerifySkyKey>() {
+                @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
+                @Override
+                public void onResponse(@NonNull Call<ModelVerifySkyKey> call, @NonNull Response<ModelVerifySkyKey> response) {
+                    if (response.isSuccessful()) {
 
-                    // Do  awesome stuff
-                    assert response.body() != null;
+                        // Do  awesome stuff
+                        assert response.body() != null;
 
-                    Boolean success = response.body().getSuccess();
-                    Boolean error = response.body().getError();
-                    String message = response.body().getMessage();
+                        Boolean success = response.body().getSuccess();
+                        Boolean error = response.body().getError();
+                        String message = response.body().getMessage();
 
-                    if (error || !success) {
-                        message(message);
+                        if (error || !success) {
+                            message(message);
+                        } else {
+                            message("success! session has been verified. you can now chat, react as a verified user\n\n"+message);
+                            toast("verified session");
+                            Account.setSessionSkyVerified(true);
+
+                            Intent intent = new Intent(SkyLoginActivity.this, SkyActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
+
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        toast("error contacting github error 429");
                     } else {
-                        message("success! session has been verified. you can now chat, react as a verified user\n\n"+message);
-                        toast("verified session");
-                        Account.setSessionSkyVerified(true);
 
-                        Intent intent = new Intent(SkyLoginActivity.this, SkyActivity.class);
-                        startActivity(intent);
-                        finish();
                     }
-
-
-                } else if (response.code() == 429) {
-                    // Handle unauthorized
-                    toast("error contacting github error 429");
-                } else {
-
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ModelVerifySkyKey> call, @NonNull Throwable t) {
-                Log.d("error_contact", t.toString());
-                toast("no network");
-                message(t.toString());
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ModelVerifySkyKey> call, @NonNull Throwable t) {
+                    Log.d("error_contact", t.toString());
+                    toast("no network");
+                    message(t.toString());
+                }
+            });
+        } catch (Exception e) {
+            toast("error connecting to sky. please retry");
+            message(e.toString());
+        }
     }
 
     public void finish(View view) {

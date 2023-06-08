@@ -78,6 +78,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh, imageViewSendEmoji;
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly, textViewEmojiPlus,textViewReactions;
     EditText editTextComment, editTextReaction;
+    ConstraintLayout react;
 
     ProgressBar progressBar;
     RecyclerView link_view;
@@ -123,11 +124,9 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         for (Reactions reaction : reactions){
                             s_reactions += reaction.getReaction()+" ";
                         }
+                        textViewReactions.setVisibility(View.VISIBLE);
                         if (s_reactions.length()>0) {
-                            textViewReactions.setVisibility(View.VISIBLE);
                             textViewReactions.setText(s_reactions);
-                        } else {
-                            textViewReactions.setVisibility(View.GONE);
                         }
                         textViewEmojiPlus.setVisibility(View.VISIBLE);
                     } else if (response.code() == 429) {
@@ -332,7 +331,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         imageViewRant = findViewById(R.id.imageViewRant);
         view_container = findViewById(R.id.view_container);
         chill = findViewById(R.id.chill);
-
+        react = findViewById(R.id.react);
         textViewWeekly = findViewById(R.id.textViewWeekly);
         chill.setVisibility(View.GONE);
         textViewWeekly.setVisibility(View.GONE);
@@ -340,9 +339,8 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         editTextReaction = findViewById(R.id.editTextReaction);
         textViewReactions = findViewById(R.id.textViewReactions);
         imageViewSendEmoji = findViewById(R.id.imageViewSendEmojie);
-        editTextReaction.setVisibility(View.GONE);
+        react.setVisibility(View.GONE);
         textViewEmojiPlus = findViewById(R.id.textViewEmojiPlus);
-        imageViewSendEmoji.setVisibility(View.GONE);
         textViewReactions.setVisibility(View.GONE);
         textViewEmojiPlus.setVisibility(View.GONE);
         view_container.setOnClickListener(new DoubleClickListener() {
@@ -1111,8 +1109,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void addEmoji(View view) {
         if (emojiPopup!=null && emojiPopup.isShowing()) {
             emojiPopup.toggle();
-            editTextReaction.setVisibility(View.GONE);
-            imageViewSendEmoji.setVisibility(View.GONE);
+            react.setVisibility(View.GONE);
         } else {
             if (Account.isLoggedIn()) {
                 if (Account.isSessionSkyVerified()) {
@@ -1124,8 +1121,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     emojiPopup.toggle(); // Toggles visibility of the Popup.
                     //emojiPopup.dismiss(); // Dismisses the Popup.
                     //emojiPopup.isShowing(); // Returns true when Popup is showing.
-                    editTextReaction.setVisibility(View.VISIBLE);
-                    imageViewSendEmoji.setVisibility(View.VISIBLE);
+                    react.setVisibility(View.VISIBLE);
                 } else {
                     Intent intent = new Intent(RantActivity.this, SkyLoginActivity.class);
                     startActivity(intent);
@@ -1157,8 +1153,12 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         }
 
-        editTextReaction.setVisibility(View.GONE);
-        imageViewSendEmoji.setVisibility(View.GONE);
+        uploadEmoji(reaction);
+    }
+
+    private void uploadEmoji(String reaction) {
+
+        react.setVisibility(View.GONE);
 
         emojiPopup.dismiss();
 
@@ -1208,5 +1208,17 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void viewReactions(View view) {
         Intent intent = new Intent(RantActivity.this, ReactionActivity.class);
         startActivity(intent);
+    }
+
+    public void reactUp(View view) {
+        uploadEmoji("\uD83D\uDC4D");
+    }
+
+    public void reactDown(View view) {
+        uploadEmoji("\uD83D\uDC4E");
+    }
+
+    public void reactPin(View view) {
+        uploadEmoji("\uD83D\uDCCC");
     }
 }

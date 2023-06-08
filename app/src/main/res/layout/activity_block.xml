@@ -41,7 +41,7 @@
             android:fontFamily="@font/nunito"
             android:onClick="switchGreen"
             android:padding="10dp"
-            android:text="block green dot users"
+            android:text="block green dot users (if post has under 5 ++)"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,12 +125,13 @@
 
         <TextView
             android:id="@+id/textViewBlockedUsersHelp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:fontFamily="@font/nunito"
             android:text="@string/blocked_users"
             android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switchWords" />
 

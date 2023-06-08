@@ -3,6 +3,7 @@ package com.dev.engineerrant;
 import static com.dev.engineerrant.CommunityPostActivity.communityItem;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
+import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,10 @@ import com.dev.engineerrant.adapters.CommunityMenuItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.classes.dev.Projects;
 import com.dev.engineerrant.network.methods.git.MethodsCommunity;
+import com.dev.engineerrant.network.methods.sky.MethodsCommunitySky;
 import com.dev.engineerrant.network.models.git.ModelCommunity;
 import com.dev.engineerrant.network.RetrofitClient;
+import com.dev.engineerrant.network.models.sky.ModelCommunitySky;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,8 @@ import retrofit2.Response;
 public class CommunityActivity extends AppCompatActivity {
     ProgressBar progressBar;
     RecyclerView recyclerView;
-    List<Projects> logs;
+    List<com.dev.engineerrant.classes.sky.Projects> logs;
+    List<com.dev.engineerrant.classes.dev.Projects> git_logs;
     String type = "all";
     TextView filter;
     String os = "all";
@@ -60,29 +64,27 @@ public class CommunityActivity extends AppCompatActivity {
         filter = findViewById(R.id.filter);
         switchCompat = findViewById(R.id.switchActive);
         filter.setText("");
-        getLogs();
+        getLogsSky();
     }
 
 
+    private void getLogsSky() {
+        MethodsCommunitySky methods = RetrofitClient.getRetrofitInstance().create(MethodsCommunitySky.class);
 
-    private void getLogs() {
-        MethodsCommunity methods = RetrofitClient.getRetrofitInstance().create(MethodsCommunity.class);
-        String total_url = "https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/community.json";
-
+        String total_url = SKY_SERVER_URL+"community";
         progressBar.setVisibility(View.VISIBLE);
         switchCompat.setVisibility(View.GONE);
 
-        Call<ModelCommunity> call = methods.getAllData(total_url);
-        call.enqueue(new Callback<ModelCommunity>() {
+        Call<ModelCommunitySky> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelCommunitySky>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<ModelCommunity> call, @NonNull Response<ModelCommunity> response) {
+            public void onResponse(@NonNull Call<ModelCommunitySky> call, @NonNull Response<ModelCommunitySky> response) {
                 if (response.isSuccessful()) {
 
                     // Do  awesome stuff
                     assert response.body() != null;
 
-                    long last_updated = response.body().getLast_updated();
                     logs = response.body().getProjects();
 
                     if (communityMenuItems==null) {
@@ -99,9 +101,51 @@ public class CommunityActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onFailure(@NonNull Call<ModelCommunitySky> call, @NonNull Throwable t) {
+
+                    Log.d("error_contact", t.toString());
+                    toast("sky failed .. fetching GitHub backup");
+                    getLogsGit();
+            }
+        });
+    }
+
+    private void getLogsGit() {
+        MethodsCommunity methods = RetrofitClient.getRetrofitInstance().create(MethodsCommunity.class);
+
+        String total_url = "https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/community.json";
+        progressBar.setVisibility(View.VISIBLE);
+        switchCompat.setVisibility(View.GONE);
+
+        Call<ModelCommunity> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelCommunity>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelCommunity> call, @NonNull Response<ModelCommunity> response) {
+                if (response.isSuccessful()) {
+
+                    // Do  awesome stuff
+                    assert response.body() != null;
+
+                    git_logs = response.body().getProjects();
+
+                    if (communityMenuItems==null) {
+                        createList();
+                    }
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                    toast("error contacting github error 429");
+                } else {
+                    toast("error contacting github");
+                }
+                progressBar.setVisibility(View.GONE);
+
+            }
+
+            @Override
             public void onFailure(@NonNull Call<ModelCommunity> call, @NonNull Throwable t) {
-                Log.d("error_contact", t.toString());
-                toast("no network");
+                    Log.d("error_contact", t.toString());
+                    toast("no network");
             }
         });
     }
@@ -120,32 +164,63 @@ public class CommunityActivity extends AppCompatActivity {
         __os.add("all");
         __type.add("all");
         // Some os types may include multiple Os. They are separated with a comma.
-        for (Projects item : logs){
 
-            for (String _type: item.getType().split(",")) {
-                if (!Objects.equals(_type, "")) {
-                    if (!__type.contains(_type)) {
-                        __type.add(_type);
+        if (logs != null) {
+            for (com.dev.engineerrant.classes.sky.Projects item : logs){
+
+                for (String _type: item.getType().split(",")) {
+                    if (!Objects.equals(_type, "")) {
+                        if (!__type.contains(_type)) {
+                            __type.add(_type);
+                        }
                     }
                 }
-            }
 
-            for (String _os: item.getOs().split(",")) {
-                if (!Objects.equals(_os, "")) {
-                    if (!__os.contains(_os)) {
-                        __os.add(_os);
+                for (String _os: item.getOs().split(",")) {
+                    if (!Objects.equals(_os, "")) {
+                        if (!__os.contains(_os)) {
+                            __os.add(_os);
+                        }
                     }
                 }
-            }
 
-            if (active) {
-                if (item.getActive()) {
+                if (active) {
+                    if (item.getActive() == 1) {
+                        sortTypeSky(item);
+                    }
+                } else {
+                    sortTypeSky(item);
+                }
+            }
+        } else {
+            for (Projects item : git_logs){
+
+                for (String _type: item.getType().split(",")) {
+                    if (!Objects.equals(_type, "")) {
+                        if (!__type.contains(_type)) {
+                            __type.add(_type);
+                        }
+                    }
+                }
+
+                for (String _os: item.getOs().split(",")) {
+                    if (!Objects.equals(_os, "")) {
+                        if (!__os.contains(_os)) {
+                            __os.add(_os);
+                        }
+                    }
+                }
+
+                if (active) {
+                    if (item.getActive()) {
+                        sortType(item);
+                    }
+                } else {
                     sortType(item);
                 }
-            } else {
-                sortType(item);
             }
         }
+
 
 
         if (communityMenuItems==null) {
@@ -239,6 +314,25 @@ public class CommunityActivity extends AppCompatActivity {
 
     }
 
+    private void addItemSky(com.dev.engineerrant.classes.sky.Projects item) {
+        Boolean active = false;
+        if (item.getActive() == 1) {
+            active = true;
+        }
+        menuItems.add(new CommunityItem(item.getTitle(),
+                item.getOs(),
+                item.getType(),
+                item.getTimestamp_added(),
+                item.getDescription(),
+                item.getRelevant_dr_url(),
+                item.getWebsite(),
+                item.getGithub(),
+                item.getLanguage(),
+                active
+        ));
+
+    }
+
     private void sortType(Projects item) {
         if (type.equals("all")) {
             sortOs(item);
@@ -252,6 +346,22 @@ public class CommunityActivity extends AppCompatActivity {
             addItem(item);
         } else if (item.getOs().toLowerCase().contains(os.toLowerCase())) {
             addItem(item);
+        }
+    }
+
+    private void sortTypeSky(com.dev.engineerrant.classes.sky.Projects item) {
+        if (type.equals("all")) {
+            sortOsSky(item);
+        } else if (item.getType().contains(type)) {
+            sortOsSky(item);
+        }
+    }
+
+    private void sortOsSky(com.dev.engineerrant.classes.sky.Projects item) {
+        if (os.equals("all")) {
+            addItemSky(item);
+        } else if (item.getOs().toLowerCase().contains(os.toLowerCase())) {
+            addItemSky(item);
         }
     }
 

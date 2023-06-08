@@ -1,7 +1,7 @@
 package com.dev.engineerrant.network.methods.sky;
 
-import com.dev.engineerrant.network.models.sky.ModelSkyPost;
 import com.dev.engineerrant.network.models.sky.ModelSkyProfile;
+import com.dev.engineerrant.network.models.sky.ModelSkyProfileAuth;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

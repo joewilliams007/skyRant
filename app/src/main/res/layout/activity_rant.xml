@@ -251,27 +251,13 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="EMOJIE1, EMOJIE2"
+                    android:text=" "
                     android:onClick="viewReactions"
                     android:textColor="?attr/colorPrimaryVariant"
                     app:layout_constraintEnd_toStartOf="@+id/textViewEmojiPlus"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/insideRant" />
 
-                <com.vanniktech.emoji.EmojiEditText
-                    android:id="@+id/editTextReaction"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rounded_corner"
-                    android:imeOptions="actionSend"
-                    android:inputType="textCapSentences"
-                    android:maxLines="1"
-                    android:padding="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageViewSendEmojie"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewEmojiPlus" />
 
                 <TextView
                     android:id="@+id/textViewEmojiPlus"
@@ -286,18 +272,44 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/insideRant" />
 
-                <ImageView
-                    android:id="@+id/imageViewSendEmojie"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:onClick="sendEmoji"
-                    android:padding="12dp"
-                    android:rotation="180"
-                    app:layout_constraintBottom_toBottomOf="@+id/editTextReaction"
-                    app:layout_constraintEnd_toEndOf="@+id/textViewEmojiPlus"
-                    app:layout_constraintTop_toTopOf="@+id/editTextReaction"
-                    app:srcCompat="@drawable/back" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/react"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewReactions">
 
+
+                    <com.vanniktech.emoji.EmojiEditText
+                        android:id="@+id/editTextReaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="emoji"
+                        android:imeOptions="actionSend"
+                        android:inputType="textCapSentences"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:textColorHint="?attr/colorPrimaryVariant"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageViewSendEmojie"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/imageViewSendEmojie"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="sendEmoji"
+                        android:padding="12dp"
+                        android:rotation="180"
+                        app:layout_constraintBottom_toBottomOf="@+id/editTextReaction"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/editTextReaction"
+                        app:srcCompat="@drawable/back" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

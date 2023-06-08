@@ -2,7 +2,6 @@ package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 import static com.dev.engineerrant.app.toast;
-import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,14 +19,14 @@ import android.widget.TextView;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.classes.sky.SkyProfile;
+import com.dev.engineerrant.classes.sky.SkyProfileAuth;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.methods.sky.MethodsSkyProfile;
-import com.dev.engineerrant.network.models.sky.ModelSkyProfile;
+import com.dev.engineerrant.network.methods.sky.MethodsSkyProfileAuth;
+import com.dev.engineerrant.network.models.sky.ModelSkyProfileAuth;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
-import com.dev.engineerrant.network.post.RantClient;
 import com.dev.engineerrant.network.post.sky.BackupClient;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import okhttp3.MediaType;
@@ -42,7 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BackupActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
-    SkyProfile profile;
+    SkyProfileAuth profile;
     TextView textViewRestore, textViewBackup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,15 +90,15 @@ public class BackupActivity extends AppCompatActivity {
     }
     private void getProfile() {
         progressBar.setVisibility(View.VISIBLE);
-        MethodsSkyProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfile.class);
+        MethodsSkyProfileAuth methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfileAuth.class);
         String total_url = SKY_SERVER_URL+"my_profile/"+ Account.user_id()+"/"+Account.id();
 
-        Call<ModelSkyProfile> call = methods.getAllData(total_url);
+        Call<ModelSkyProfileAuth> call = methods.getAllData(total_url);
 
-        call.enqueue(new Callback<ModelSkyProfile>() {
+        call.enqueue(new Callback<ModelSkyProfileAuth>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<ModelSkyProfile> call, @NonNull Response<ModelSkyProfile> response) {
+            public void onResponse(@NonNull Call<ModelSkyProfileAuth> call, @NonNull Response<ModelSkyProfileAuth> response) {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     profile = response.body().getProfile();
@@ -130,7 +128,7 @@ public class BackupActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ModelSkyProfile> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ModelSkyProfileAuth> call, @NonNull Throwable t) {
                 Log.d("error_contact", t.toString());
                 progressBar.setVisibility(View.GONE);
             }

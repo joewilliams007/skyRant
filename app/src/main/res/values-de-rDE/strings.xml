@@ -43,7 +43,7 @@
     <string name="switch_block_words">Wörter auch in Kommentaren blockieren</string>
     <string name="switch_block_users">Accounts auch in Kommentaren blockieren</string>
     <string name="heading_blocking">B l o c k i e r e n</string>
-    <string name="blocked_users">blockierte Accounts (Komma separiert, genauer Benutzername eingeben)</string>
+    <string name="blocked_users">blockierte Accounts (Komma separiert, genauer Benutzername eingeben) auch unter Profil möglich</string>
     <string name="logout">Ausloggen</string>
     <string name="profile"><![CDATA[> P r o f i l]]></string>
     <string name="language">Sprache</string>

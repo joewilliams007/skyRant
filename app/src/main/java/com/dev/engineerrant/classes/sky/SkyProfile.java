@@ -1,5 +1,7 @@
 package com.dev.engineerrant.classes.sky;
 
+import java.util.List;
+
 public class SkyProfile {
     int user_id;
     String username;
@@ -11,6 +13,16 @@ public class SkyProfile {
     String following;
     String background;
     int timestamp;
+    int reactions_count;
+    List<Reactions> reactions;
+
+    public List<Reactions> getReactions() {
+        return reactions;
+    }
+
+    public int getReactions_count() {
+        return reactions_count;
+    }
 
     public String getFollowing() {
         return following;

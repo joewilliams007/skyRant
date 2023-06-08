@@ -44,11 +44,11 @@
     <string name="heading_community"><![CDATA[> c o m m u n i t y]]></string>
     <string name="watchrant_download">watchRant - download</string>
     <string name="hint_words" translatable="false">ai, gpt</string>
-    <string name="help_enter_words_to_block">"enter words to block (comma seperated, rants with words containing blocked word will also be blocked) "</string>
+    <string name="help_enter_words_to_block">"enter words to block (comma separated, rants with words containing blocked word will also be blocked) "</string>
     <string name="switch_block_words">block words in comments as well</string>
     <string name="switch_block_users">block users in comments as well</string>
     <string name="heading_blocking">B l o c k i n g</string>
-    <string name="blocked_users">blocked users (comma seperated, enter exact username)</string>
+    <string name="blocked_users">blocked users (comma separated, enter exact username, blocking can be done under profile aswell)</string>
     <string name="logout">logout</string>
     <string name="profile"><![CDATA[> p r o f i l e]]></string>
     <string name="hint_users" translatable="false">AOK, kiki</string>

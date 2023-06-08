@@ -1,9 +1,12 @@
 package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
+import static com.dev.engineerrant.ProfileReactionActivity.profile_reactions;
+import static com.dev.engineerrant.ReactionActivity.reactions;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
+import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,10 +43,15 @@ import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.dev.Counts;
 import com.dev.engineerrant.classes.dev.Rants;
 import com.dev.engineerrant.classes.dev.User_avatar;
+import com.dev.engineerrant.classes.sky.Reactions;
 import com.dev.engineerrant.network.methods.git.MethodsGithub;
 import com.dev.engineerrant.network.methods.dev.MethodsProfile;
+import com.dev.engineerrant.network.methods.sky.MethodsSkyPost;
+import com.dev.engineerrant.network.methods.sky.MethodsSkyProfile;
 import com.dev.engineerrant.network.models.git.ModelGithub;
 import com.dev.engineerrant.network.models.dev.ModelProfile;
+import com.dev.engineerrant.network.models.sky.ModelSkyPost;
+import com.dev.engineerrant.network.models.sky.ModelSkyProfile;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.post.VoteClient;
@@ -51,6 +59,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -67,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
     ImageView imageViewProfile, imageViewShare, imageViewProfileAlone, imageViewGithub, imageViewOptions;
     CardView cardViewProfile;
     TabLayout tabLayout;
+    Integer reactions_count = null;
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         Tools.setTheme(this);
@@ -80,7 +90,43 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         id = intent.getStringExtra("user_id");
         tabLayout.setVisibility(View.GONE);
         cardViewProfile.setVisibility(View.INVISIBLE);
-        requestProfile();
+        profile_reactions = null;
+        requestSkyProfile();
+    }
+
+    private void requestSkyProfile() {
+        try {
+            MethodsSkyProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsSkyProfile.class);
+            String total_url = SKY_SERVER_URL+"profile/"+id;
+
+            Call<ModelSkyProfile> call = methods.getAllData(total_url);
+
+            call.enqueue(new Callback<ModelSkyProfile>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onResponse(@NonNull Call<ModelSkyProfile> call, @NonNull Response<ModelSkyProfile> response) {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
+                        profile_reactions = response.body().getProfile().getReactions();
+                        reactions_count = response.body().getProfile().getReactions_count();
+                        requestProfile();
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        requestProfile();
+                    } else {
+                        requestProfile();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelSkyProfile> call, @NonNull Throwable t) {
+                    Log.d("error_contact", t.toString());
+                    requestProfile();
+                }
+            });
+        } catch (Exception ignored) {
+            requestProfile();
+        }
     }
 
     private void initialize() {
@@ -145,6 +191,11 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     tabLayout.addTab(tabLayout.newTab().setText(comments_count+"\nComments").setId(1));
                     tabLayout.addTab(tabLayout.newTab().setText(upvoted_count+"\n++'s").setId(2));
                     // tabLayout.addTab(tabLayout.newTab().setText(favorites_count+"\nFavorites").setId(3));
+
+                    if (profile_reactions !=null) {
+                        tabLayout.addTab(tabLayout.newTab().setText(reactions_count+"\nReactions").setId(3));
+                    }
+
                     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                     tabLayout.setVisibility(View.VISIBLE);
 
@@ -158,7 +209,10 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                             } else if (tab.getId()==2) {
                                 createFeedList(upVoted_rants);
                             } else if (tab.getId()==3) {
-                                createFeedList(favorites_rants);
+                                requestSkyProfile();
+                                Intent intent = new Intent(ProfileActivity.this, ProfileReactionActivity.class);
+                                startActivity(intent);
+                                Objects.requireNonNull(tabLayout.getTabAt(0)).select();
                             }
                         }
 

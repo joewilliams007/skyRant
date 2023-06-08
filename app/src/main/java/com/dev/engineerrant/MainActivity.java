@@ -398,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
             boolean containsBlocked = false;
 
             if (Account.blockGreenDot()) {
-                if (rant.getUser_avatar().getI()==null) {
+                if (rant.getUser_avatar().getI()==null && rant.getScore()<5) {
                     containsBlocked = true;
                 }
             }

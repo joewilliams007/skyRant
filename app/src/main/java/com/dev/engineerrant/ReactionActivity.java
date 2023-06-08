@@ -43,7 +43,8 @@ public class ReactionActivity extends AppCompatActivity {
                         item.getUsername(),
                         "#"+item.getColor(),
                         item.getAvatar(),
-                        item.getReaction()
+                        item.getReaction(),
+                        String.valueOf(item.getPost_id())
                 ));
             }
         } catch (Exception ignored) {
