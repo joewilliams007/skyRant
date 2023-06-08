@@ -463,8 +463,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void addCommunityProject(View view) {
+        /*
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/joewilliams007/jsonapi/issues"));
         startActivity(browserIntent);
+        */
+        Intent intent = new Intent(SettingsActivity.this, UploadProjectActivity.class);
+        startActivity(intent);
     }
 
     public void devrantWebsite(View view) {

@@ -209,7 +209,6 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                             } else if (tab.getId()==2) {
                                 createFeedList(upVoted_rants);
                             } else if (tab.getId()==3) {
-                                requestSkyProfile();
                                 Intent intent = new Intent(ProfileActivity.this, ProfileReactionActivity.class);
                                 startActivity(intent);
                                 Objects.requireNonNull(tabLayout.getTabAt(0)).select();

@@ -23,17 +23,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewHintGithub"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/nunito"
-        android:padding="10dp"
-        android:text="github (optional)"
-        android:textColor="?attr/colorOnPrimary"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true"
+        android:indeterminateTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/top">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewHintGithub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:padding="10dp"
+                android:text="github (optional)"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextGithub"
@@ -50,18 +79,19 @@
         android:textColor="?attr/colorOnPrimary"
         android:textColorHint="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewHintGithub"
-        app:layout_constraintTop_toBottomOf="@+id/top" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintGithub" />
 
     <TextView
         android:id="@+id/auto_fill"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/rounded_corner_item"
         android:fontFamily="@font/nunito"
         android:gravity="center_horizontal"
         android:padding="10dp"
+        android:onClick="fetchGithub"
         android:text="auto fill some fields by fetching GitHub"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +100,7 @@
 
     <TextView
         android:id="@+id/textViewHintTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
@@ -95,12 +125,12 @@
         android:textColor="?attr/colorOnPrimary"
         android:textColorHint="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewHintTitle"
-        app:layout_constraintTop_toBottomOf="@+id/auto_fill" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintTitle" />
 
     <TextView
         android:id="@+id/textViewHintType"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
@@ -124,10 +154,9 @@
         android:padding="10dp"
         android:textColor="?attr/colorOnPrimary"
         android:textColorHint="?attr/colorPrimaryVariant"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewHintType"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewHintType"
-        app:layout_constraintTop_toTopOf="@+id/textViewHintType" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintType" />
 
     <TextView
         android:id="@+id/textViewHintDesc"
@@ -141,7 +170,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHintType" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextType" />
 
     <EditText
         android:id="@+id/editTextDesc"
@@ -152,8 +181,7 @@
         android:ems="10"
         android:fontFamily="@font/nunito"
         android:hint="description"
-        android:inputType="textPersonName"
-        android:maxLines="1"
+        android:inputType="textMultiLine"
         android:padding="10dp"
         android:textColor="?attr/colorOnPrimary"
         android:textColorHint="?attr/colorPrimaryVariant"
@@ -163,7 +191,7 @@
 
     <TextView
         android:id="@+id/textViewHintWebsite"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
@@ -189,12 +217,12 @@
         android:textColorHint="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewHintWebsite"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDesc" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintWebsite" />
 
     <TextView
         android:id="@+id/textViewHintOwner"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
@@ -220,12 +248,12 @@
         android:textColorHint="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewHintOwner"
-        app:layout_constraintTop_toBottomOf="@+id/editTextWebsite" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintOwner" />
 
     <TextView
         android:id="@+id/textViewHintOwnerUserId"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginStart="8dp"
@@ -252,8 +280,8 @@
         android:textColorHint="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewHintOwnerUserId"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOwner" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintOwnerUserId" />
 
     <TextView
         android:id="@+id/textViewHintOs"
@@ -262,7 +290,7 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
         android:padding="10dp"
-        android:text="supported os (optional, comma sepaarated)\nplease view existing naming"
+        android:text="supported os (optional, comma separated)\nplease view existing naming"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -277,7 +305,7 @@
         android:ems="10"
         android:fontFamily="@font/nunito"
         android:hint="os (comma separated)"
-        android:inputType="number"
+        android:inputType="textPersonName"
         android:maxLines="1"
         android:padding="10dp"
         android:textColor="?attr/colorOnPrimary"
@@ -287,6 +315,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHintOs" />
 
+    <TextView
+        android:id="@+id/textViewHintLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/nunito"
+        android:padding="10dp"
+        android:text="Programming language"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextOs" />
+
+    <EditText
+        android:id="@+id/editTextLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:ems="10"
+        android:fontFamily="@font/nunito"
+        android:hint="programming language"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorPrimaryVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHintLanguage" />
+
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchActive"
         android:layout_width="0dp"
@@ -295,10 +355,29 @@
         android:checked="true"
         android:fontFamily="@font/nunito"
         android:padding="10dp"
-        android:text="sd"
+        android:text="active"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOs"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLanguage"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchArchived"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:checked="false"
+        android:fontFamily="@font/nunito"
+        android:padding="10dp"
+        android:text="archived"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchActive"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
