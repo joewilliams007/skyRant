@@ -23,6 +23,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/upload"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:onClick="uploadProject"
+        android:text="@string/upload"
+        android:textColor="?attr/colorPrimaryVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -59,7 +72,7 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
                 android:padding="10dp"
-                android:text="github (optional)"
+                android:text="github repo link (optional)"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -220,19 +233,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHintWebsite" />
 
-    <TextView
-        android:id="@+id/textViewHintOwner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/nunito"
-        android:padding="10dp"
-        android:text="owner*"
-        android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextWebsite" />
+            <TextView
+                android:id="@+id/textViewHintDRUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:padding="10dp"
+                android:text="relevant devRant post Url (optional)"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextWebsite" />
 
-    <EditText
+            <EditText
+                android:id="@+id/editTextDRUrl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="?attr/colorSurfaceVariant"
+                android:ems="10"
+                android:fontFamily="@font/nunito"
+                android:hint="relevant devRant post Url"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="?attr/colorOnPrimary"
+                android:textColorHint="?attr/colorPrimaryVariant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.761"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewHintDRUrl" />
+
+            <TextView
+                android:id="@+id/textViewHintOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/nunito"
+                android:padding="10dp"
+                android:text="owner*"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDRUrl" />
+
+            <EditText
         android:id="@+id/editTextOwner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -322,7 +367,7 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
         android:padding="10dp"
-        android:text="Programming language"
+        android:text="programming language"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -352,7 +397,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:checked="true"
+        android:checked="false"
         android:fontFamily="@font/nunito"
         android:padding="10dp"
         android:text="active"

@@ -29,6 +29,5 @@ public interface UploadProjectClient {
             @Part("archived") RequestBody archived,
             @Part("owner_user_id") RequestBody owner_user_id,
             @Part("owner") RequestBody owner
-
     );
 }

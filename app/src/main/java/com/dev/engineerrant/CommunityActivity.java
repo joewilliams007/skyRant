@@ -420,4 +420,9 @@ public class CommunityActivity extends AppCompatActivity {
     public void switchActive(View view) {
         createList();
     }
+
+    public void uploadProject(View view) {
+        Intent intent = new Intent(CommunityActivity.this, UploadProjectActivity.class);
+        startActivity(intent);
+    }
 }
