@@ -25,7 +25,9 @@ import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.network.RetrofitClient;
+import com.dev.engineerrant.network.methods.dev.MethodsProfile;
 import com.dev.engineerrant.network.methods.git.MethodsRepo;
+import com.dev.engineerrant.network.models.dev.ModelProfile;
 import com.dev.engineerrant.network.models.git.ModelRepo;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.post.RantClient;
@@ -55,7 +57,55 @@ public class UploadProjectActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_project);
+
+        if (!Account.isLoggedIn()) {
+            Intent intent = new Intent(UploadProjectActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        if (!Account.isSessionSkyVerified()) {
+            Intent intent = new Intent(UploadProjectActivity.this, SkyLoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         initialize();
+        checkScore();
+    }
+
+    private void checkScore() {
+        MethodsProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsProfile.class);
+        String total_url = BASE_URL + "users/"+Account.user_id()+"?app=3";
+        progressBar.setVisibility(View.VISIBLE);
+        Call<ModelProfile> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelProfile>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelProfile> call, @NonNull Response<ModelProfile> response) {
+                if (response.isSuccessful()) {
+                    // Do awesome stuff
+                    assert response.body() != null;
+
+                    if (response.body().getProfile().getScore()<500) {
+                        finish();
+                        toast("500 devRant points required");
+                    }
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                } else {
+                    toast(response.message());
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ModelProfile> call, @NonNull Throwable t) {
+                Log.d("error_contact", t.toString());
+                toast(t.toString());
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void initialize() {
