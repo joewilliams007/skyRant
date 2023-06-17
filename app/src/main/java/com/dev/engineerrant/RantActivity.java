@@ -500,25 +500,27 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             String s_check = s.toLowerCase();
             boolean containsBlocked = false;
 
-            if (Account.blockGreenDot()) {
-                if (comment.getUser_avatar().getI()==null) {
-                    containsBlocked = true;
-                }
-            }
-
-            if (Account.blockWordsComments()&&Account.blockedWords()!=null&&!Account.blockedWords().equals("") && !containsBlocked) {
-                for (String word : blockedWords) {
-                    if (s_check.contains(word)) {
+            if (!String.valueOf(comment.getUser_id()).equals(user_id)) {
+                if (Account.blockGreenDot()) {
+                    if (comment.getUser_avatar().getI()==null) {
                         containsBlocked = true;
-                        break;
                     }
                 }
-            }
-            if (Account.blockUsersComments()&&Account.blockedUsers()!=null&&!Account.blockedUsers().equals("") && !containsBlocked) {
-                for (String user : blockedUsers) {
-                    if (username.equals(user.toLowerCase())) {
-                        containsBlocked = true;
-                        break;
+
+                if (Account.blockWordsComments()&&Account.blockedWords()!=null&&!Account.blockedWords().equals("") && !containsBlocked) {
+                    for (String word : blockedWords) {
+                        if (s_check.contains(word)) {
+                            containsBlocked = true;
+                            break;
+                        }
+                    }
+                }
+                if (Account.blockUsersComments()&&Account.blockedUsers()!=null&&!Account.blockedUsers().equals("") && !containsBlocked) {
+                    for (String user : blockedUsers) {
+                        if (username.equals(user.toLowerCase())) {
+                            containsBlocked = true;
+                            break;
+                        }
                     }
                 }
             }
