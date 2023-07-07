@@ -143,32 +143,35 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                         String uri_bg = response.body().getProfile().getAvatar_bg_url();
                         String uri = response.body().getProfile().getAvatar_frame_url();
                         String _uri_profile_background = response.body().getProfile().getProfile_bg_url();
-
-                        if (_uri_profile_background.contains(".gif") || _uri_profile_background.contains(".png") || _uri_profile_background.contains(".jpg")|| _uri_profile_background.contains(".jpeg")) {
-                            try {
-                                if (_uri_profile_background.contains(".png")) {
-                                    try {
-                                        ApngImageLoader.ApngConfig apngConfig = new ApngImageLoader.ApngConfig(999999999, true);
-                                        ApngImageLoader.getInstance().init(ProfileActivity.this);
-                                        ApngImageLoader.getInstance().displayApng(_uri_profile_background, imageViewBackgroundStill, apngConfig);
-                                    } catch (Exception e) {
+                        try {
+                            if (_uri_profile_background.contains(".gif") || _uri_profile_background.contains(".png") || _uri_profile_background.contains(".jpg")|| _uri_profile_background.contains(".jpeg")) {
+                                try {
+                                    if (_uri_profile_background.contains(".png")) {
+                                        try {
+                                            ApngImageLoader.ApngConfig apngConfig = new ApngImageLoader.ApngConfig(999999999, true);
+                                            ApngImageLoader.getInstance().init(ProfileActivity.this);
+                                            ApngImageLoader.getInstance().displayApng(_uri_profile_background, imageViewBackgroundStill, apngConfig);
+                                        } catch (Exception e) {
+                                            Glide
+                                                    .with(MyApplication.getAppContext())
+                                                    .load(_uri_profile_background)
+                                                    .into(new DrawableImageViewTarget(imageViewBackgroundStill));
+                                        }
+                                    }  else {
                                         Glide
                                                 .with(MyApplication.getAppContext())
                                                 .load(_uri_profile_background)
                                                 .into(new DrawableImageViewTarget(imageViewBackgroundStill));
                                     }
-                                }  else {
-                                    Glide
-                                            .with(MyApplication.getAppContext())
-                                            .load(_uri_profile_background)
-                                            .into(new DrawableImageViewTarget(imageViewBackgroundStill));
+
+                                } catch (Exception ignored){
+
                                 }
-
-                            } catch (Exception ignored){
-
+                            } else {
+                                uri_profile_background = response.body().getProfile().getProfile_bg_url();
                             }
-                        } else {
-                            uri_profile_background = response.body().getProfile().getProfile_bg_url();
+                        } catch (Exception ignored){
+
                         }
                         try {
                             if (uri_bg.contains(".png")) {
