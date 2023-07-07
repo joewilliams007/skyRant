@@ -2,16 +2,13 @@ package com.dev.engineerrant;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 import static com.dev.engineerrant.ProfileReactionActivity.profile_reactions;
-import static com.dev.engineerrant.ReactionActivity.reactions;
 import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,70 +18,51 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
+import com.dev.engineerrant.animations.ScaleImageView;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.dev.Counts;
 import com.dev.engineerrant.classes.dev.Rants;
 import com.dev.engineerrant.classes.dev.User_avatar;
-import com.dev.engineerrant.classes.sky.Reactions;
-import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.DownloadImageTaskAlter;
 import com.dev.engineerrant.network.methods.git.MethodsGithub;
 import com.dev.engineerrant.network.methods.dev.MethodsProfile;
-import com.dev.engineerrant.network.methods.sky.MethodsSkyPost;
 import com.dev.engineerrant.network.methods.sky.MethodsSkyProfile;
 import com.dev.engineerrant.network.models.git.ModelGithub;
 import com.dev.engineerrant.network.models.dev.ModelProfile;
-import com.dev.engineerrant.network.models.sky.ModelSkyPost;
 import com.dev.engineerrant.network.models.sky.ModelSkyProfile;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.post.VoteClient;
 
-import com.github.sahasbhop.apngview.ApngDrawable;
 import com.github.sahasbhop.apngview.ApngImageLoader;
 
 import com.google.android.material.tabs.TabLayout;
 
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -99,7 +77,8 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
     String id, github = null, website = null, image = null, _username = null, user_avatar = null ,color;
     TextView textViewAbout, textViewGithub, textViewUsername, textViewSkills, textViewScore, textViewWebsite, textViewJoined,textViewLocation;
     ImageView imageViewProfile, imageViewShare, imageViewGithub, imageViewOptions, imageViewFrame,imageViewProfileBg;
-    WebView webViewProfile,webViewFrame;
+    VideoView imageViewBackground;
+    ScaleImageView imageViewBackgroundStill;
     TabLayout tabLayout;
     Integer reactions_count = null;
     @Override
@@ -118,6 +97,30 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         profile_reactions = null;
         requestSkyProfile();
         requestProfile();
+    }
+    String uri_profile_background;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (uri_profile_background!=null) {
+                imageViewBackground.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setLooping(true);
+                    }
+                });
+
+                Uri _uri = Uri.parse(uri_profile_background);
+                imageViewBackground.setVideoURI(_uri);
+                imageViewBackground.start();
+                imageViewBackground.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            imageViewBackground.setVisibility(View.GONE);
+        }
+
     }
 
     private void requestSkyProfile() {
@@ -139,7 +142,34 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                         // String uri = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/items/322330/46461aaea39b18a4a3da2e6d3cf253006f2d6193.png";
                         String uri_bg = response.body().getProfile().getAvatar_bg_url();
                         String uri = response.body().getProfile().getAvatar_frame_url();
+                        String _uri_profile_background = response.body().getProfile().getProfile_bg_url();
 
+                        if (_uri_profile_background.contains(".gif") || _uri_profile_background.contains(".png") || _uri_profile_background.contains(".jpg")|| _uri_profile_background.contains(".jpeg")) {
+                            try {
+                                if (_uri_profile_background.contains(".png")) {
+                                    try {
+                                        ApngImageLoader.ApngConfig apngConfig = new ApngImageLoader.ApngConfig(999999999, true);
+                                        ApngImageLoader.getInstance().init(ProfileActivity.this);
+                                        ApngImageLoader.getInstance().displayApng(_uri_profile_background, imageViewBackgroundStill, apngConfig);
+                                    } catch (Exception e) {
+                                        Glide
+                                                .with(MyApplication.getAppContext())
+                                                .load(_uri_profile_background)
+                                                .into(new DrawableImageViewTarget(imageViewBackgroundStill));
+                                    }
+                                }  else {
+                                    Glide
+                                            .with(MyApplication.getAppContext())
+                                            .load(_uri_profile_background)
+                                            .into(new DrawableImageViewTarget(imageViewBackgroundStill));
+                                }
+
+                            } catch (Exception ignored){
+
+                            }
+                        } else {
+                            uri_profile_background = response.body().getProfile().getProfile_bg_url();
+                        }
                         try {
                             if (uri_bg.contains(".png")) {
                                 try {
@@ -184,6 +214,22 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
 
                         }
 
+                        try {
+                            imageViewBackground.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                @Override
+                                public void onPrepared(MediaPlayer mp) {
+                                    mp.setLooping(true);
+                                }
+                            });
+
+                            Uri _uri = Uri.parse(uri_profile_background);
+                            imageViewBackground.setVideoURI(_uri);
+                            imageViewBackground.start();
+                            imageViewBackground.setVisibility(View.VISIBLE);
+                        } catch (Exception ignored){
+
+                        }
+
                     } else if (response.code() == 429) {
                         // Handle unauthorized
 
@@ -219,6 +265,8 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
 
         imageViewFrame = findViewById(R.id.imageViewFrame);
         imageViewProfileBg = findViewById(R.id.imageViewProfileBg);
+        imageViewBackground = findViewById(R.id.videoViewBackground);
+        imageViewBackgroundStill = findViewById(R.id.imageViewBackgroundStill);
     }
 
     private void requestProfile() {

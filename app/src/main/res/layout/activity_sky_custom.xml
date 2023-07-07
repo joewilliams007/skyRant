@@ -230,8 +230,7 @@
                     android:layout_margin="20dp"
                     android:fontFamily="@font/nunito"
                     android:padding="10dp"
-                    android:text="profile background url"
-                    android:visibility="gone"
+                    android:text="profile background url\n(video) .webm from steam/backgrounds\n(right click, copy video link)\nor regular image/gif"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/editTextAvatarBgUrl" />
@@ -245,7 +244,6 @@
                     android:ems="10"
                     android:fontFamily="@font/nunito"
                     android:importantForAutofill="no"
-                    android:visibility="gone"
                     android:inputType="textUri"
                     android:padding="10dp"
                     android:textColor="?attr/colorOnPrimary"

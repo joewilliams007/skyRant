@@ -56,7 +56,7 @@ public class DownloadImageTaskAlter extends AsyncTask<String, Void, Drawable> {
         return new BitmapDrawable(bitmap);
     }
     private static final int[] FROM_COLOR = new int[]{123,200,164};
-    private static final int THRESHOLD = 6;
+    private static final int THRESHOLD = 10;
     private boolean match(int pixel)
     {
         //There may be a better way to match, but I wanted to do a comparison ignoring

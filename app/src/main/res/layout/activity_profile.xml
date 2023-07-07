@@ -47,140 +47,175 @@
                 android:id="@+id/inside"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top">
 
-
-
-                <ImageView
-                    android:id="@+id/imageViewProfileBg"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:onClick="openProfileIcon"
-                    android:padding="14dp"
+                <VideoView
+                    android:id="@+id/videoViewBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
                     android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageViewProfile"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:onClick="openProfileIcon"
-                    android:padding="14dp"
+                <com.dev.engineerrant.animations.ScaleImageView
+                    android:id="@+id/imageViewBackgroundStill"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <ImageView
-                    android:id="@+id/imageViewFrame"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:onClick="openProfileIcon"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/textViewScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintStart_toEndOf="@+id/textViewJoined"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
-
-                <TextView
-                    android:id="@+id/textViewAbout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewProfile" />
-
-                <TextView
-                    android:id="@+id/textViewSkills"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
-
-                <TextView
-                    android:id="@+id/textViewGithub"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="openGithub"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewSkills" />
-
-                <TextView
-                    android:id="@+id/textViewWebsite"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="openWebsite"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewGithub" />
-
-                <TextView
-                    android:id="@+id/textViewLocation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="openWebsite"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewWebsite" />
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/insideMargin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewScore"
-                    app:tabIndicatorAnimationMode="elastic"
-                    app:tabRippleColor="?attr/colorSurface"
-                    app:tabIndicatorColor="?attr/colorPrimaryVariant"
-                    app:tabSelectedTextColor="?attr/colorPrimaryVariant"
-                    app:tabTextColor="?attr/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/textViewJoined"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+                    app:layout_constraintTop_toTopOf="parent">
 
+                    <ImageView
+                        android:id="@+id/imageViewProfileBg"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:onClick="openProfileIcon"
+                        android:padding="14dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="@+id/imageViewProfile"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageViewProfile"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:onClick="openProfileIcon"
+                        android:padding="14dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="@+id/imageViewFrame"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/imageViewFrame"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:onClick="openProfileIcon"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageViewProfileBg"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textViewScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintStart_toEndOf="@+id/textViewJoined"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+
+                        <TextView
+                            android:id="@+id/textViewAbout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewSkills"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
+
+                        <TextView
+                            android:id="@+id/textViewGithub"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:onClick="openGithub"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewSkills" />
+
+                        <TextView
+                            android:id="@+id/textViewWebsite"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:onClick="openWebsite"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewGithub" />
+
+                        <TextView
+                            android:id="@+id/textViewLocation"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:onClick="openWebsite"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewWebsite" />
+
+                        <TextView
+                            android:id="@+id/textViewJoined"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/nunito"
+                            android:textColor="?attr/colorOnPrimary"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                app:tabIndicatorAnimationMode="elastic"
+                app:tabIndicatorColor="?attr/colorPrimaryVariant"
+                app:tabRippleColor="?attr/colorSurface"
+                app:tabSelectedTextColor="?attr/colorPrimaryVariant"
+                app:tabTextColor="?attr/colorPrimary" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/profile_view"
