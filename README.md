@@ -15,7 +15,8 @@
 - [x] animations (no wait time, SIMMORSAL, typing effect)  
 - [x] profile editor (details, avatar) 
 - [x] community page (projects, filter) 
-- [x] block (rants/comments with word/from user) 
+- [x] block (rants/comments with word/from user)
+- [x] animated custom profile frames and backgrounds! 
 - [ ] chat (skyAPI)
 ## Download
 
