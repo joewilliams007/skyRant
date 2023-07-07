@@ -132,7 +132,14 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
+    public void themeAmoledPart(View view) {
+        Account.setTheme("amoledPart");
+        Intent intent;
+        Tools.setTheme(SettingsActivity.this);
+        intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
     public void themeCoffee(View view) {
         Account.setTheme("coffee");
         Intent intent;
@@ -624,4 +631,6 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+
 }

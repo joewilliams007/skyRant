@@ -104,6 +104,9 @@ public class Tools {
             case "amoled":
                 context.setTheme(R.style.Theme_Amoled);
                 break;
+            case "amoledPart":
+                context.setTheme(R.style.Theme_AmoledPart);
+                break;
             case "green":
                 context.setTheme(R.style.Theme_Green);
                 break;
