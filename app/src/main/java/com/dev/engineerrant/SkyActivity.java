@@ -99,7 +99,10 @@ public class SkyActivity extends AppCompatActivity {
         Intent intent = new Intent(SkyActivity.this, BackupActivity.class);
         startActivity(intent);
     }
-
+    public void customize(View view) {
+        Intent intent = new Intent(SkyActivity.this, SkyCustomActivity.class);
+        startActivity(intent);
+    }
     public void deleteSky(View view) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this)
                 .setTitle("Delete sky account")
@@ -175,4 +178,6 @@ public class SkyActivity extends AppCompatActivity {
             toast("error "+e);
         }
     }
+
+
 }

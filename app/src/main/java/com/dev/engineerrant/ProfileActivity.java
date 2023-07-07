@@ -9,6 +9,7 @@ import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,21 +21,37 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.animations.Tools;
@@ -44,6 +61,8 @@ import com.dev.engineerrant.classes.dev.Counts;
 import com.dev.engineerrant.classes.dev.Rants;
 import com.dev.engineerrant.classes.dev.User_avatar;
 import com.dev.engineerrant.classes.sky.Reactions;
+import com.dev.engineerrant.network.DownloadImageTask;
+import com.dev.engineerrant.network.DownloadImageTaskAlter;
 import com.dev.engineerrant.network.methods.git.MethodsGithub;
 import com.dev.engineerrant.network.methods.dev.MethodsProfile;
 import com.dev.engineerrant.network.methods.sky.MethodsSkyPost;
@@ -55,8 +74,14 @@ import com.dev.engineerrant.network.models.sky.ModelSkyProfile;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.post.VoteClient;
+
+import com.github.sahasbhop.apngview.ApngDrawable;
+import com.github.sahasbhop.apngview.ApngImageLoader;
+
 import com.google.android.material.tabs.TabLayout;
 
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -73,8 +98,8 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
 
     String id, github = null, website = null, image = null, _username = null, user_avatar = null ,color;
     TextView textViewAbout, textViewGithub, textViewUsername, textViewSkills, textViewScore, textViewWebsite, textViewJoined,textViewLocation;
-    ImageView imageViewProfile, imageViewShare, imageViewProfileAlone, imageViewGithub, imageViewOptions;
-    CardView cardViewProfile;
+    ImageView imageViewProfile, imageViewShare, imageViewGithub, imageViewOptions, imageViewFrame,imageViewProfileBg;
+    WebView webViewProfile,webViewFrame;
     TabLayout tabLayout;
     Integer reactions_count = null;
     @Override
@@ -89,9 +114,10 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         Intent intent = getIntent();
         id = intent.getStringExtra("user_id");
         tabLayout.setVisibility(View.GONE);
-        cardViewProfile.setVisibility(View.INVISIBLE);
+
         profile_reactions = null;
         requestSkyProfile();
+        requestProfile();
     }
 
     private void requestSkyProfile() {
@@ -102,30 +128,77 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
             Call<ModelSkyProfile> call = methods.getAllData(total_url);
 
             call.enqueue(new Callback<ModelSkyProfile>() {
-                @SuppressLint("SetTextI18n")
+                @SuppressLint({"SetTextI18n", "SetJavaScriptEnabled"})
                 @Override
                 public void onResponse(@NonNull Call<ModelSkyProfile> call, @NonNull Response<ModelSkyProfile> response) {
                     if (response.isSuccessful()) {
                         assert response.body() != null;
                         profile_reactions = response.body().getProfile().getReactions();
                         reactions_count = response.body().getProfile().getReactions_count();
-                        requestProfile();
+
+                        // String uri = "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/items/322330/46461aaea39b18a4a3da2e6d3cf253006f2d6193.png";
+                        String uri_bg = response.body().getProfile().getAvatar_bg_url();
+                        String uri = response.body().getProfile().getAvatar_frame_url();
+
+                        try {
+                            if (uri_bg.contains(".png")) {
+                                try {
+                                    ApngImageLoader.ApngConfig apngConfig = new ApngImageLoader.ApngConfig(999999999, true);
+                                    ApngImageLoader.getInstance().init(ProfileActivity.this);
+                                    ApngImageLoader.getInstance().displayApng(uri_bg, imageViewProfileBg, apngConfig);
+                                } catch (Exception e) {
+                                    Glide
+                                            .with(MyApplication.getAppContext())
+                                            .load(uri_bg)
+                                            .into(new DrawableImageViewTarget(imageViewProfileBg));
+                                }
+                            }  else {
+                                Glide
+                                        .with(MyApplication.getAppContext())
+                                        .load(uri_bg)
+                                        .into(new DrawableImageViewTarget(imageViewProfileBg));
+                            }
+
+                        } catch (Exception ignored){
+
+                        }
+                        try {
+                            if (uri.contains(".png")) {
+                                try {
+                                    ApngImageLoader.ApngConfig apngConfig = new ApngImageLoader.ApngConfig(999999999, true);
+                                    ApngImageLoader.getInstance().init(ProfileActivity.this);
+                                    ApngImageLoader.getInstance().displayApng(uri, imageViewFrame, apngConfig);
+                                } catch (Exception e) {
+                                    Glide
+                                            .with(MyApplication.getAppContext())
+                                            .load(uri)
+                                            .into(new DrawableImageViewTarget(imageViewFrame));
+                                }
+                            }  else {
+                                Glide
+                                .with(MyApplication.getAppContext())
+                                .load(uri)
+                                .into(new DrawableImageViewTarget(imageViewFrame));
+                            }
+                        } catch (Exception ignored){
+
+                        }
+
                     } else if (response.code() == 429) {
                         // Handle unauthorized
-                        requestProfile();
+
                     } else {
-                        requestProfile();
+
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<ModelSkyProfile> call, @NonNull Throwable t) {
                     Log.d("error_contact", t.toString());
-                    requestProfile();
                 }
             });
         } catch (Exception ignored) {
-            requestProfile();
+
         }
     }
 
@@ -140,11 +213,12 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         textViewJoined = findViewById(R.id.textViewJoined);
         imageViewShare = findViewById(R.id.imageViewShare);
         textViewLocation = findViewById(R.id.textViewLocation);
-        imageViewProfileAlone = findViewById(R.id.imageViewProfileAlone);
         imageViewGithub = findViewById(R.id.imageViewGithub);
-        cardViewProfile = findViewById(R.id.cardViewProfile);
         tabLayout = findViewById(R.id.tabLayout);
         imageViewOptions = findViewById(R.id.imageViewOptions);
+
+        imageViewFrame = findViewById(R.id.imageViewFrame);
+        imageViewProfileBg = findViewById(R.id.imageViewProfileBg);
     }
 
     private void requestProfile() {
@@ -192,10 +266,6 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     tabLayout.addTab(tabLayout.newTab().setText(upvoted_count+"\n++'s").setId(2));
                     // tabLayout.addTab(tabLayout.newTab().setText(favorites_count+"\nFavorites").setId(3));
 
-                    if (profile_reactions !=null) {
-                        tabLayout.addTab(tabLayout.newTab().setText(reactions_count+"\nReactions").setId(3));
-                    }
-
                     tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                     tabLayout.setVisibility(View.VISIBLE);
 
@@ -208,10 +278,6 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                                 createFeedList(comments_rants);
                             } else if (tab.getId()==2) {
                                 createFeedList(upVoted_rants);
-                            } else if (tab.getId()==3) {
-                                Intent intent = new Intent(ProfileActivity.this, ProfileReactionActivity.class);
-                                startActivity(intent);
-                                Objects.requireNonNull(tabLayout.getTabAt(0)).select();
                             }
                         }
 
@@ -253,17 +319,17 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     textViewJoined.setText(getRelativeTimeSpanString(created_time*1000L));
 
                     color = "#"+avatar.getB();
+                    if (user_avatar!=null) {
+                        // Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
+                        String img = ("https://avatars.devrant.com/"+user_avatar.replaceAll("b-","b-1_"));
+                        new DownloadImageTaskAlter(imageViewProfile)
+                                .execute(img);
+                        image = "https://avatars.devrant.com/"+user_avatar;
+                    } else {
+                        imageViewProfile.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+                    }
                     if (github.equals("") || github.contains(" ")) {
                         textViewGithub.setVisibility(View.GONE);
-                        cardViewProfile.setVisibility(View.GONE);
-                        imageViewProfileAlone.setImageDrawable(null);
-                        if (user_avatar!=null) {
-                            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
-                            image = "https://avatars.devrant.com/"+user_avatar;
-                        } else {
-                            imageViewProfileAlone.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
-                        }
-
 
                         if (location.length()>0) {
                             textViewLocation.setText(location);
@@ -275,11 +341,8 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
                         textViewGithub.setText(content);
 
-                        imageViewProfileAlone.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
-                        imageViewProfileAlone.setVisibility(View.GONE);
-                        imageViewProfile.setImageDrawable(null);
-                        imageViewProfile.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
-                        imageViewGithub.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+                        // imageViewProfile.setBackgroundColor(Color.parseColor("#"+avatar.getB()));
+
                         getGithubProfile(github,user_avatar,location);
                     }
 
@@ -363,29 +426,16 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                                 textViewLocation.setVisibility(View.GONE);
                             }
                         }
-                        if (user_avatar!=null) {
-                            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfile);
-                            image = "https://avatars.devrant.com/"+user_avatar;
-                        }
 
                         Glide.with(MyApplication.getAppContext()).load(response.body().getAvatar_url()).into(imageViewGithub);
-                        cardViewProfile.setVisibility(View.VISIBLE);
                     } else {
                         textViewGithub.setVisibility(View.GONE);
-                        cardViewProfile.setVisibility(View.GONE);
-                        imageViewProfileAlone.setImageDrawable(null);
-                        if (user_avatar!=null) {
-                            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
-                            image = "https://avatars.devrant.com/"+user_avatar;
-                        }
-                        imageViewProfileAlone.setVisibility(View.VISIBLE);
 
                         if (location.length()>0) {
                             textViewLocation.setText(location);
                         } else {
                             textViewLocation.setVisibility(View.GONE);
                         }
-                        cardViewProfile.setVisibility(View.GONE);
                     }
 
                 }
@@ -393,20 +443,19 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                 @Override
                 public void onFailure(@NonNull Call<ModelGithub> call, @NonNull Throwable t) {
                     textViewGithub.setVisibility(View.GONE);
-                    cardViewProfile.setVisibility(View.GONE);
-                    imageViewProfileAlone.setImageDrawable(null);
                     if (user_avatar!=null) {
-                        Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
+                        // Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
+                        String img = ("https://avatars.devrant.com/"+user_avatar.replaceAll("b-","b-1_"));
+                        new DownloadImageTaskAlter(imageViewProfile)
+                                .execute(img);
                         image = "https://avatars.devrant.com/"+user_avatar;
                     }
-                    imageViewProfileAlone.setVisibility(View.VISIBLE);
 
                     if (location.length()>0) {
                         textViewLocation.setText(location);
                     } else {
                         textViewLocation.setVisibility(View.GONE);
                     }
-                    cardViewProfile.setVisibility(View.GONE);
                 }
             });
     }
@@ -623,20 +672,21 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
 
         String[] blockedUsers = Account.blockedUsers().toLowerCase().split(",");
 
+
         if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
             Boolean blocked = false;
             for (String user : blockedUsers) {
                 if (_username.toLowerCase().equals(user)) {
-                    popupMenu.getMenu().add(0,3,8,"unblock"); // groupId, itemId, order, title
+                    popupMenu.getMenu().add(0,3,9,"unblock"); // groupId, itemId, order, title
                     blocked = true;
                     break;
                 }
             }
             if (!blocked) {
-                popupMenu.getMenu().add(0,2,8,"block"); // groupId, itemId, order, title
+                popupMenu.getMenu().add(0,2,9,"block"); // groupId, itemId, order, title
             }
         } else {
-            popupMenu.getMenu().add(0,2,8,"block"); // groupId, itemId, order, title
+            popupMenu.getMenu().add(0,2,9,"block"); // groupId, itemId, order, title
         }
 
         if (Account.isFollow(id)) {
@@ -655,7 +705,9 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
             popupMenu.getMenu().add(0,6,6,"copy avatar link"); // groupId, itemId, order, title
             popupMenu.getMenu().add(0,7,7,"download avatar image"); // groupId, itemId, order, title
         }
-
+        if (profile_reactions !=null) {
+            popupMenu.getMenu().add(0,8,8,"view reactions"); // groupId, itemId, order, title
+        }
         popupMenu.show();
     }
 
@@ -720,7 +772,10 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     downloadManager.enqueue(request);
                     toast("downloaded image");
                 return true;
-
+            case 8: // view reactions
+                Intent intent = new Intent(ProfileActivity.this, ProfileReactionActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return false;
         }

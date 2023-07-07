@@ -15,6 +15,27 @@ public class SkyProfileAuth {
     int timestamp;
     int reactions;
 
+    String avatar_frame_url;
+    String avatar_bg_hex;
+    String avatar_bg_url;
+    String profile_bg_url;
+
+    public String getAvatar_frame_url() {
+        return avatar_frame_url;
+    }
+
+    public String getAvatar_bg_hex() {
+        return avatar_bg_hex;
+    }
+
+    public String getAvatar_bg_url() {
+        return avatar_bg_url;
+    }
+
+    public String getProfile_bg_url() {
+        return profile_bg_url;
+    }
+
     public int getReactions() {
         return reactions;
     }

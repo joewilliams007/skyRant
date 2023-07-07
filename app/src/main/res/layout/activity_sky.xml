@@ -96,13 +96,13 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
         android:gravity="center"
-        android:padding="10dp"
         android:onClick="verifyAgain"
+        android:padding="10dp"
         android:text="tap to verify again"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBackup" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCustom" />
 
     <TextView
         android:id="@+id/textViewDelete"
@@ -126,14 +126,31 @@
         android:layout_margin="10dp"
         android:fontFamily="@font/nunito"
         android:gravity="center"
-        android:padding="10dp"
         android:onClick="backupRestore"
-        android:textStyle="bold"
+        android:padding="10dp"
         android:text="backup and restore"
         android:textColor="?attr/colorOnPrimary"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
+    <TextView
+        android:id="@+id/textViewCustom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/nunito"
+        android:gravity="center"
+        android:onClick="customize"
+        android:padding="10dp"
+        android:text="customize"
+        android:textColor="?attr/colorOnPrimary"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBackup" />
 
     <TextView
         android:id="@+id/textViewPowered"
@@ -157,5 +174,5 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewPowered"
         app:layout_constraintEnd_toEndOf="@+id/textViewPowered"
         app:layout_constraintStart_toStartOf="@+id/textViewPowered"
-        app:srcCompat="@drawable/raspberry" />
+        app:srcCompat="@drawable/announcementbar_guy" />
 </androidx.constraintlayout.widget.ConstraintLayout>
