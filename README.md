@@ -17,7 +17,8 @@
 - [x] community page (projects, filter) 
 - [x] block (rants/comments with word/from user)
 - [x] animated custom profile frames and backgrounds! 
-- [ ] chat (skyAPI)
+- [x] matrix chat peview
+- [x] devRant Bulletin Board magazine
 ## Download
 
 [Click to download apk](https://github.com/joewilliams007/skyRant/blob/master/app/release/app-release.apk?raw=true)
