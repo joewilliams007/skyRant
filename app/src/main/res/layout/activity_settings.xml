@@ -972,7 +972,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewNotif" />
+                app:layout_constraintTop_toBottomOf="@+id/notif" />
 
             <TextView
                 android:id="@+id/textViewFollowing"

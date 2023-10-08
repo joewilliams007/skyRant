@@ -1040,7 +1040,7 @@ public class MainActivity extends AppCompatActivity {
                 writer.typeWrite(textViewChat,MainActivity.this, message.getSender().split(":")[0].split("@")[1]+": "+message.getContent().getBody().split("\n")[0]+"... [read chat]", 100L);
             } catch (Exception e) {
                 Log.d("Message", "failed to log message");
-                textViewChat.setText("open chat");
+                textViewChat.setText("matrix");
             }
 
         }

@@ -98,7 +98,9 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
        // holder.textViewDate.setText(getRelativeTimeSpanString(data_provider.getTimestamp()));
         holder.textViewUsername.setText(data_provider.getMessage().getSender().split(":")[0].split("@")[1]);
         holder.textViewText.setText(data_provider.getMessage().getContent().getBody());
-
+        if (data_provider.getMessage().getContent().getBody()==null||data_provider.getMessage().getContent().getBody().equals("")) {
+            holder.textViewText.setText("[unsupported message]");
+        }
 
         SimpleDateFormat formatter = new SimpleDateFormat("hh:mm, dd.MM");
         holder.textViewDate.setText(formatter.format(data_provider.getMessage().getOrigin_server_ts()));
