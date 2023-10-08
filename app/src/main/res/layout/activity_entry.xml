@@ -28,8 +28,9 @@
         android:layout_height="40dp"
         android:background="?attr/colorSurface"
         android:scaleType="centerCrop"
-        android:padding="5dp"
-        android:src="@drawable/paper_plane"
+        android:padding="11dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/share"
         android:onClick="sharePost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,9 +40,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="refresh"
-        android:padding="12dp"
+        android:padding="11dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/refresh"
+        android:src="@drawable/reload"
         app:layout_constraintBottom_toBottomOf="@+id/top"
         app:layout_constraintEnd_toStartOf="@+id/imageViewShare"
         app:layout_constraintTop_toTopOf="@+id/top"
@@ -105,6 +106,7 @@
             android:orientation="vertical"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
+            android:onClick="openProfile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -125,6 +127,7 @@
             android:layout_margin="10dp"
             android:fontFamily="@font/nunito"
             android:text="joewilliams007"
+            android:onClick="openProfile"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toStartOf="@+id/cardViewProfile"
             app:layout_constraintTop_toTopOf="parent" />

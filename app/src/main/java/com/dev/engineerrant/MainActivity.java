@@ -1060,4 +1060,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, MagazineActivity.class);
         startActivity(intent);
     }
+
+    public void openCommunity(View view) {
+        Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+        startActivity(intent);
+    }
 }

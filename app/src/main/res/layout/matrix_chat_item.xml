@@ -45,10 +45,8 @@
                     android:id="@+id/imageViewProfile"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:visibility="gone"
-                    android:background="?attr/colorOnPrimary"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/avatar" />
+                    android:background="#7bc8a4"
+                    android:scaleType="centerCrop"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -57,13 +55,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito"
-                android:padding="10dp"
+                android:layout_margin="10dp"
                 android:text="body"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+                app:layout_constraintTop_toBottomOf="@+id/cardViewProfile" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/link_view"
@@ -79,12 +77,9 @@
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="10dp"
                 android:background="?attr/colorSurface"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/link_view" />
@@ -98,8 +93,9 @@
                 android:gravity="right"
                 android:text="12h ago"
                 android:textColor="?attr/colorPrimaryVariant"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <TextView
                 android:id="@+id/textViewUsername"
@@ -108,9 +104,9 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
                 android:text="username"
-                android:textStyle="bold"
                 android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/cardViewProfile"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

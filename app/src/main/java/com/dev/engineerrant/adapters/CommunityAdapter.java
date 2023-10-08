@@ -2,6 +2,8 @@ package com.dev.engineerrant.adapters;
 
 import static android.text.format.DateUtils.getRelativeTimeSpanString;
 
+import static com.dev.engineerrant.CommunityPostActivity.communityItem;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dev.engineerrant.CommunityActivity;
+import com.dev.engineerrant.CommunityPostActivity;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.auth.MyApplication;
 
@@ -52,7 +56,7 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder
     {
 
-        TextView textViewTitle, textViewActive, textViewDate, textViewDesc, textViewType, textViewGithub, textViewRelated, textViewWebsite;
+        TextView textViewTitle, textViewActive, textViewDate, textViewDesc, textViewType, textViewGithub, textViewRelated, textViewWebsite,textViewInfo;
         ConstraintLayout constraintLayout;
         RecyclerView link_view;
         public RecyclerViewHolder(View view) {
@@ -64,7 +68,7 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
             textViewDesc = view.findViewById(R.id.textViewDesc);
             constraintLayout = view.findViewById(R.id.inside);
             link_view = view.findViewById(R.id.link_view);
-
+            textViewInfo = view.findViewById(R.id.textViewInfo);
             textViewWebsite = view.findViewById(R.id.textViewWebsite);
             textViewGithub = view.findViewById(R.id.textViewGithub);
             textViewRelated = view.findViewById(R.id.textViewRelated);
@@ -128,7 +132,11 @@ public abstract class CommunityAdapter extends RecyclerView.Adapter<CommunityAda
             holder.textViewWebsite.setVisibility(View.GONE);
         }
 
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+        if (data_provider.getGithub().length() <5){
+            holder.textViewInfo.setVisibility(View.GONE);
+        }
+
+        holder.textViewInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(callback != null) {

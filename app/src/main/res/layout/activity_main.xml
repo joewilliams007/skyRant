@@ -28,12 +28,26 @@
             android:gravity="center_horizontal"
             android:onClick="buttonClick"
             android:padding="10dp"
-            android:layout_marginStart="10dp"
             android:text="s k y R a n t"
             android:textColor="?attr/colorOnPrimary"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
+            android:fontFamily="@font/nunito"
+            android:gravity="center_horizontal"
+            android:onClick="openSettings"
+            android:padding="10dp"
+            android:text="s e t t i n g s"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <HorizontalScrollView
             android:id="@+id/items"
             android:layout_width="match_parent"
@@ -424,23 +438,24 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textViewMagazine"
+                app:layout_constraintStart_toEndOf="@+id/textViewCommunity"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <TextView
-                android:id="@+id/textViewSettings"
+                android:id="@+id/textViewCommunity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/rounded_corner"
                 android:fontFamily="@font/nunito"
                 android:gravity="center_horizontal"
-                android:onClick="openSettings"
+                android:onClick="openCommunity"
                 android:padding="10dp"
-                android:text="settings"
+                android:text="community"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewMagazine"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -456,7 +471,7 @@
                 android:text="magazine"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textViewSettings"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>

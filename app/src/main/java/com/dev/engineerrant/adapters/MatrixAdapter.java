@@ -105,9 +105,7 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
 
         holder.imageViewProfile.setImageDrawable(null);
 
-        holder.textViewUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
                 try {
                     MethodsProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsProfile.class);
                     String total_url = "https://matrix-client.matrix.org/_matrix/client/v3/profile/"+data_provider.getMessage().getSender()+"/avatar_url";
@@ -148,8 +146,7 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
                 } catch (Exception e) {
 
                 }
-            }
-        });
+
 
 
         try {

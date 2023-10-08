@@ -33,20 +33,20 @@
                 android:id="@+id/textViewDesc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:fontFamily="@font/nunito"
                 android:text="devRant client for Android with a focus on Animations"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewType" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
             <TextView
                 android:id="@+id/textViewGithub"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:fontFamily="@font/nunito"
                 android:text="github.com"
                 android:textColor="?attr/colorPrimaryVariant"
@@ -59,7 +59,7 @@
                 android:id="@+id/textViewWebsite"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:fontFamily="@font/nunito"
                 android:text="website.com"
                 android:textColor="?attr/colorPrimaryVariant"
@@ -72,7 +72,7 @@
                 android:id="@+id/textViewRelated"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:padding="10dp"
                 android:fontFamily="@font/nunito"
                 android:text="related.com"
                 android:textColor="?attr/colorPrimaryVariant"
@@ -88,6 +88,7 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
                 android:gravity="right"
+                android:visibility="gone"
                 android:text="added 12h ago"
                 android:textColor="?attr/colorPrimaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -101,6 +102,7 @@
                 android:fontFamily="@font/nunito"
                 android:gravity="right"
                 android:text="active"
+                android:visibility="gone"
                 android:textColor="#FF7F50"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -113,6 +115,7 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
                 android:text="skyRant"
+                android:textStyle="bold"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -122,12 +125,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito"
+                android:padding="10dp"
                 android:text="android - client"
-                android:textColor="?attr/colorPrimaryVariant"
-                app:layout_constraintStart_toStartOf="@+id/textViewTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-
+            <TextView
+                android:id="@+id/textViewInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito"
+                android:padding="10dp"
+                android:text="[read more]"
+                android:background="@drawable/rounded_corner"
+                android:layout_margin="10dp"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRelated" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

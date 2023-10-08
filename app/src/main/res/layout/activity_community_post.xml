@@ -175,8 +175,9 @@
                 android:layout_height="40dp"
                 android:onClick="sharePost"
                 android:padding="10dp"
+                android:layout_marginEnd="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/paper_plane"
+                android:src="@drawable/share"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

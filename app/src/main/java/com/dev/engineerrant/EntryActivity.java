@@ -75,6 +75,7 @@ public class EntryActivity extends AppCompatActivity {
         textViewComments = findViewById(R.id.textViewComments);
         imageViewRant = findViewById(R.id.imageViewRant);
         link_view = findViewById(R.id.link_view);
+        comments_view = findViewById(R.id.comments_view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -216,8 +217,6 @@ public class EntryActivity extends AppCompatActivity {
     public void createFeedList(List<CommentItems> comments){
         ArrayList<EntryCommentItem> menuItems = new ArrayList<>();
 
-        String[] blockedWords = Account.blockedWords().split(",");
-        String[] blockedUsers = Account.blockedUsers().split(",");
         for (CommentItems comment : comments){
             menuItems.add(new EntryCommentItem(comment));
         }
@@ -235,6 +234,10 @@ public class EntryActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(Integer menuPosition, String type) {
                 EntryCommentItem menuItem = commentItems.get(menuPosition);
+
+                Intent intent = new Intent(EntryActivity.this, KbinProfileActivity.class);
+                intent.putExtra("userId",String.valueOf(menuItem.getCommentItems().getUser().getUserId()));
+                startActivity(intent);
             }
         }) {
             @Override
@@ -264,5 +267,11 @@ public class EntryActivity extends AppCompatActivity {
         intent.putExtra(android.content.Intent.EXTRA_TEXT, "https://kbin.melroy.org/m/drbboard/t/"+selected_entry.getEntryId());
         /*Fire!*/
         startActivity(Intent.createChooser(intent, "dR Bulletin Board"));
+    }
+
+    public void openProfile(View view) {
+        Intent intent = new Intent(EntryActivity.this, KbinProfileActivity.class);
+        intent.putExtra("userId",String.valueOf(selected_entry.getUser().getUserId()));
+        startActivity(intent);
     }
 }

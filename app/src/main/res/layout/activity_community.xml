@@ -7,34 +7,6 @@
     android:background="?attr/colorSurface"
     tools:context=".CommunityActivity">
 
-    <TextView
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito"
-        android:gravity="center_horizontal"
-        android:textColor="?attr/colorOnPrimary"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:background="?attr/colorSurface"
-        android:text="@string/top_heading_community"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/add"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:onClick="uploadProject"
-        android:textStyle="bold"
-        android:text="+ add"
-        android:textColor="?attr/colorPrimaryVariant"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -54,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,6 +42,46 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top">
 
+                <TextView
+                    android:id="@+id/top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorSurface"
+                    android:fontFamily="@font/nunito"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:text="community"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewKbin" />
+
+
+                <ImageView
+                    android:id="@+id/imageViewKbin"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/community" />
+
+                <TextView
+                    android:id="@+id/add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito"
+                    android:gravity="center_horizontal"
+                    android:onClick="uploadProject"
+                    android:padding="10dp"
+                    android:text="+ add"
+                    android:textColor="?attr/colorPrimaryVariant"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/type_menu_view"
                     android:layout_width="0dp"
@@ -78,7 +90,7 @@
                     android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/top" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/os_menu_view"
@@ -117,6 +129,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/switchActive" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/community_view"
                 android:layout_width="match_parent"

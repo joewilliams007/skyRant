@@ -234,16 +234,19 @@ public class UploadProjectActivity extends AppCompatActivity {
             toast("website must be max 2000 characters long");
             return;
         }
-        String invalid_message = "enter valid GitHub Repository URL";
-        if (github.length()<12||github.length()>2000) {
-            toast(invalid_message);
-            return;
+        if (github.length()>0) {
+            String invalid_message = "enter valid GitHub Repository URL";
+            if (github.length()<12||github.length()>2000) {
+                toast(invalid_message);
+                return;
+            }
+
+            if (!github.contains("github.com")) {
+                toast(invalid_message);
+                return;
+            }
         }
 
-        if (!github.contains("github.com")) {
-            toast(invalid_message);
-            return;
-        }
         if (owner.length()<3||owner.length()>2000) {
             toast("owner name must be at least 3 characters long");
             return;

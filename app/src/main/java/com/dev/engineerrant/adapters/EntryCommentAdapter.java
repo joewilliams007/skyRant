@@ -109,6 +109,18 @@ public abstract class EntryCommentAdapter extends RecyclerView.Adapter<EntryComm
                         .execute(data_provider.getCommentItems().getImage().getStorageUrl());
             }
         }
+        holder.imageViewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onItemClicked(position,"profile");
+            }
+        });
+        holder.textViewUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onItemClicked(position,"profile");
+            }
+        });
 
         if (data_provider.getCommentItems().getChildCount()>0) {
                 ArrayList<EntryCommentItem> menuItems = new ArrayList<>();
