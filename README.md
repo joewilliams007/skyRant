@@ -40,4 +40,4 @@ https://github.com/joewilliams007/skyAPI
 https://github.com/joewilliams007/jsonapi
 
 ## Credit
-You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation. And <3 to devRant
+You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation, @vintprox for managing communities And <3 to devRant
