@@ -45,9 +45,13 @@ public class NotifActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
+        initialize();
+        startReq();
+    }
+
+    private void initialize() {
         stats = findViewById(R.id.stats);
         imageViewRefresh = findViewById(R.id.imageViewRefresh);
-        startReq();
     }
 
     private void startReq() {

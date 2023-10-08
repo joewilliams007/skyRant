@@ -19,6 +19,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".EntryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MagazineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MatrixChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MatrixLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".SkyCustomActivity"
             android:exported="false" />
         <activity

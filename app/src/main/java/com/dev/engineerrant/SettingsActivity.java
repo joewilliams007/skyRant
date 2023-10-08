@@ -24,9 +24,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.GitHubAccount;
+import com.dev.engineerrant.auth.MatrixAccount;
 import com.dev.engineerrant.classes.dev.Changelog;
 import com.dev.engineerrant.network.methods.git.MethodsUpdate;
 import com.dev.engineerrant.network.models.sky.ModelUpdate;
@@ -50,8 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        textViewLogin = findViewById(R.id.textViewLogin);
+        initialize();
+        setSwitches();
+    }
 
+    private void initialize() {
+        textViewLogin = findViewById(R.id.textViewLogin);
         theme = findViewById(R.id.theme);
         profile = findViewById(R.id.profile);
         update = findViewById(R.id.update);
@@ -66,13 +73,11 @@ public class SettingsActivity extends AppCompatActivity {
         editTextRantsAmount = findViewById(R.id.editTextRantsAmount);
         editTextSearchText = findViewById(R.id.editTextSearchText);
         editTextKey = findViewById(R.id.editTextKey);
-        setSwitches();
 
         if (Account.isLoggedIn()) {
             textViewLogin.setText(R.string.logout);
         }
     }
-
     public void login(View view) {
         if (Account.isLoggedIn()) {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(this)
@@ -342,7 +347,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void saveGithubKey(View view) {
         String t = editTextKey.getText().toString();
         if (t.length()>1) {
-            Account.setGithubKey(t);
+            GitHubAccount.setGithubKey(t);
             github.setVisibility(View.GONE);
             hideKeyboard(SettingsActivity.this);
             editTextKey.setText("");
@@ -544,7 +549,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public void removeKey(View view) {
-        Account.setGithubKey(null);
+        GitHubAccount.setGithubKey(null);
         github.setVisibility(View.GONE);
         toast("removed key");
     }
@@ -633,4 +638,21 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
+    public void openMatrix(View view) {
+        if (!MatrixAccount.isLoggedIn()) {
+            Intent intent = new Intent(SettingsActivity.this, MatrixLoginActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SettingsActivity.this, MatrixChatActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void matrixLogout(View view) {
+        MatrixAccount.setAccessToken(null);
+        MatrixAccount.setExpire_time(0);
+        MatrixAccount.setUser_id(null);
+        MatrixAccount.setUsername(null);
+        toast("logged out");
+    }
 }

@@ -80,7 +80,7 @@ dependencies {
     implementation 'com.kcthota:emoji4j:6.0'
 
     implementation "com.vanniktech:emoji-ios:0.16.0"
-
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
 
     implementation ('com.github.sahasbhop:apng-view:1.3') {
         exclude group: 'com.android.support'

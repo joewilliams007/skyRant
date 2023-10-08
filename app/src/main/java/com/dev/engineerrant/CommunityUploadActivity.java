@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.dev.engineerrant.animations.Tools;
 
 public class CommunityUploadActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Tools.setTheme(this);

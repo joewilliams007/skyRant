@@ -39,9 +39,13 @@ public class ChangelogActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changelog);
+        initialize();
+        getLogs();
+    }
+
+    private void initialize() {
         recyclerView = findViewById(R.id.log_view);
         progressBar = findViewById(R.id.progressBar);
-        getLogs();
     }
 
     private void getLogs() {

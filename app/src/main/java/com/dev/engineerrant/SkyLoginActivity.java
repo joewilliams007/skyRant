@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.GitHubAccount;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.methods.git.MethodsVerifyGithub;
 import com.dev.engineerrant.network.methods.sky.MethodsVerifySkyKey;
@@ -45,13 +46,16 @@ public class SkyLoginActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sky_login);
+        initialize();
+    }
+    private void initialize() {
         textViewLogin = findViewById(R.id.textViewLogin);
         textViewSign = findViewById(R.id.textViewSign);
         progressBar = findViewById(R.id.progressBar);
         checkboxSign = findViewById(R.id.checkboxSign);
+
         progressBar.setVisibility(View.GONE);
     }
-
     public void readMore(View view) {
         if (textViewLogin.getVisibility()==View.VISIBLE) {
             textViewLogin.setVisibility(View.GONE);
@@ -75,8 +79,8 @@ public class SkyLoginActivity extends AppCompatActivity {
         String total_url = "https://raw.githubusercontent.com/joewilliams007/jsonapi/gh-pages/skyserver.json";
         MethodsVerifyGithub methods = RetrofitClient.getRetrofitInstance().create(MethodsVerifyGithub.class);
         String header = null;
-        if (Account.githubKey()!=null) {
-            header = "token "+Account.githubKey();
+        if (GitHubAccount.githubKey()!=null) {
+            header = "token "+GitHubAccount.githubKey();
         }
         Call<ModelVerifyGithub> call = methods.getAllData(header,total_url);
         call.enqueue(new Callback<ModelVerifyGithub>() {

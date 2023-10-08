@@ -28,10 +28,10 @@
             android:gravity="center_horizontal"
             android:onClick="buttonClick"
             android:padding="10dp"
-            android:text="d e v R a n t"
+            android:layout_marginStart="10dp"
+            android:text="s k y R a n t"
             android:textColor="?attr/colorOnPrimary"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <HorizontalScrollView
@@ -242,7 +242,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/itemsBottom"
         app:layout_constraintEnd_toStartOf="@+id/helper"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/users_view" />
@@ -377,7 +377,7 @@
         android:text="@string/main_notif"
         android:textAlignment="center"
         android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/setting"
+        app:layout_constraintBottom_toTopOf="@+id/itemsBottom"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
@@ -385,30 +385,79 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nunito"
+        android:onClick="openNotifs"
         android:padding="10dp"
         android:text="H"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnPrimary"
         android:visibility="invisible"
-        android:textAlignment="center"
-        android:onClick="openNotifs"
-        android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/setting"
+        app:layout_constraintBottom_toTopOf="@+id/itemsBottom"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
+
+    <HorizontalScrollView
+        android:id="@+id/itemsBottom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp"
-        android:paddingStart="20dp"
-        android:text="@string/main_settings"
-        android:textAlignment="center"
-        android:onClick="openSettings"
-        android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:scrollbars="none"
+        android:background="?attr/colorSurface"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+            <TextView
+                android:id="@+id/textViewChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner"
+                android:fontFamily="@font/nunito"
+                android:maxLines="1"
+                android:onClick="openMatrix"
+                android:padding="10dp"
+                android:text="tap to open chat"
+                android:textColor="?attr/colorOnPrimary"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewMagazine"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="openSettings"
+                android:padding="10dp"
+                android:text="settings"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewMagazine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="openMagazine"
+                android:padding="10dp"
+                android:text="magazine"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewSettings"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

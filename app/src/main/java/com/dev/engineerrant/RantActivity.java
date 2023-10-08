@@ -79,12 +79,11 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly, textViewEmojiPlus,textViewReactions;
     EditText editTextComment, editTextReaction;
     ConstraintLayout react;
-
     ProgressBar progressBar;
     RecyclerView link_view;
     View view_container;
     int rantVote = 0;
-    String id, user_id, image, _username, user_avatar, color, text;
+    String id, user_id, image, _username, user_avatar, color;
 
     public static Integer widget_rant_id = null;
     Intent intent;
@@ -94,15 +93,18 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rant);
         initialize();
+        handleIntent();
+        setRant();
+        requestComments(true);
+        getReactions();
+    }
+
+    private void handleIntent() {
         intent = getIntent();
         if (widget_rant_id != null) {
             id = String.valueOf(widget_rant_id);
             widget_rant_id = null;
         }
-
-        setRant();
-        requestComments();
-        getReactions();
     }
 
     private void getReactions() {
@@ -357,7 +359,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
 
-    private void requestComments() {
+    private void requestComments(Boolean refreshComments) {
         MethodsRant methods = RetrofitClient.getRetrofitInstance().create(MethodsRant.class);
         String total_url;
 
@@ -472,7 +474,9 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                     user_id = String.valueOf(rants.getUser_id());
 
-                    createFeedList(comments);
+                    if (refreshComments) {
+                        createFeedList(comments);
+                    }
                 } else if (response.code() == 429) {
                     // Handle unauthorized
                     toast("you are not authorized");
@@ -635,7 +639,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                             Boolean success = response.body().getSuccess();
 
                             if (success) {
-                                requestComments();
+                                requestComments(true);
                             } else {
                                 toast("failed");
                             }
@@ -691,7 +695,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Boolean success = response.body().getSuccess();
 
                         if (success) {
-                            requestComments();
+                            requestComments(false);
                         } else {
                             toast("failed");
                         }
@@ -796,24 +800,29 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Boolean success = response.body().getSuccess();
 
                         if (success) {
-                            requestComments();
+                            requestComments(true);
                         } else {
                             toast("failed");
+                            editTextComment.setText(c);
                         }
 
                     } else if (response.code() == 400) {
                         toast("Invalid login credentials entered. Please try again. :(");
+                        editTextComment.setText(c);
                     } else if (response.code() == 429) {
                         // Handle unauthorized
                         toast("You are not authorized :P");
+                        editTextComment.setText(c);
                     } else {
                         toast(response.message());
+                        editTextComment.setText(c);
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
                     toast("Request failed! " + t.getMessage());
+                    editTextComment.setText(c);
                 }
 
             });
@@ -1194,8 +1203,6 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 } else if (response.code() == 429) {
                     // Handle unauthorized
                     toast("error contacting github error 429");
-                } else {
-
                 }
             }
 
@@ -1210,17 +1217,5 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void viewReactions(View view) {
         Intent intent = new Intent(RantActivity.this, ReactionActivity.class);
         startActivity(intent);
-    }
-
-    public void reactUp(View view) {
-        uploadEmoji("\uD83D\uDC4D");
-    }
-
-    public void reactDown(View view) {
-        uploadEmoji("\uD83D\uDC4E");
-    }
-
-    public void reactPin(View view) {
-        uploadEmoji("\uD83D\uDCCC");
     }
 }

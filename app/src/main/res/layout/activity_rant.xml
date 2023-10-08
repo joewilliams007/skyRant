@@ -219,7 +219,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageViewRant" />
 
-
                     <TextView
                         android:id="@+id/textViewTags"
                         android:layout_width="0dp"
@@ -312,7 +311,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comments_view"
                 android:layout_width="match_parent"
@@ -323,9 +321,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inside" />
 
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
     <EditText

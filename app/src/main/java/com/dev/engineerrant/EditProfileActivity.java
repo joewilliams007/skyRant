@@ -34,10 +34,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EditProfileActivity extends AppCompatActivity {
-
     ConstraintLayout details;
     ProgressBar progressBar, progressBarBig;
-    TextView account, textViewSave;
+    TextView textViewSave;
     EditText editTextAbout, editTextSkills, editTextWebsite, editTextGithub, editTextLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +169,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
                     toast("Request failed! " + t.getMessage());
-
                     textViewSave.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
@@ -178,7 +176,6 @@ public class EditProfileActivity extends AppCompatActivity {
             });
         } catch (Exception e) {
             toast(e.toString());
-
             textViewSave.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
         }

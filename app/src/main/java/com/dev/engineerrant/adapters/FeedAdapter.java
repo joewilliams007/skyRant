@@ -93,8 +93,6 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
     public void onBindViewHolder(RecyclerViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         FeedItem data_provider = dataSource.get(position);
 
-        // holder.setIsRecyclable(false);
-
         if (Account.userInfo()) {
             holder.textViewUsername.setText(data_provider.getUsername());
             holder.imageViewProfile.setImageDrawable(null);
@@ -108,7 +106,6 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
                 holder.textViewScore.setText(String.valueOf(data_provider.getUser_score()));
             } else {
                 holder.textViewScore.setText("+"+data_provider.getUser_score());
-
 
                 if (Account.binary()) {
                     holder.textViewScore.setText("+"+toBinaryString(data_provider.getUser_score()));
@@ -136,11 +133,9 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
                 s = s.substring(0, 500)+"... [read more]";
             }
             holder.textViewText.setText(s);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
-
-
 
         if (data_provider.getVote_state() == 1) {
             holder.textViewPlus.setTextColor(Color.parseColor("#FFFF0000"));
@@ -218,8 +213,6 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
                 }
             }
         });
-        
-
 
         if (data_provider.getTags() == null) {
             holder.textViewTags.setVisibility(View.INVISIBLE);
@@ -233,8 +226,6 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
             holder.textViewTags.setText(t.substring(0, t.length()-2));
         }
 
-
-
         switch (data_provider.getType()) {
             case "feed":
 
@@ -246,12 +237,6 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
 
                 break;
         }
-
-        //if(callback != null) {
-        //    callback.onItemClicked(position);
-        //}
-
-
 
     }
 

@@ -13,9 +13,6 @@ import androidx.annotation.ColorInt;
 class ThemeColors {
     private static final String NAME = "ThemeColors", KEY = "color";
 
-    @ColorInt
-    private int color;
-
     ThemeColors(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         String stringColor = sharedPreferences.getString(KEY, "004bff");
@@ -36,10 +33,5 @@ class ThemeColors {
         editor.apply();
 
         activity.recreate();
-    }
-
-    private boolean isLightActionBar() {// Checking if title text color will be black
-        int rgb = (Color.red(color) + Color.green(color) + Color.blue(color)) / 3;
-        return rgb > 210;
     }
 }

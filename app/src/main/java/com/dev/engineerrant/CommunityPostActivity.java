@@ -26,6 +26,7 @@ import com.dev.engineerrant.adapters.LinkAdapter;
 import com.dev.engineerrant.adapters.LinkItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.GitHubAccount;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.network.methods.git.MethodsRepo;
 import com.dev.engineerrant.network.models.git.ModelRepo;
@@ -41,8 +42,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommunityPostActivity extends AppCompatActivity {
-
-
     public static CommunityItem communityItem;
     String ownerGithub = null;
     Intent intent;
@@ -56,6 +55,10 @@ public class CommunityPostActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_post);
+        initialize();
+        createList();
+    }
+    private void initialize() {
         recyclerView = findViewById(R.id.community_post_view);
         progressBar = findViewById(R.id.progressBar);
         textViewStars = findViewById(R.id.textViewStars);
@@ -64,10 +67,7 @@ public class CommunityPostActivity extends AppCompatActivity {
         textViewUploaded = findViewById(R.id.textViewUploaded);
         link_view = findViewById(R.id.link_view);
         repo = findViewById(R.id.repo);
-
-        createList();
     }
-
     public void createList(){
         intent = getIntent();
         String total_url;
@@ -83,14 +83,11 @@ public class CommunityPostActivity extends AppCompatActivity {
         }
 
             MethodsRepo methods = RetrofitClient.getRetrofitInstance().create(MethodsRepo.class);
-
-
-
             progressBar.setVisibility(View.VISIBLE);
 
             String header = null;
-            if (Account.githubKey()!=null) {
-                header = "token "+Account.githubKey();
+            if (GitHubAccount.githubKey()!=null) {
+                header = "token "+GitHubAccount.githubKey();
             }
             Call<ModelRepo> call = methods.getAllData(header,total_url);
             call.enqueue(new Callback<ModelRepo>() {
@@ -98,24 +95,19 @@ public class CommunityPostActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<ModelRepo> call, @NonNull Response<ModelRepo> response) {
                     if (response.isSuccessful()) {
-
-                        // Do  awesome stuff
                         assert response.body() != null;
-
-
                         ArrayList<CommunityPostItem> menuItems = new ArrayList<>();
 
                         textViewStars.setText(String.valueOf(response.body().getStargazers_count()));
                         textViewUsername.setText(response.body().getOwner().getLogin());
                         repo.setText(response.body().getName());
-
                         ownerGithub = response.body().getOwner().getHtml_url();
                         imageViewProfile.setImageDrawable(null);
+
                         String user_avatar = response.body().getOwner().getAvatar_url();
                         if (user_avatar!=null) {
                             Glide.with(MyApplication.getAppContext()).load(user_avatar).into(imageViewProfile);
                         }
-
 
                         if (intent.getStringExtra("repo_url")==null) {
                             menuItems.add(new CommunityPostItem(communityItem.getDesc(),""));
@@ -126,7 +118,6 @@ public class CommunityPostActivity extends AppCompatActivity {
                         } else {
                             menuItems.add(new CommunityPostItem(response.body().getDescription(),""));
                         }
-
 
                         if (response.body().getLanguage()!=null) {
                             menuItems.add(new CommunityPostItem("language",response.body().getLanguage()));
@@ -154,9 +145,7 @@ public class CommunityPostActivity extends AppCompatActivity {
                         }
                         String formattedDatePushed = new SimpleDateFormat("dd/MM/yyyy").format(datePushed);
                         menuItems.add(new CommunityPostItem("last updated",formattedDatePushed));
-
                         showLinks();
-
                         build(menuItems);
                     } else if (response.code() == 429) {
                         // Handle unauthorized
@@ -174,7 +163,6 @@ public class CommunityPostActivity extends AppCompatActivity {
                         }
                     }
                     progressBar.setVisibility(View.GONE);
-
                 }
 
                 @Override
@@ -188,7 +176,6 @@ public class CommunityPostActivity extends AppCompatActivity {
 
     private void showLinks() {
         ArrayList<LinkItem> linkItems = new ArrayList<>();
-
         if (intent.getStringExtra("repo_url")==null) {
             linkItems.add(new LinkItem(communityItem.getGithub(),true));
             if (!communityItem.getWebsite().equals("")) {
@@ -200,10 +187,7 @@ public class CommunityPostActivity extends AppCompatActivity {
         } else {
             linkItems.add(new LinkItem(intent.getStringExtra("repo_url"),true));
         }
-
-
         link_view.setHasFixedSize(false);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MyApplication.getAppContext());
         LinkAdapter mAdapter = new LinkAdapter(MyApplication.getAppContext(), linkItems, new LinkAdapter.AdapterCallback() {
             @SuppressLint("SetTextI18n")

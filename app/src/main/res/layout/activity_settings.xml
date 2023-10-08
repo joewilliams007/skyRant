@@ -17,6 +17,7 @@
         android:textColor="?attr/colorOnPrimary"
         android:textStyle="bold"
         android:padding="10dp"
+        android:onClick="matrixLogout"
         android:background="?attr/colorSurface"
         android:text="@string/heading_top_settings"
         app:layout_constraintEnd_toEndOf="parent"
@@ -964,10 +965,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewWeekly" />
 
             <TextView
+                android:id="@+id/textViewMatrix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/nunito"
+                android:onClick="openMatrix"
+                android:padding="10dp"
+                android:text="> m a t r i x"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCommunity" />
+
+            <TextView
                 android:id="@+id/textViewSupporters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:layout_marginStart="24dp"
                 android:fontFamily="@font/nunito"
                 android:onClick="openSupporters"
                 android:padding="10dp"
@@ -975,7 +991,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCommunity" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewMatrix" />
 
             <TextView
                 android:id="@+id/textViewFollowing"

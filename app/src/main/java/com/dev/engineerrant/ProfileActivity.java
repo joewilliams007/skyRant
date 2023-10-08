@@ -41,6 +41,7 @@ import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.animations.ScaleImageView;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.GitHubAccount;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.dev.Counts;
 import com.dev.engineerrant.classes.dev.Rants;
@@ -86,18 +87,18 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         initialize();
-        imageViewShare.setVisibility(View.INVISIBLE);
-        imageViewOptions.setVisibility(View.INVISIBLE);
-        Intent intent = getIntent();
-        id = intent.getStringExtra("user_id");
-        tabLayout.setVisibility(View.GONE);
-
+        handleIntent();
         profile_reactions = null;
         requestSkyProfile();
         requestProfile();
     }
+
+    private void handleIntent() {
+        Intent intent = getIntent();
+        id = intent.getStringExtra("user_id");
+    }
+
     String uri_profile_background;
 
     @Override
@@ -265,11 +266,14 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         imageViewGithub = findViewById(R.id.imageViewGithub);
         tabLayout = findViewById(R.id.tabLayout);
         imageViewOptions = findViewById(R.id.imageViewOptions);
-
         imageViewFrame = findViewById(R.id.imageViewFrame);
         imageViewProfileBg = findViewById(R.id.imageViewProfileBg);
         imageViewBackground = findViewById(R.id.videoViewBackground);
         imageViewBackgroundStill = findViewById(R.id.imageViewBackgroundStill);
+
+        imageViewShare.setVisibility(View.INVISIBLE);
+        imageViewOptions.setVisibility(View.INVISIBLE);
+        tabLayout.setVisibility(View.GONE);
     }
 
     private void requestProfile() {
@@ -359,10 +363,10 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     contentWeb.setSpan(new UnderlineSpan(), 0, contentWeb.length(), 0);
                     textViewWebsite.setText(contentWeb);
 
-                    // textViewAbout.setText(about);
+                    textViewAbout.setText(about);
 
-                    com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
-                    writer.typeWrite(textViewAbout,ProfileActivity.this, about, 100L);
+                    /*com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
+                    writer.typeWrite(textViewAbout,ProfileActivity.this, about, 100L);*/
 
 
                     textViewSkills.setText(skills);
@@ -448,8 +452,8 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
 
 
             String header = null;
-            if (Account.githubKey()!=null) {
-                header = "token "+Account.githubKey();
+            if (GitHubAccount.githubKey()!=null) {
+                header = "token "+GitHubAccount.githubKey();
             }
 
             Call<ModelGithub> call = methods.getAllData(header,total_url);

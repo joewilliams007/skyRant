@@ -41,7 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initialize();
+    }
 
+    private void initialize() {
         progressBar = findViewById(R.id.progressBar);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextUsername = findViewById(R.id.editTextUsername);

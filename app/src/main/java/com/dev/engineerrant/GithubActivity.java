@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.GitHubAccount;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.network.methods.git.MethodsGithub;
 import com.dev.engineerrant.network.models.git.ModelGithub;
@@ -47,6 +48,11 @@ public class GithubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Tools.setTheme(this);
         setContentView(R.layout.activity_github);
+        initialize();
+        getProfile();
+    }
+
+    private void initialize() {
         recyclerView = findViewById(R.id.repo_view);
         progressBar = findViewById(R.id.progressBar);
         textViewUsername = findViewById(R.id.textViewUsername);
@@ -61,7 +67,6 @@ public class GithubActivity extends AppCompatActivity {
         textViewLocation = findViewById(R.id.textViewLocation);
         textViewGithub = findViewById(R.id.textViewGithub);
         textViewRepos = findViewById(R.id.textViewRepos);
-        getProfile();
     }
 
     private void getProfile() {
@@ -79,8 +84,8 @@ public class GithubActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         String header = null;
-        if (Account.githubKey()!=null) {
-            header = "token "+Account.githubKey();
+        if (GitHubAccount.githubKey()!=null) {
+            header = "token "+GitHubAccount.githubKey();
         }
 
         Call<ModelGithub> call = methods.getAllData(header,total_url);

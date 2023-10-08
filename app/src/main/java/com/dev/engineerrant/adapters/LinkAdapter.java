@@ -76,6 +76,14 @@ public abstract class LinkAdapter extends RecyclerView.Adapter<LinkAdapter.Recyc
     public void onBindViewHolder(RecyclerViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         LinkItem data_provider = dataSource.get(position);
 
+        if (!data_provider.getImage()) {
+            holder.textViewTitle.setText(data_provider.getLink());
+            holder.textViewDesc.setVisibility(View.GONE);
+            holder.textViewHost.setVisibility(View.GONE);
+            holder.imageViewIcon.setVisibility(View.GONE);
+            holder.imageViewPreview.setVisibility(View.GONE);
+            return;
+        }
         URLEmbeddedTask urlTask = new URLEmbeddedTask(new URLEmbeddedTask.OnLoadURLListener() {
             @Override
             public void onLoadURLCompleted(URLEmbeddedData data) {

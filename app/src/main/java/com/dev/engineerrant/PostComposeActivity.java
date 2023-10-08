@@ -37,12 +37,11 @@ public class PostComposeActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_compose);
+        initialize();
+        handleIntent();
+    }
 
-        textViewTop = findViewById(R.id.top);
-        editTextPost = findViewById(R.id.editTextPost);
-        editTextTags = findViewById(R.id.editTextTags);
-        upload = findViewById(R.id.upload);
-
+    private void handleIntent() {
         Intent intent = getIntent();
         textViewTop.setText(intent.getStringExtra("typeName"));
         _type = intent.getStringExtra("type");
@@ -55,6 +54,12 @@ public class PostComposeActivity extends AppCompatActivity {
         }
     }
 
+    private void initialize() {
+        textViewTop = findViewById(R.id.top);
+        editTextPost = findViewById(R.id.editTextPost);
+        editTextTags = findViewById(R.id.editTextTags);
+        upload = findViewById(R.id.upload);
+    }
     public static String composed = null;
     @Override
     public void onBackPressed() {

@@ -44,11 +44,15 @@ public class SkyActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sky);
+        initialize();
+        getProfile();
+    }
+
+    private void initialize() {
         textViewUsedScoreAmount = findViewById(R.id.textViewUsedScoreAmount);
         textViewUsername = findViewById(R.id.textViewUsername);
         progressBar = findViewById(R.id.progressBar);
         textViewDate = findViewById(R.id.textViewDate);
-        getProfile();
     }
 
     private void getProfile() {

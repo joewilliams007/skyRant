@@ -36,7 +36,11 @@ public class IntroActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        initialize();
+        setIntro();
+    }
 
+    private void initialize() {
         constraintLayout = findViewById(R.id.constraintLayout);
         textViewNext = findViewById(R.id.textViewNext);
         seekBar = findViewById(R.id.seekBar);
@@ -55,7 +59,6 @@ public class IntroActivity extends AppCompatActivity {
         layouts.add(R.layout.intro_end);
         seekBar.setMax(layouts.size()-1);
         seekBar.setProgress(0);
-        setIntro();
     }
 
     private void setIntro() {

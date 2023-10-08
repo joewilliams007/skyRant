@@ -33,22 +33,28 @@ import android.widget.TextView;
 import com.dev.engineerrant.adapters.FeedAdapter;
 import com.dev.engineerrant.adapters.FeedItem;
 import com.dev.engineerrant.adapters.FollowingItem;
+import com.dev.engineerrant.adapters.MatrixChatItem;
 import com.dev.engineerrant.adapters.UsersAdapter;
 import com.dev.engineerrant.animations.RantLoadingAnimation;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.MatrixAccount;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.classes.dev.Rants;
+import com.dev.engineerrant.classes.matrix.Chunk;
+import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.methods.dev.MethodsFeed;
 import com.dev.engineerrant.network.methods.dev.MethodsId;
 import com.dev.engineerrant.network.methods.dev.MethodsProfile;
 import com.dev.engineerrant.network.methods.dev.MethodsRant;
 import com.dev.engineerrant.network.methods.dev.MethodsSearch;
+import com.dev.engineerrant.network.methods.matrix.MethodsChat;
 import com.dev.engineerrant.network.models.dev.ModelFeed;
 import com.dev.engineerrant.network.models.dev.ModelId;
 import com.dev.engineerrant.network.models.dev.ModelProfile;
 import com.dev.engineerrant.network.models.dev.ModelRant;
 import com.dev.engineerrant.network.models.dev.ModelSearch;
+import com.dev.engineerrant.network.models.matrix.ModelMatrixChat;
 import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.notifcenter.AlarmReceiver;
@@ -72,7 +78,7 @@ import com.vanniktech.emoji.ios.IosEmojiProvider;
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
-    TextView textViewUsername, textViewSetting, textViewNotif, textViewSurprise,textViewSearch,follow_feed;
+    TextView textViewUsername, textViewNotif, textViewSurprise,textViewSearch,follow_feed, textViewChat;
     EditText editTextSearch;
     String sort = "recent";
     Boolean follow = false;
@@ -87,52 +93,21 @@ public class MainActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        EmojiManager.install(new IosEmojiProvider());
-
-        scrollLayout = findViewById(R.id.scroll);
-
-        textViewUsername = findViewById(R.id.username);
-        textViewNotif = findViewById(R.id.notif);
-        textViewSetting = findViewById(R.id.setting);
-        textViewSurprise = findViewById(R.id.textViewSurprise);
-        editTextSearch = findViewById(R.id.editTextSearch);
-        search = findViewById(R.id.search);
-        search.setVisibility(View.GONE);
-        textViewSearch = findViewById(R.id.textViewSearch);
-        textViewSearch.setText(Account.search());
-        users_view = findViewById(R.id.users_view);
-        users_view.setVisibility(View.GONE);
-        follow_feed = findViewById(R.id.follow_feed);
-
-        follow = false;
+        initialize();
         handleDeepLinkIntent(); // feed request comes afterwards
-
-        if (!Account.followBtn()) {
-            follow_feed.setVisibility(View.GONE);
-        }
-
-        if (!Account.isFeedUsername()) {
-            String text = username();
-            String[] t = text.split("");
-            text = "";
-            for (String l:t) {
-                text+=l+"\n";
-            }
-            textViewUsername.setText(text);
-        } else {
-            textViewUsername.setText("M\nE");
-        }
-
-
-        System.out.println("LOGGING SESSION\n\n\n\n"+Account.key()+"\n"+Account.id()+"\n"+Account.user_id());
 
         setUpFadeAnimation(textViewUsername);
         setUpFadeAnimation(textViewNotif);
-        setUpFadeAnimation(textViewSetting);
 
         if (Account.surprise()) {
             getSurpriseId();
+        }
+
+        if (MatrixAccount.isLoggedIn()) {
+            getMessages();
+        } else {
+            textViewChat.setText("open chat");
+            textViewChat.setVisibility(View.VISIBLE);
         }
 
         if (Account.isLoggedIn()) { // Why do we need Alarm Receiver? To handle notifications obviously!!! No firebase, no Google ****, just a simple Alarm at which when it triggers tries to search for Notifs
@@ -156,6 +131,39 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void initialize() {
+        EmojiManager.install(new IosEmojiProvider());
+        scrollLayout = findViewById(R.id.scroll);
+        textViewUsername = findViewById(R.id.username);
+        textViewNotif = findViewById(R.id.notif);
+        textViewChat = findViewById(R.id.textViewChat);
+        textViewSurprise = findViewById(R.id.textViewSurprise);
+        editTextSearch = findViewById(R.id.editTextSearch);
+        search = findViewById(R.id.search);
+        search.setVisibility(View.GONE);
+        textViewSearch = findViewById(R.id.textViewSearch);
+        textViewSearch.setText(Account.search());
+        users_view = findViewById(R.id.users_view);
+        users_view.setVisibility(View.GONE);
+        follow_feed = findViewById(R.id.follow_feed);
+        follow = false;
+
+        if (!Account.followBtn()) {
+            follow_feed.setVisibility(View.GONE);
+        }
+        if (!Account.isFeedUsername()) {
+            String text = username();
+            String[] t = text.split("");
+            text = "";
+            for (String l:t) {
+                text+=l+"\n";
+            }
+            textViewUsername.setText(text);
+        } else {
+            textViewUsername.setText("M\nE");
+        }
     }
 
     private void handleDeepLinkIntent() {
@@ -293,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
             editTextSearch.setText(null);
             search.setVisibility(View.GONE);
             textViewNotif.setVisibility(View.VISIBLE);
-            textViewSetting.setVisibility(View.VISIBLE);
         }
 
         if (Account.animate()) {
@@ -346,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
                         for (String l:t) {
                             text+=l+"\n";
                         }
-                        textViewNotif.setText(text);
+                        textViewNotif.setText(text.substring(0,text.length()-1));
                     }
                     createFeedList(rants);
                 } else if (response.code() == 429) {
@@ -916,7 +923,6 @@ public class MainActivity extends AppCompatActivity {
         editTextSearch.setText(null);
         search.setVisibility(View.GONE);
         textViewNotif.setVisibility(View.VISIBLE);
-        textViewSetting.setVisibility(View.VISIBLE);
         app.hideKeyboard(MainActivity.this);
     }
 
@@ -924,14 +930,12 @@ public class MainActivity extends AppCompatActivity {
         if (search.getVisibility() == View.GONE) {
             follow = false;
             textViewNotif.setVisibility(View.GONE);
-            textViewSetting.setVisibility(View.GONE);
             search.setVisibility(View.VISIBLE);
             textViewSearch.setText(Account.search());
         } else {
             search.setVisibility(View.GONE);
             editTextSearch.setText(null);
             textViewNotif.setVisibility(View.VISIBLE);
-            textViewSetting.setVisibility(View.VISIBLE);
             app.hideKeyboard(MainActivity.this);
         }
     }
@@ -997,5 +1001,63 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void getMessages() {
+        MethodsChat methods = RetrofitClient.getRetrofitInstance().create(MethodsChat.class);
+        Call<ModelMatrixChat> call = methods.getAllData(MatrixAccount.accessToken(),"1");
+        call.enqueue(new Callback<ModelMatrixChat>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(@NonNull Call<ModelMatrixChat> call, @NonNull Response<ModelMatrixChat> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    Log.d("MESSAGES", response.body().toString());
+                    List<Chunk> messages = response.body().getMessages().getChunk();
+                    createList(messages);
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                    toast(response.message());
+                } else {
+                    toast(response+" ");
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<ModelMatrixChat> call, @NonNull Throwable t) {
+                Log.d("error_contact", t.toString());
+                toast("no network");
+                textViewChat.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void createList(List<Chunk> messages) {
+        textViewChat.setVisibility(View.VISIBLE);
+        for (Chunk message : messages){
+            try {
+                //all += "\n"+message.getContent().getBody();
+                //Log.d("Message", message.getContent().getBody());
+                com.dev.engineerrant.animations.typeWriter writer = new com.dev.engineerrant.animations.typeWriter();
+                writer.typeWrite(textViewChat,MainActivity.this, message.getSender().split(":")[0].split("@")[1]+": "+message.getContent().getBody().split("\n")[0]+"... [read chat]", 100L);
+            } catch (Exception e) {
+                Log.d("Message", "failed to log message");
+                textViewChat.setText("open chat");
+            }
+
+        }
+    }
+
+    public void openMatrix(View view) {
+        if (!MatrixAccount.isLoggedIn()) {
+            Intent intent = new Intent(MainActivity.this, MatrixLoginActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(MainActivity.this, MatrixChatActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void openMagazine(View view) {
+        Intent intent = new Intent(MainActivity.this, MagazineActivity.class);
+        startActivity(intent);
+    }
 }

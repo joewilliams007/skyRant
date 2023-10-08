@@ -67,13 +67,16 @@ public class BuilderActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_builder);
+        initialize();
+        requestProfile();
+    }
+
+    private void initialize() {
         imageViewAvatar = findViewById(R.id.imageViewAvatar);
         textViewUsername = findViewById(R.id.textViewUsername);
         textViewScore = findViewById(R.id.textViewScore);
         progressBar = findViewById(R.id.progressBar);
         back = findViewById(R.id.back);
-        requestProfile();
-
     }
 
 
@@ -84,8 +87,6 @@ public class BuilderActivity extends AppCompatActivity {
         total_url = BASE_URL
                     + "devrant/avatars/build?token_id="+Account.id()+"&user_id="+Account.user_id()+"&token_key="+Account.key()+
                 "&option="+option+"&sub_option="+sub_option+"&app=3&image_id=https%3A%2F%2Favatars.devrant.com%2F"+profile_image_url;
-
-
 
         Call<ModelBuilder> call = methods.getAllData(total_url);
         call.enqueue(new Callback<ModelBuilder>() {
@@ -340,7 +341,7 @@ public class BuilderActivity extends AppCompatActivity {
                     }
 
                 });
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }

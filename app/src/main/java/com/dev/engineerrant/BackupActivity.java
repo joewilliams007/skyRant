@@ -47,10 +47,14 @@ public class BackupActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_backup);
+        initialize();
+        getProfile();
+    }
+
+    private void initialize() {
         progressBar = findViewById(R.id.progressBar);
         textViewRestore = findViewById(R.id.textViewRestore);
         textViewBackup = findViewById(R.id.textViewBackup);
-        getProfile();
     }
 
     public void restore(View view) {
@@ -58,7 +62,6 @@ public class BackupActivity extends AppCompatActivity {
                 .setTitle("Restore")
                 .setMessage("Restore your data (following, blocked users, blocked words) from sky servers")
                 .setCancelable(true)
-
                 .setPositiveButton(
                         "Yes",
                         new DialogInterface.OnClickListener() {
@@ -86,7 +89,6 @@ public class BackupActivity extends AppCompatActivity {
                         });
         AlertDialog alert = builder1.create();
         alert.show();
-
     }
     private void getProfile() {
         progressBar.setVisibility(View.VISIBLE);
@@ -94,7 +96,6 @@ public class BackupActivity extends AppCompatActivity {
         String total_url = SKY_SERVER_URL+"my_profile/"+ Account.user_id()+"/"+Account.id();
 
         Call<ModelSkyProfileAuth> call = methods.getAllData(total_url);
-
         call.enqueue(new Callback<ModelSkyProfileAuth>() {
             @SuppressLint("SetTextI18n")
             @Override

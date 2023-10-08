@@ -59,14 +59,17 @@ public class CommunityActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
-        recyclerView = findViewById(R.id.community_view);
-        progressBar = findViewById(R.id.progressBar);
-        filter = findViewById(R.id.filter);
-        switchCompat = findViewById(R.id.switchActive);
+        initialize();
         filter.setText("");
         getLogsSky();
     }
 
+    private void initialize() {
+        recyclerView = findViewById(R.id.community_view);
+        progressBar = findViewById(R.id.progressBar);
+        filter = findViewById(R.id.filter);
+        switchCompat = findViewById(R.id.switchActive);
+    }
 
     private void getLogsSky() {
         MethodsCommunitySky methods = RetrofitClient.getRetrofitInstance().create(MethodsCommunitySky.class);

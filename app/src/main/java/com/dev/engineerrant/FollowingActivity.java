@@ -36,14 +36,19 @@ public class FollowingActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_following);
-        edit = findViewById(R.id.edit);
-        editTextFollowing = findViewById(R.id.editTextFollowing);
+        initialize();
         showFollowingRemoveBtn = false;
         edit.setVisibility(View.GONE);
         if (Account.following()!=null) {
             createList();
         }
     }
+
+    private void initialize() {
+        edit = findViewById(R.id.edit);
+        editTextFollowing = findViewById(R.id.editTextFollowing);
+    }
+
     public void showEditBtn(View view) {
         showFollowingRemoveBtn = !showFollowingRemoveBtn;
         if (Account.following()!=null) {
@@ -67,7 +72,7 @@ public class FollowingActivity extends AppCompatActivity {
                     args[3]
             ));
         }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         build(menuItems);
@@ -180,8 +185,5 @@ public class FollowingActivity extends AppCompatActivity {
         } else {
             toast("nothing to copy");
         }
-
     }
-
-
 }

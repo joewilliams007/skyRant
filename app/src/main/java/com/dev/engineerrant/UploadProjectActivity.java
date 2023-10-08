@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.dev.engineerrant.adapters.CommunityPostItem;
 import com.dev.engineerrant.animations.Tools;
 import com.dev.engineerrant.auth.Account;
+import com.dev.engineerrant.auth.GitHubAccount;
 import com.dev.engineerrant.auth.MyApplication;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.methods.dev.MethodsProfile;
@@ -153,8 +154,8 @@ public class UploadProjectActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         String header = null;
-        if (Account.githubKey()!=null) {
-            header = "token "+Account.githubKey();
+        if (GitHubAccount.githubKey()!=null) {
+            header = "token "+GitHubAccount.githubKey();
         }
         Call<ModelRepo> call = methods.getAllData(header,total_url);
         call.enqueue(new Callback<ModelRepo>() {

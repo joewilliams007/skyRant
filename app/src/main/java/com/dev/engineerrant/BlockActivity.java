@@ -21,7 +21,11 @@ public class BlockActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block);
+        initialize();
+        setSwitches();
+    }
 
+    private void initialize() {
         editTextWords = findViewById(R.id.editTextWords);
         editTextUsers = findViewById(R.id.editTextUsers);
         editTextWords.setText(Account.blockedWords());
@@ -29,7 +33,6 @@ public class BlockActivity extends AppCompatActivity {
         switchUsers = findViewById(R.id.switchUsers);
         switchWords = findViewById(R.id.switchWords);
         switchGreen = findViewById(R.id.switchGreen);
-        setSwitches();
     }
 
     private void setSwitches() {

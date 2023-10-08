@@ -35,9 +35,12 @@ public class WeeklyActivity extends AppCompatActivity {
         Tools.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly);
-        textViewWeekly = findViewById(R.id.textViewDesc);
+        initialize();
         news = null;
         startReq();
+    }
+    private void initialize() {
+        textViewWeekly = findViewById(R.id.textViewDesc);
     }
     private void startReq() {
         MethodsFeed methods = RetrofitClient.getRetrofitInstance().create(MethodsFeed.class);
