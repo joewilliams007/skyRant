@@ -1,3 +1,5 @@
+<p align="center"> <img src="https://raw.githubusercontent.com/joewilliams007/skyRant/master/app/src/main/res/drawable/icon.png" /> </p>
+
 # skyRant
 - skyRant is an android client for devRant with a focus on animations and features.
 - skyRant is not in any way affiliated with devRant
@@ -40,4 +42,4 @@ https://github.com/joewilliams007/skyAPI
 https://github.com/joewilliams007/jsonapi
 
 ## Credit
-You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation. And <3 to devRant
+You can use any of the code you want! No credit needed. Credit to @SIMMORSAL though for his awesome rant animation, @vintprox for managing communities And <3 to devRant
