@@ -33,6 +33,9 @@ public class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
         protected Boolean doInBackground(String... urls) {
             try {
 
+                if (message.contains("\n")) {
+                    message = message.replaceAll("\n"," ");
+                }
 
                 OkHttpClient client = new OkHttpClient();
 

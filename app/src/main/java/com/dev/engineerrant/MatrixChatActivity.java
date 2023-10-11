@@ -15,7 +15,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -72,6 +74,21 @@ public class MatrixChatActivity extends AppCompatActivity {
 
         initialize();
         getMessages();
+        editTextComment.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                    String message = editTextComment.getText().toString();
+                    if (message.length()>0){
+                        editTextComment.setText(null);
+                        progressBar.setVisibility(View.VISIBLE);
+
+                        //Pass your params array and the current activity to the AsyncTask
+                        new JSONAsyncTask(MatrixChatActivity.this,message).execute();
+                    }
+
+                    return true;
+            }
+        });
     }
 
     private void sendMessage(String hi) {
