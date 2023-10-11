@@ -125,6 +125,7 @@
         android:textColor="?attr/colorOnPrimary"
         android:textColorHint="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fill"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
@@ -134,7 +135,7 @@
         android:background="?attr/colorSurfaceVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextComment"
+        app:layout_constraintStart_toStartOf="@+id/imageViewRefresh"
         app:layout_constraintTop_toTopOf="@+id/editTextComment" />
 
     <ImageView
@@ -152,7 +153,7 @@
     <ImageView
         android:id="@+id/imageViewRefresh"
         android:layout_width="40dp"
-        android:layout_height="0dp"
+        android:layout_height="40dp"
         android:background="?attr/colorSurfaceVariant"
         android:onClick="refresh"
         android:padding="14dp"
