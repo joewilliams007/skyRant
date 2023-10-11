@@ -97,6 +97,7 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
 
        // holder.textViewDate.setText(getRelativeTimeSpanString(data_provider.getTimestamp()));
         holder.textViewUsername.setText(data_provider.getMessage().getSender().split(":")[0].split("@")[1]);
+      //  holder.textViewUsername.setText(data_provider.getMessage().ge);
         holder.textViewText.setText(data_provider.getMessage().getContent().getBody());
         if (data_provider.getMessage().getContent().getBody()==null||data_provider.getMessage().getContent().getBody().equals("")) {
             holder.textViewText.setText("[unsupported message]");
@@ -110,7 +111,7 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
 
                 try {
                     MethodsProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsProfile.class);
-                    String total_url = "https://matrix-client.matrix.org/_matrix/client/v3/profile/"+data_provider.getMessage().getSender()+"/avatar_url";
+                    String total_url = "https://matrix-client.matrix.org/_matrix/client/v3/profile/"+data_provider.getMessage().getSender();
 
                     Call<ModelMatrixProfile> call = methods.getAllData(total_url);
 
@@ -122,6 +123,7 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
                                 holder.imageViewProfile.setVisibility(View.VISIBLE);
                                 assert response.body() != null;
                                 try {
+                                    holder.textViewUsername.setText(response.body().getDisplayname());
                                     if (response.body().getAvatar_url()!=null) {
                                         Glide.with(MyApplication.getAppContext()).load("https://matrix-client.matrix.org/_matrix/media/v3/thumbnail/"+response.body().getAvatar_url().split("mxc://")[1]+"?width=258&height=258&method=scale").into(holder.imageViewProfile);
                                     } else {
@@ -185,9 +187,13 @@ public abstract class MatrixAdapter extends RecyclerView.Adapter<MatrixAdapter.R
         if (text.contains("http")) {
             ArrayList<LinkItem> linkItems = new ArrayList<>();
 
-            for (String _text : text.split(" ")) {
+            for (String _text : text.split("\n")) {
                 if (_text.contains("http")) {
-                    linkItems.add(new LinkItem(_text,false));
+                    for (String __text : _text.split(" ")) {
+                        if (__text.contains("http")) {
+                            linkItems.add(new LinkItem(__text,true));
+                        }
+                    }
                 }
             }
 

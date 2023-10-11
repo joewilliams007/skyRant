@@ -1,12 +1,10 @@
 package com.dev.engineerrant;
 
 import static com.dev.engineerrant.app.toast;
-import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,45 +12,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dev.engineerrant.adapters.ChangelogItem;
 import com.dev.engineerrant.animations.Tools;
-import com.dev.engineerrant.auth.Account;
 import com.dev.engineerrant.auth.MatrixAccount;
-import com.dev.engineerrant.classes.dev.Changelog;
-import com.dev.engineerrant.classes.dev.NotifItems;
-import com.dev.engineerrant.classes.dev.NotifUnread;
-import com.dev.engineerrant.classes.matrix.Chunk;
 import com.dev.engineerrant.classes.matrix.Identifier;
 import com.dev.engineerrant.classes.matrix.LoginData;
-import com.dev.engineerrant.classes.matrix.Messages;
-import com.dev.engineerrant.network.RetrofitClient;
-import com.dev.engineerrant.network.methods.dev.MethodsNotif;
-import com.dev.engineerrant.network.methods.matrix.MethodsChat;
-import com.dev.engineerrant.network.models.dev.ModelLogin;
-import com.dev.engineerrant.network.models.dev.ModelNotif;
 import com.dev.engineerrant.network.models.matrix.ModelJoin;
-import com.dev.engineerrant.network.models.matrix.ModelMatrixChat;
 import com.dev.engineerrant.network.models.matrix.ModelMatrixLogin;
 import com.dev.engineerrant.network.models.matrix.ModelToken;
 import com.dev.engineerrant.network.post.matrix.JoinClient;
 import com.dev.engineerrant.network.post.matrix.LoginClient;
 import com.dev.engineerrant.network.post.matrix.RegisterClient;
-import com.dev.engineerrant.network.post.matrix.TokenRequest;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.dev.engineerrant.network.post.matrix.JSONRequest;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
+import java.io.IOException;
 
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -152,7 +129,7 @@ public class MatrixLoginActivity extends AppCompatActivity {
     public void guestLogin(View view) {
         progressBar.setVisibility(View.VISIBLE);
 
-        TokenRequest tokenRequest = new TokenRequest("{\"initial_device_display_name\":\"app.element.io: Firefox on Linux\"}");
+        JSONRequest JSONRequest = new JSONRequest("{\"initial_device_display_name\":\"app.element.io: Firefox on Linux\"}");
         RequestBody kind = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "guest");
 
 
@@ -165,7 +142,7 @@ public class MatrixLoginActivity extends AppCompatActivity {
         RegisterClient client = retrofit.create(RegisterClient.class);
         // finally, execute the request
 
-        Call<ModelToken> call = client.getToken(tokenRequest);
+        Call<ModelToken> call = client.getToken(JSONRequest);
         call.enqueue(new Callback<ModelToken>() {
             @Override
             public void onResponse(@NonNull Call<ModelToken> call, @NonNull Response<ModelToken> response) {
