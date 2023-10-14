@@ -1,9 +1,14 @@
 package com.dev.engineerrant;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.transition.Visibility;
 
 import com.dev.engineerrant.auth.MyApplication;
 

@@ -17,7 +17,7 @@
     <string name="newest_version">neuste Version</string>
     <string name="update">Updates herunterladen</string>
     <string name="heading_notif"><![CDATA[> N o t i f]]></string>
-    <string name="allow_notifications">Benachrichtigungen erlauben</string>
+    <string name="allow_notifications">Tippen um Benachrichtigungen erlauben  (Android 13+)</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="heading_features"><![CDATA[> F e a t u r e s]]></string>
     <string name="animation_simmorsal">Animation (SIMMORSAL)</string>

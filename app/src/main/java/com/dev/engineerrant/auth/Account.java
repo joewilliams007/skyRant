@@ -430,4 +430,15 @@ public class Account {
         SharedPreferences.Editor editor = preferences.edit().putBoolean("sessionSkyVerified",verified);
         editor.apply();
     }
+
+    public static String widgetRantId() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getString("widgetRantId", null);
+    }
+
+    public static void setWidgetRantId(String id) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putString("widgetRantId",id);
+        editor.apply();
+    }
 }

@@ -72,6 +72,11 @@ public class MatrixChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matrix_chat);
 
+        if (!MatrixAccount.isLoggedIn()) {
+            toast("please login to Matrix to continue");
+            finish();
+        }
+
         initialize();
         getMessages();
         editTextComment.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -234,6 +239,7 @@ public class MatrixChatActivity extends AppCompatActivity {
     }
 
     public void refresh(View view) {
+        progressBar.setVisibility(View.VISIBLE);
         getMessages();
     }
 

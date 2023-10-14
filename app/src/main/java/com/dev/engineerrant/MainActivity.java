@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         initialize();
         handleDeepLinkIntent(); // feed request comes afterwards
 
+
         setUpFadeAnimation(textViewUsername);
         setUpFadeAnimation(textViewNotif);
 

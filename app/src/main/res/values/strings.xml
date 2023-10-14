@@ -19,7 +19,7 @@
     <string name="newest_version">newest version</string>
     <string name="update">update</string>
     <string name="heading_notif"><![CDATA[> n o t i f]]></string>
-    <string name="allow_notifications">allow notifications</string>
+    <string name="allow_notifications">tap to allow notifications (Android 13+)</string>
     <string name="notifications">notifications</string>
     <string name="heading_features"><![CDATA[> f e a t u r e s]]></string>
     <string name="animation_simmorsal">animation (SIMMORSAL)</string>
@@ -111,4 +111,6 @@
     <string name="binary_user_scores">binary user scores</string>
     <string name="w_e_e_k_l_y"><![CDATA[> w e e k l y]]></string>
     <string name="profile_info">profile</string>
+    <string name="dRCS">dRCS</string>
+    <string name="kbin">magazine</string>
 </resources>
