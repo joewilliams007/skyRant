@@ -43,8 +43,8 @@
         android:layout_height="40dp"
         android:background="?attr/colorSurface"
         android:scaleType="centerCrop"
-        android:padding="11dp"
-        android:src="@drawable/share"
+        android:padding="10dp"
+        android:src="@drawable/paper_plane"
         android:layout_marginEnd="10dp"
         android:onClick="sharePost"
         app:layout_constraintEnd_toEndOf="parent"
@@ -380,9 +380,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="refresh"
-        android:padding="11dp"
+        android:padding="13dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/reload"
+        android:src="@drawable/refresh"
         app:layout_constraintBottom_toBottomOf="@+id/top"
         app:layout_constraintEnd_toStartOf="@+id/imageViewShare"
         app:layout_constraintTop_toTopOf="@+id/top"
@@ -401,6 +401,119 @@
         app:layout_constraintTop_toTopOf="@+id/top"
         app:layout_constraintVertical_bias="0.0" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutModify"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/colorSurfaceVariant"
+        android:visibility="gone"
+        android:onClick="doNothing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/mid"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:gravity="left"
+            android:padding="10dp"
+            android:text="P U S H"
+            android:onClick="editComment"
+            android:textColor="#B9F6CA"
+            android:textColorHint="#43A047"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textViewCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:onClick="cancelModify"
+            android:padding="10dp"
+            android:text="C A N C E L"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/mid"
+            app:layout_constraintStart_toStartOf="@+id/mid" />
+
+        <TextView
+            android:id="@+id/textViewAlpha"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorSurface"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:onClick="doNothing"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="F A I L E D\n\n you probably exceeded the limit for editing comments, which is 5 min and 30 min for ++ supporters.\n\nplease consider deleting your old comment and posting the updated version."
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextModifyComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/rounded_corner"
+            android:ems="10"
+            android:fontFamily="@font/nunito"
+            android:hint="modify comment ..."
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="?attr/colorOnPrimary"
+            android:textColorHint="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="D E L E T E"
+            android:onClick="deleteComment"
+            android:textColor="#FF8A80"
+            android:textColorHint="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -414,4 +527,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

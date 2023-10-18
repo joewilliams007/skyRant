@@ -65,7 +65,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
     {
 
         ImageView imageViewProfile, imageViewRant;
-        TextView textViewUsername, textViewScore, textViewText, textViewReply, textViewDate, textViewScoreRant, textViewPlus, textViewMinus;
+        TextView textViewUsername, textViewScore, textViewText, textViewReply, textViewDate, textViewScoreRant, textViewPlus, textViewMinus, textViewModify;
         ConstraintLayout constraintLayout;
         View _view;
         View viewState;
@@ -80,6 +80,7 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
             textViewScoreRant = view.findViewById(R.id.textViewScoreRant);
             viewState = view.findViewById(R.id.viewState);
             textViewReply = view.findViewById(R.id.textViewReply);
+            textViewModify = view.findViewById(R.id.textViewModify);
             textViewDate = view.findViewById(R.id.textViewDate);
             textViewPlus = view.findViewById(R.id.textViewPlus);
             textViewMinus = view.findViewById(R.id.textViewMinus);
@@ -95,6 +96,20 @@ public abstract class CommentAdapter extends RecyclerView.Adapter<CommentAdapter
         CommentItem data_provider = dataSource.get(position);
 
         // holder.setIsRecyclable(false);
+
+        if (Account.user_id() == data_provider.getUser_id()) {
+            holder.textViewModify.setVisibility(View.VISIBLE);
+            holder.textViewModify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(callback != null) {
+                        callback.onItemClicked(position, "modify");
+                    }
+                }
+            });
+        } else {
+            holder.textViewModify.setVisibility(View.GONE);
+        }
 
         holder.imageViewProfile.setImageDrawable(null);
         if (data_provider.getI()!=null) {

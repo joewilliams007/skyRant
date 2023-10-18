@@ -48,6 +48,7 @@ import com.dev.engineerrant.classes.dev.Links;
 import com.dev.engineerrant.classes.dev.Rants;
 import com.dev.engineerrant.classes.sky.Reactions;
 import com.dev.engineerrant.classes.dev.Weekly;
+import com.dev.engineerrant.network.delete.DeleteCommentClient;
 import com.dev.engineerrant.network.methods.dev.MethodsRant;
 import com.dev.engineerrant.network.methods.sky.MethodsSkyPost;
 import com.dev.engineerrant.network.methods.sky.MethodsVerifySkyKey;
@@ -58,6 +59,7 @@ import com.dev.engineerrant.network.DownloadImageTask;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.network.models.sky.ModelVerifySkyKey;
 import com.dev.engineerrant.network.post.CommentClient;
+import com.dev.engineerrant.network.post.ModifyCommentClient;
 import com.dev.engineerrant.network.post.VoteClient;
 import com.dev.engineerrant.network.post.VoteCommentClient;
 import com.vanniktech.emoji.EmojiPopup;
@@ -76,14 +78,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     ImageView imageViewProfile, imageViewRant, imageViewSurprise, imageViewRefresh, imageViewSendEmoji;
-    TextView textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly, textViewEmojiPlus,textViewReactions;
-    EditText editTextComment, editTextReaction;
-    ConstraintLayout react;
+    TextView textViewMessage, textViewUsername, textViewScore, textViewText, textViewTags, textViewComments, textViewScoreRant, textViewDate, textViewPlus, textViewMinus, chill,textViewWeekly, textViewEmojiPlus,textViewReactions;
+    EditText editTextComment, editTextReaction, editTextModifyComment;
+    ConstraintLayout react, constraintLayoutModify;
     ProgressBar progressBar;
     RecyclerView link_view;
     View view_container;
     int rantVote = 0;
     String id, user_id, image, _username, user_avatar, color;
+    public static CommentItem modifyComment = null;
 
     public static Integer widget_rant_id = null;
     Intent intent;
@@ -337,7 +340,11 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         textViewWeekly = findViewById(R.id.textViewWeekly);
         chill.setVisibility(View.GONE);
         textViewWeekly.setVisibility(View.GONE);
-
+        textViewMessage = findViewById(R.id.textViewMessage);
+        textViewMessage.setVisibility(View.GONE);
+        constraintLayoutModify = findViewById(R.id.constraintLayoutModify);
+        constraintLayoutModify.setVisibility(View.GONE);
+        editTextModifyComment = findViewById(R.id.editTextModifyComment);
         editTextReaction = findViewById(R.id.editTextReaction);
         textViewReactions = findViewById(R.id.textViewReactions);
         imageViewSendEmoji = findViewById(R.id.imageViewSendEmojie);
@@ -579,6 +586,12 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         Intent intent = new Intent(RantActivity.this, ProfileActivity.class);
                         intent.putExtra("user_id",String.valueOf(menuItem.getUser_id()));
                         startActivity(intent);
+                        break;
+                    case "modify":
+                        textViewMessage.setVisibility(View.GONE);
+                        modifyComment = menuItem;
+                        editTextModifyComment.setText(modifyComment.getText());
+                        constraintLayoutModify.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -1217,5 +1230,155 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void viewReactions(View view) {
         Intent intent = new Intent(RantActivity.this, ReactionActivity.class);
         startActivity(intent);
+    }
+
+    public void doNothing(View view) {
+    }
+
+    public void cancelModify(View view) {
+        constraintLayoutModify.setVisibility(View.GONE);
+        app.hideKeyboard(RantActivity.this);
+    }
+
+    public void editComment(View view) {
+        if (Account.isLoggedIn()) {
+            String c = editTextModifyComment.getText().toString();
+            if (c.length()<1) {
+                toast("enter comment");
+            } else {
+                editTextModifyComment.setText("");
+                modifyC(c);
+                hideKeyboard(RantActivity.this);
+            }
+        } else {
+            Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void modifyC(String c) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        try {
+            RequestBody app = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "3");
+            RequestBody comment = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), c);
+            RequestBody token_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.id()));
+            RequestBody token_key = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), Account.key());
+            RequestBody user_id = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), String.valueOf(Account.user_id()));
+
+            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+
+            ModifyCommentClient client = retrofit.create(ModifyCommentClient.class);
+            // finally, execute the request
+
+            Call<ModelSuccess> call = client.upload(String.valueOf(modifyComment.getId()),app, comment, token_id, token_key, user_id);
+            call.enqueue(new Callback<ModelSuccess>() {
+                @Override
+                public void onResponse(@NonNull Call<ModelSuccess> call, @NonNull Response<ModelSuccess> response) {
+                    Log.v("Upload", response + " ");
+
+                    if (response.isSuccessful()) {
+                        // Do awesome stuff
+                        assert response.body() != null;
+                        Boolean success = response.body().getSuccess();
+
+                        if (success) {
+                            constraintLayoutModify.setVisibility(View.GONE);
+                            requestComments(true);
+                        } else {
+                            toast("failed");
+                            textViewMessage.setVisibility(View.VISIBLE);
+                            editTextModifyComment.setText(c);
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                    } else if (response.code() == 400) {
+                        progressBar.setVisibility(View.GONE);
+                        toast("Invalid login credentials entered. Please try again. :(");
+                        editTextModifyComment.setText(c);
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        progressBar.setVisibility(View.GONE);
+                        toast("You are not authorized :P");
+                        editTextModifyComment.setText(c);
+                    } else {
+                        toast(response.message());
+                        progressBar.setVisibility(View.GONE);
+                        editTextModifyComment.setText(c);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
+                    toast("Request failed! " + t.getMessage());
+                    editTextModifyComment.setText(c);
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            });
+        } catch (Exception e) {
+            editTextModifyComment.setText(c);
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    public void deleteComment(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        try {
+
+            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+
+            DeleteCommentClient client = retrofit.create(DeleteCommentClient.class);
+            // finally, execute the request
+
+            Call<ModelSuccess> call = client.delete(String.valueOf(modifyComment.getId()),"3", String.valueOf(Account.id()), Account.key(), String.valueOf(Account.user_id()));
+            call.enqueue(new Callback<ModelSuccess>() {
+                @Override
+                public void onResponse(@NonNull Call<ModelSuccess> call, @NonNull Response<ModelSuccess> response) {
+                    Log.v("Upload", response + " ");
+
+                    if (response.isSuccessful()) {
+                        // Do awesome stuff
+                        assert response.body() != null;
+                        Boolean success = response.body().getSuccess();
+
+                        if (success) {
+                            constraintLayoutModify.setVisibility(View.GONE);
+                            requestComments(true);
+
+                            toast("comment deleted");
+                        } else {
+                            toast("failed");
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                    } else if (response.code() == 400) {
+                        progressBar.setVisibility(View.GONE);
+                        toast("Invalid login credentials entered. Please try again. :(");
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        progressBar.setVisibility(View.GONE);
+                        toast("You are not authorized :P");
+                    } else {
+                        toast(response.message());
+                        progressBar.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
+                    toast("Request failed! " + t.getMessage());
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            });
+        } catch (Exception e) {
+            progressBar.setVisibility(View.GONE);
+            editTextModifyComment.setText(e.toString());
+        }
     }
 }
