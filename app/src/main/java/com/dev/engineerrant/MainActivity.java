@@ -555,44 +555,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestRantsOfProfile(String id) {
-            MethodsProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsProfile.class);
-            String total_url;
-            if (Account.isLoggedIn()){
-                total_url = BASE_URL + "users/"+id+"?app=3&token_id="+Account.id()+"&token_key="+Account.key()+"&user_id="+Account.user_id();
-            } else {
-                total_url = BASE_URL + "users/"+id+"?app=3";
+        MethodsProfile methods = RetrofitClient.getRetrofitInstance().create(MethodsProfile.class);
+        String total_url;
+        if (Account.isLoggedIn()){
+            total_url = BASE_URL + "users/"+id+"?app=3&token_id="+Account.id()+"&token_key="+Account.key()+"&user_id="+Account.user_id();
+        } else {
+            total_url = BASE_URL + "users/"+id+"?app=3";
+        }
+        Call<ModelProfile> call = methods.getAllData(total_url);
+        call.enqueue(new Callback<ModelProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<ModelProfile> call, @NonNull Response<ModelProfile> response) {
+                if (response.isSuccessful()) {
+
+                    // Do awesome stuff
+                    assert response.body() != null;
+
+                    String user_avatar = response.body().getProfile().getAvatar().getI();
+
+                    List<Rants> profile_rants = response.body().getProfile().getContent().getContent().getRants();
+                    List<Rants> favorites_rants = response.body().getProfile().getContent().getContent().getFavorites();
+                    List<Rants> upVoted_rants = response.body().getProfile().getContent().getContent().getUpvoted();
+                    List<Rants> comments_rants = response.body().getProfile().getContent().getContent().getComments();
+
+                    createFeedList(profile_rants);
+                } else if (response.code() == 429) {
+                    // Handle unauthorized
+                } else {
+                    toast(response.message());
+                }
+
             }
-            Call<ModelProfile> call = methods.getAllData(total_url);
-            call.enqueue(new Callback<ModelProfile>() {
-                @Override
-                public void onResponse(@NonNull Call<ModelProfile> call, @NonNull Response<ModelProfile> response) {
-                    if (response.isSuccessful()) {
 
-                        // Do awesome stuff
-                        assert response.body() != null;
-
-                        String user_avatar = response.body().getProfile().getAvatar().getI();
-
-                        List<Rants> profile_rants = response.body().getProfile().getContent().getContent().getRants();
-                        List<Rants> favorites_rants = response.body().getProfile().getContent().getContent().getFavorites();
-                        List<Rants> upVoted_rants = response.body().getProfile().getContent().getContent().getUpvoted();
-                        List<Rants> comments_rants = response.body().getProfile().getContent().getContent().getComments();
-
-                        createFeedList(profile_rants);
-                    } else if (response.code() == 429) {
-                        // Handle unauthorized
-                    } else {
-                        toast(response.message());
-                    }
-
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<ModelProfile> call, @NonNull Throwable t) {
-                    Log.d("error_contact", t.toString());
-                    toast(t.toString());
-                }
-            });
+            @Override
+            public void onFailure(@NonNull Call<ModelProfile> call, @NonNull Throwable t) {
+                Log.d("error_contact", t.toString());
+                toast(t.toString());
+            }
+        });
     }
 
     private void build(ArrayList<FeedItem> feedItems) {
@@ -674,7 +674,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setTranslationY(Tools.dpToPx(40));
         recyclerView.animate().alpha(1).translationY(0).setDuration(300).withLayer();
 
-         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -869,6 +869,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void votePost(int i, int rant_id) {
+        if (!Account.isLoggedIn()) {
+            toast("login to perform this action");
+            return;
+        }
         vibrate();
         try {
             RequestBody app = RequestBody.create(MediaType.parse("application/x-form-urlencoded"), "3");

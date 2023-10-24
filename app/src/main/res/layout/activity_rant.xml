@@ -433,7 +433,7 @@
             android:text="P U S H"
             android:onClick="editComment"
             android:textColor="#B9F6CA"
-            android:textColorHint="#43A047"
+            android:textColorHint="#8BC34A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

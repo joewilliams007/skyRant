@@ -43,7 +43,7 @@ import retrofit2.Response;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    TextView textViewLogin,textViewCurrentNr,textViewNewestNr;
+    TextView textViewCurrentNr,textViewNewestNr;
     ConstraintLayout theme, profile, update, features, feed, about, notif, github;
     ProgressBar progressBar;
     EditText editTextRantsAmount, editTextSearchText, editTextKey;
@@ -58,7 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        textViewLogin = findViewById(R.id.textViewLogin);
         theme = findViewById(R.id.theme);
         profile = findViewById(R.id.profile);
         update = findViewById(R.id.update);
@@ -73,51 +72,6 @@ public class SettingsActivity extends AppCompatActivity {
         editTextRantsAmount = findViewById(R.id.editTextRantsAmount);
         editTextSearchText = findViewById(R.id.editTextSearchText);
         editTextKey = findViewById(R.id.editTextKey);
-
-        if (Account.isLoggedIn()) {
-            textViewLogin.setText(R.string.logout);
-        }
-    }
-    public void login(View view) {
-        if (Account.isLoggedIn()) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this)
-                    .setTitle("logout")
-                    .setMessage("U sure u want to logout :(")
-                    .setCancelable(true)
-
-                    .setPositiveButton(
-                            "Yes",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    Account.setKey(null);
-                                    Account.setExpire_time(0);
-                                    Account.setUser_id(0);
-                                    Account.setId(0);
-                                    Account.setUsername(null);
-                                    Account.setSessionSkyVerified(false);
-
-                                    Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            })
-
-                    .setNegativeButton(
-                            "No",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-
-            AlertDialog alert = builder1.create();
-            alert.show();
-        } else {
-            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-
     }
 
     public void themeLight(View view) {
@@ -356,17 +310,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void profileOptions(View view) {
-        if (Account.isLoggedIn()) {
-            Intent intent = new Intent(SettingsActivity.this, EditProfileActivity.class);
-            intent.putExtra("user_id",String.valueOf(Account.user_id()));
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-    }
-
     public void updateLog(View view) {
         Intent intent = new Intent(SettingsActivity.this, ChangelogActivity.class);
         startActivity(intent);
@@ -496,20 +439,7 @@ public class SettingsActivity extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://swag.devrant.com/"));
         startActivity(browserIntent);
     }
-    public void avatar(View view) {
-        if (Account.isLoggedIn()) {
-            Intent intent = new Intent(SettingsActivity.this, BuilderActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-    }
 
-    public void block(View view) {
-        Intent intent = new Intent(SettingsActivity.this, BlockActivity.class);
-        startActivity(intent);
-    }
 
     public void appNotifSettings(View view) {
         Intent intent = new Intent();
@@ -638,21 +568,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    public void openMatrix(View view) {
-        if (!MatrixAccount.isLoggedIn()) {
-            Intent intent = new Intent(SettingsActivity.this, MatrixLoginActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(SettingsActivity.this, MatrixChatActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    public void matrixLogout(View view) {
-        MatrixAccount.setAccessToken(null);
-        MatrixAccount.setExpire_time(0);
-        MatrixAccount.setUser_id(null);
-        MatrixAccount.setUsername(null);
-        toast("logged out");
+    public void openAccounts(View view) {
+        Intent intent = new Intent(SettingsActivity.this, AccountsActivity.class);
+        startActivity(intent);
     }
 }

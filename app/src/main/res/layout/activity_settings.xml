@@ -29,125 +29,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorSurface"
-                android:fontFamily="@font/nunito"
-                android:gravity="center_horizontal"
+                android:fontFamily="@font/air"
+                android:gravity="right"
                 android:padding="10dp"
-                android:text="settings"
+                android:text="skyRant\nsettings"
                 android:textColor="?attr/colorOnPrimary"
+                android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewKbin" />
-
-
-            <ImageView
-                android:id="@+id/imageViewKbin"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/settings" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewSky"
+                android:id="@+id/textViewAccounts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
-                android:onClick="skyRant"
+                android:onClick="openAccounts"
                 android:padding="10dp"
-                android:text="> s k y"
+                android:text="> a c c o u n t s"
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top" />
-
-            <TextView
-                android:id="@+id/textViewProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/nunito"
-                android:onClick="showProfile"
-                android:padding="10dp"
-                android:text="@string/profile"
-                android:textColor="?attr/colorOnPrimary"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewSky" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.473"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewProfile">
-
-
-                <TextView
-                    android:id="@+id/textViewLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="login"
-                    android:padding="10dp"
-                    android:text="@string/login"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewAvatar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="avatar"
-                    android:padding="10dp"
-                    android:text="@string/avatar_builder"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewChange" />
-
-                <TextView
-                    android:id="@+id/textViewBlock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="block"
-                    android:padding="10dp"
-                    android:text="@string/blocking"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewAvatar" />
-
-                <TextView
-                    android:id="@+id/textViewChange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="profileOptions"
-                    android:padding="10dp"
-                    android:text="@string/change_profile_details"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLogin" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textViewTheme"
@@ -161,7 +64,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewAccounts" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/theme"
