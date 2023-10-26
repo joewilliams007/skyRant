@@ -431,14 +431,15 @@ public class Account {
         editor.apply();
     }
 
-    public static String widgetRantId() {
+    public static String avatarImg() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-        return preferences.getString("widgetRantId", null);
+        return preferences.getString("avatar", null);
     }
 
-    public static void setWidgetRantId(String id) {
+    public static void setAvatar(String avatar_img_url) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-        SharedPreferences.Editor editor = preferences.edit().putString("widgetRantId",id);
+        SharedPreferences.Editor editor = preferences.edit().putString("avatar",avatar_img_url);
         editor.apply();
     }
+
 }

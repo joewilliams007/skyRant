@@ -97,6 +97,14 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
     private void handleIntent() {
         Intent intent = getIntent();
         id = intent.getStringExtra("user_id");
+
+        if (id == null) {
+            if (Account.isLoggedIn()) {
+                id = String.valueOf(Account.user_id());
+            } else {
+                finish();
+            }
+        }
     }
 
     String uri_profile_background;
@@ -377,6 +385,9 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                     if (user_avatar!=null) {
                         // Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+user_avatar).into(imageViewProfileAlone);
                         String img = ("https://avatars.devrant.com/"+user_avatar.replaceAll("b-","b-1_"));
+                        if (id.equals(String.valueOf(Account.user_id()))) {
+                            Account.setAvatar(img);
+                        }
                         new DownloadImageTaskAlter(imageViewProfile)
                                 .execute(img);
                         image = "https://avatars.devrant.com/"+user_avatar;

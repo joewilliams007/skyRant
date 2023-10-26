@@ -113,4 +113,5 @@
     <string name="profile_info">profile</string>
     <string name="dRCS">dRCS</string>
     <string name="kbin">magazine</string>
+    <string name="avatar">personal profile avatar</string>
 </resources>
