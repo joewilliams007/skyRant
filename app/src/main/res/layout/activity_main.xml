@@ -199,7 +199,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="?attr/colorSurfaceVariant"
+                android:background="@drawable/no_corner"
                 android:ems="10"
                 android:fontFamily="@font/nunito"
                 android:hint="@string/search"
@@ -260,6 +260,7 @@
         app:layout_constraintEnd_toStartOf="@+id/helper"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/users_view" />
+
 
     <RelativeLayout
         android:id="@+id/relContainer"
@@ -360,6 +361,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="370dp"
             android:src="@drawable/rants" />
+
+
 
     </RelativeLayout>
 

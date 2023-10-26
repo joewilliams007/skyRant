@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:animateLayoutChanges="true"
+    tools:context=".ThemesActivity">
+
+    <TextView
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito"
+        android:gravity="center"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:text="theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textViewTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/nunito"
+        android:text="theme"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top" />
+
+    <HorizontalScrollView
+        android:id="@+id/items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTheme"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="?attr/colorSurface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeDark"
+                android:padding="10dp"
+                android:text="dark"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/restart"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/discord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeDiscord"
+                android:padding="10dp"
+                android:text="discord"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/dark"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeGreen"
+                android:padding="10dp"
+                android:text="green"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/discord"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/coffee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeCoffee"
+                android:padding="10dp"
+                android:text="coffee"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/green"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/amoled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeAmoled"
+                android:padding="10dp"
+                android:text="amoled"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/coffee"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/amoledPart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeAmoledPart"
+                android:padding="10dp"
+                android:text="amoled part"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/amoled"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_horizontal"
+                android:onClick="themeLight"
+                android:padding="10dp"
+                android:text="light"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/amoledPart"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/restart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/no_corner_green"
+                android:fontFamily="@font/nunito"
+                android:onClick="openHome"
+                android:padding="10dp"
+                android:text="restart"
+                android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/textViewSearchTextDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/nunito"
+        android:textStyle="bold"
+        android:text="@string/search_text_example"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/items" />
+
+    <EditText
+        android:id="@+id/editTextSearchText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/no_corner"
+        android:ems="10"
+        android:fontFamily="@font/nunito"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textColor="?attr/colorOnPrimary"
+        android:textColorHint="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/textViewSaveSearchText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSearchTextDesc" />
+
+    <TextView
+        android:id="@+id/textViewSaveSearchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/no_corner_green"
+        android:fontFamily="@font/nunito"
+        android:onClick="saveSearch"
+        android:padding="10dp"
+        android:text="@string/save"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearchText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearchText" />
+
+    <TextView
+        android:id="@+id/textViewLanguageTextDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/nunito"
+        android:textStyle="bold"
+        android:text="@string/language"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearchText" />
+
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchUsername"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:checked="true"
+        android:fontFamily="@font/nunito"
+        android:onClick="switchUsername"
+        android:padding="10dp"
+        android:text="@string/display_me_instead_of_username_recommended_on_smaller_phones"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTextDesc"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+</androidx.constraintlayout.widget.ConstraintLayout>

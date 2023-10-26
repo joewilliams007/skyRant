@@ -29,13 +29,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorSurface"
-                android:fontFamily="@font/air"
-                android:gravity="right"
+                android:fontFamily="@font/nunito"
+                android:gravity="center"
                 android:padding="10dp"
-                android:text="skyRant\nsettings"
+                android:text="settings"
                 android:textColor="?attr/colorOnPrimary"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -58,214 +59,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/nunito"
-                android:onClick="showTheme"
+                android:onClick="openThemes"
                 android:padding="10dp"
                 android:text="@string/heading_theme"
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewAccounts" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/theme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:animateLayoutChanges="true"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTheme">
-
-                <TextView
-                    android:id="@+id/textViewThemeLight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeLight"
-                    android:padding="10dp"
-                    android:text="@string/theme_light"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textViewThemeDark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeDark"
-                    android:padding="10dp"
-                    android:text="@string/theme_dark"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
-
-                <TextView
-                    android:id="@+id/textViewThemeAmoled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeAmoled"
-                    android:padding="10dp"
-                    android:text="@string/theme_amoled"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeDark" />
-
-                <TextView
-                    android:id="@+id/textViewThemeAmoledPart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeAmoledPart"
-                    android:padding="10dp"
-                    android:text="amoled variant"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeAmoled" />
-
-                <TextView
-                    android:id="@+id/textViewThemeCoffee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeCoffee"
-                    android:padding="10dp"
-                    android:text="@string/theme_coffee"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeLight" />
-
-                <TextView
-                    android:id="@+id/textViewThemeGreen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeGreen"
-                    android:padding="10dp"
-                    android:text="@string/theme_green"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeDiscord" />
-
-                <TextView
-                    android:id="@+id/textViewThemeDiscord"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeDiscord"
-                    android:padding="10dp"
-                    android:text="@string/theme_discord"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeCoffee" />
-
-                <TextView
-                    android:id="@+id/textViewSearchTextDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeAmoled"
-                    android:text="@string/search_text_example"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewThemeGreen" />
-
-                <EditText
-                    android:id="@+id/editTextSearchText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:background="?attr/colorSurfaceVariant"
-                    android:ems="10"
-                    android:fontFamily="@font/nunito"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    android:textColor="?attr/colorOnPrimary"
-                    android:textColorHint="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toStartOf="@+id/textViewSaveSearchText"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewSearchTextDesc" />
-
-                <TextView
-                    android:id="@+id/textViewSaveSearchText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="saveSearch"
-                    android:padding="10dp"
-                    android:text="@string/save"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintBottom_toBottomOf="@+id/editTextSearchText"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/editTextSearchText" />
-
-                <TextView
-                    android:id="@+id/textViewLanguageTextDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="themeAmoled"
-                    android:text="@string/language"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextSearchText" />
-
-                <TextView
-                    android:id="@+id/textViewEnglish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="langEn"
-                    android:padding="10dp"
-                    android:text="@string/english"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintEnd_toStartOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTextDesc" />
-
-                <TextView
-                    android:id="@+id/textViewGerman"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="langDe"
-                    android:padding="10dp"
-                    android:text="@string/german"
-                    android:textColor="?attr/colorPrimaryVariant"
-                    app:layout_constraintStart_toEndOf="@+id/textViewThemeLight"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTextDesc" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switchUsername"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:checked="true"
-                    android:fontFamily="@font/nunito"
-                    android:onClick="switchUsername"
-                    android:padding="10dp"
-                    android:text="@string/display_me_instead_of_username_recommended_on_smaller_phones"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewEnglish"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textViewUpdate"
@@ -279,7 +79,7 @@
                 android:textColor="?attr/colorOnPrimary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/theme" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTheme" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/update"

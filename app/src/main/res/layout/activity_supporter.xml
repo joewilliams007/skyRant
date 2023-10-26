@@ -28,28 +28,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top">
+
                 <TextView
                     android:id="@+id/top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorSurface"
                     android:fontFamily="@font/nunito"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
+                    android:padding="10dp"
                     android:text="supporters"
                     android:textColor="?attr/colorOnPrimary"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewKbin" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <ImageView
                     android:id="@+id/imageViewKbin"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/top"
+                    app:layout_constraintStart_toStartOf="@+id/top"
+                    app:layout_constraintTop_toBottomOf="@+id/top"
                     app:srcCompat="@drawable/plusplus" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

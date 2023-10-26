@@ -44,7 +44,7 @@ import retrofit2.Response;
 public class SettingsActivity extends AppCompatActivity {
 
     TextView textViewCurrentNr,textViewNewestNr;
-    ConstraintLayout theme, profile, update, features, feed, about, notif, github;
+    ConstraintLayout profile, update, features, feed, about, notif, github;
     ProgressBar progressBar;
     EditText editTextRantsAmount, editTextSearchText, editTextKey;
     @SuppressLint("MissingInflatedId")
@@ -58,7 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        theme = findViewById(R.id.theme);
         profile = findViewById(R.id.profile);
         update = findViewById(R.id.update);
         features = findViewById(R.id.features);
@@ -74,66 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
         editTextKey = findViewById(R.id.editTextKey);
     }
 
-    public void themeLight(View view) {
-        Account.setTheme("light");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
-    public void themeAmoled(View view) {
-        Account.setTheme("amoled");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    public void themeAmoledPart(View view) {
-        Account.setTheme("amoledPart");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    public void themeCoffee(View view) {
-        Account.setTheme("coffee");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void themeDark(View view) {
-        Account.setTheme("dark");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void themeGreen(View view) {
-        Account.setTheme("green");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void themeDiscord(View view) {
-        Account.setTheme("discord");
-        Intent intent;
-        Tools.setTheme(SettingsActivity.this);
-        intent = new Intent(SettingsActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     public void switchAutoLoad(View view) {
         Account.setAutoLoad(!Account.autoLoad());
@@ -167,23 +107,18 @@ public class SettingsActivity extends AppCompatActivity {
         setSwitches();
     }
 
-    public void switchUsername(View view) {
-        Account.setFeedUsername(!Account.isFeedUsername());
-        setSwitches();
-    }
-
     private void setSwitches() {
         SwitchCompat switchAuto = findViewById(R.id.switchLoad);
         SwitchCompat switchInfo = findViewById(R.id.switchInfoOnFeed);
         SwitchCompat switchHighlight = findViewById(R.id.switchHighlight);
         SwitchCompat switchSurprise = findViewById(R.id.switchSurprise);
         SwitchCompat switchAnimation = findViewById(R.id.switchAnimation);
-        SwitchCompat switchUsername = findViewById(R.id.switchUsername);
+
         SwitchCompat switchFollowing = findViewById(R.id.switchFollowing);
         SwitchCompat switchBinary = findViewById(R.id.switchBinary);
         switchBinary.setChecked(Account.binary());
         switchFollowing.setChecked(Account.followBtn());
-        switchUsername.setChecked(Account.isFeedUsername());
+
         switchSurprise.setChecked(Account.surprise());
         switchAnimation.setChecked(Account.animate());
         switchHighlight.setChecked(Account.highlighter());
@@ -213,14 +148,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    public void showTheme(View view) {
-        if (theme.getVisibility() == View.GONE) {
-            editTextSearchText.setText(Account.search());
-            theme.setVisibility(View.VISIBLE);
-        } else {
-            theme.setVisibility(View.GONE);
-        }
-    }
+
 
     public void showProfile(View view) {
         if (profile.getVisibility() == View.GONE) {
@@ -287,16 +215,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void saveSearch(View view) {
-        String t = editTextSearchText.getText().toString();
-        if (t.length()>1) {
-            Account.setSearch(t);
-            theme.setVisibility(View.GONE);
-            hideKeyboard(SettingsActivity.this);
-        } else {
-            toast("enter a term");
-        }
-    }
+
 
     public void saveGithubKey(View view) {
         String t = editTextKey.getText().toString();
@@ -570,6 +489,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void openAccounts(View view) {
         Intent intent = new Intent(SettingsActivity.this, AccountsActivity.class);
+        startActivity(intent);
+    }
+
+    public void openThemes(View view) {
+        Intent intent = new Intent(SettingsActivity.this, ThemesActivity.class);
         startActivity(intent);
     }
 }
