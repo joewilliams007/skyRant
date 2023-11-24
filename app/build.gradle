@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.dev.engineerrant'
+    namespace 'com.dev.engineerrant'                                                                                                                                                           
     compileSdk 33
 
     defaultConfig {
