@@ -91,6 +91,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     String id, user_id, image, _username, user_avatar, color;
     Rants stash_rant;
     Boolean stashed = false;
+    Boolean stashBtnUsed = false;
     public static CommentItem modifyComment = null;
 
     public static Integer widget_rant_id = null;
@@ -325,6 +326,8 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void initialize() {
+        stashBtnUsed = false;
+
         link_view = findViewById(R.id.link_view);
         progressBar = findViewById(R.id.progressBar);
         imageViewRefresh = findViewById(R.id.imageViewRefresh);
@@ -1145,6 +1148,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case 15: // stash rant for preservation in skyAPI
                 if (Account.isLoggedIn()) {
                     if (Account.isSessionSkyVerified()) {
+                        stashBtnUsed = true;
                         sendRantToServer();
                     } else {
                         Intent intent = new Intent(RantActivity.this, SkyLoginActivity.class);
@@ -1162,10 +1166,9 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     private void sendRantToServer() {
         if (stashed) {
-            if(Account.autoStash()) {
-                return;
+            if(stashBtnUsed) {
+                toast("already stashed!");
             }
-            toast("already stashed!");
             return;
         }
         if (stash_rant==null) {
@@ -1228,14 +1231,12 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         assert response.body() != null;
                         Boolean success = response.body().getSuccess();
 
-                        if(Account.autoStash()) {
-                            return;
-                        }
-
-                        if (success) {
-                            toast("rant stashed!");
-                        } else {
-                            toast("rant was already stashed by someone");
+                        if(stashBtnUsed) {
+                            if (success) {
+                                toast("rant stashed!");
+                            } else {
+                                toast("rant was already stashed by someone");
+                            }
                         }
                     } else if (response.code() == 400) {
                         toast("Invalid login credentials entered. Please try again. :(");
@@ -1244,29 +1245,31 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         // Handle unauthorized
                         toast("You are not authorized :P");
                     } else {
-                        toast(response.message());
+                        if (stashBtnUsed) {
+                            toast(response.message());
+                        }
                     }
+                    stashBtnUsed = false;
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
                     stashed = false;
                     progressBar.setVisibility(View.GONE);
-                    if(Account.autoStash()) {
-                        return;
+                    if(stashBtnUsed) {
+                        toast("Request failed! " + t.getMessage());
                     }
-                    toast("Request failed! " + t.getMessage());
+                    stashBtnUsed = false;
                 }
 
             });
         } catch (Exception e) {
             stashed = false;
             progressBar.setVisibility(View.GONE);
-            if(Account.autoStash()) {
-                return;
+            if(stashBtnUsed) {
+                toast("error " + e);
             }
-            toast("error "+e);
-
+            stashBtnUsed = false;
         }
     }
 
