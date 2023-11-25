@@ -77,6 +77,48 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
 
     <TextView
+        android:id="@+id/textViewStashed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/nunito"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="stashed rants"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsedScore" />
+
+    <TextView
+        android:id="@+id/textViewStashedAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/nunito"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="0"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsedScore" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchAutoStash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:checked="true"
+        android:fontFamily="@font/nunito"
+        android:onClick="switchAutoStash"
+        android:padding="10dp"
+        android:text="automatically stash surprise rants"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStashed"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
         android:id="@+id/textViewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +130,7 @@
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUsedScore" />
+        app:layout_constraintTop_toBottomOf="@+id/switchAutoStash" />
 
     <TextView
         android:id="@+id/textViewVerify"

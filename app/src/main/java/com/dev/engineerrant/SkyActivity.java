@@ -6,6 +6,7 @@ import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -36,8 +37,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SkyActivity extends AppCompatActivity {
-    TextView textViewUsedScoreAmount, textViewUsername, textViewDate;
+    TextView textViewUsedScoreAmount, textViewUsername, textViewDate,textViewStashedAmount;
     ProgressBar progressBar;
+
+    SwitchCompat switchAutoStash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,10 @@ public class SkyActivity extends AppCompatActivity {
         textViewUsername = findViewById(R.id.textViewUsername);
         progressBar = findViewById(R.id.progressBar);
         textViewDate = findViewById(R.id.textViewDate);
+        textViewStashedAmount = findViewById(R.id.textViewStashedAmount);
+        switchAutoStash = findViewById(R.id.switchAutoStash);
+
+        switchAutoStash.setChecked(Account.autoStash());
     }
 
     private void getProfile() {
@@ -71,6 +78,7 @@ public class SkyActivity extends AppCompatActivity {
 
                         SkyProfileAuth profile = response.body().getProfile();
                         textViewUsedScoreAmount.setText(String.valueOf(profile.getUsed_score()));
+                        textViewStashedAmount.setText(String.valueOf(profile.getNum_stashed_rants()));
                         textViewUsername.setText(profile.getUsername());
                         textViewDate.setText("registered to sky "+getRelativeTimeSpanString(profile.getTimestamp()* 1000L));
                         progressBar.setVisibility(View.GONE);
@@ -184,4 +192,9 @@ public class SkyActivity extends AppCompatActivity {
     }
 
 
+    public void switchAutoStash(View view) {
+        Account.setAutoStash(!Account.autoStash());
+
+        initialize();
+    }
 }

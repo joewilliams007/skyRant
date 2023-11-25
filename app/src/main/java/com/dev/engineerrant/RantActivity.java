@@ -62,9 +62,12 @@ import com.dev.engineerrant.network.post.CommentClient;
 import com.dev.engineerrant.network.post.ModifyCommentClient;
 import com.dev.engineerrant.network.post.VoteClient;
 import com.dev.engineerrant.network.post.VoteCommentClient;
+import com.dev.engineerrant.network.post.sky.CustomClient;
+import com.dev.engineerrant.network.post.sky.StashClient;
 import com.vanniktech.emoji.EmojiPopup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -86,6 +89,8 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     View view_container;
     int rantVote = 0;
     String id, user_id, image, _username, user_avatar, color;
+    Rants stash_rant;
+    Boolean stashed = false;
     public static CommentItem modifyComment = null;
 
     public static Integer widget_rant_id = null;
@@ -315,6 +320,8 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         } else {
             textViewScoreRant.setText("+"+rants.getScore());
         }
+
+
     }
 
     private void initialize() {
@@ -457,7 +464,7 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     }
 
                     Rants rants = response.body().getRant();
-
+                    stash_rant = rants;
                     rantVote = rants.getVote_state();
 
                     if (rantVote == 1) {
@@ -477,6 +484,10 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     Intent intent = getIntent();
                     if (intent.getStringExtra("info").equals("false")) {
                         setRantPulled(rants);
+                    }
+
+                    if(Account.autoStash()) {
+                        sendRantToServer();
                     }
 
                     user_id = String.valueOf(rants.getUser_id());
@@ -988,6 +999,8 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         PopupMenu popupMenu = new PopupMenu(this,view);
         popupMenu.setOnMenuItemClickListener(this);
 
+
+
         String[] blockedUsers = Account.blockedUsers().toLowerCase().split(",");
 
         if (Account.blockedUsers()!=null&&!Account.blockedUsers().equals("")) {
@@ -1024,6 +1037,8 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         popupMenu.getMenu().add(0,13,4,"refresh"); // groupId, itemId, order, title
 
         popupMenu.getMenu().add(0,14,5,"copy rant text"); // groupId, itemId, order, title
+
+        popupMenu.getMenu().add(0,15,19,"stash rant"); // groupId, itemId, order, title
 
         if (user_avatar!=null && !user_avatar.equals("")) {
             popupMenu.getMenu().add(0,6,6,"copy avatar link"); // groupId, itemId, order, title
@@ -1125,10 +1140,134 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 clip = ClipData.newPlainText("text of rant "+id, textViewText.getText().toString());
                 clipboard.setPrimaryClip(clip);
                 return true;
+            case 15: // stash rant for preservation in skyAPI
+                if (Account.isLoggedIn()) {
+                    if (Account.isSessionSkyVerified()) {
+                        sendRantToServer();
+                    } else {
+                        Intent intent = new Intent(RantActivity.this, SkyLoginActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    Intent intent = new Intent(RantActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                return true;
             default:
                 return false;
         }
     }
+
+    private void sendRantToServer() {
+        if (stashed) {
+            if(Account.autoStash()) {
+                return;
+            }
+            toast("already stashed!");
+            return;
+        }
+        if (stash_rant==null) {
+            toast("rant has not been pulled yet");
+        } else {
+            uploadRant();
+        }
+    }
+
+;
+    private void uploadRant() {
+        stashed = true;
+        progressBar.setVisibility(View.VISIBLE);
+
+        try {
+            RequestBody user_id = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(Account.user_id()));
+            RequestBody session_id = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(Account.id()));
+
+            String[] _tags = stash_rant.getTags();
+            StringBuilder t = new StringBuilder();
+            for (String tag: _tags) {
+                t.append(tag).append(",");
+            }
+
+            RequestBody rant_id = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(id));
+            RequestBody text = RequestBody.create(MediaType.parse("multipart/form-data"), rant_text);
+            RequestBody score = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(stash_rant.getScore()));
+            RequestBody created_time = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(stash_rant.getCreated_time()));
+            RequestBody num_comments = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(stash_rant.getNum_comments()));
+            RequestBody tags = RequestBody.create(MediaType.parse("multipart/form-data"), t.toString());
+            RequestBody edited = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(stash_rant.getEdited()));
+            RequestBody rant_user_id = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(stash_rant.getUser_id()));
+            RequestBody user_username = RequestBody.create(MediaType.parse("multipart/form-data"), stash_rant.getUser_username());
+            RequestBody user_score = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(stash_rant.getUser_score()));
+            RequestBody b = RequestBody.create(MediaType.parse("multipart/form-data"), stash_rant.getUser_avatar().getB());
+            RequestBody i = RequestBody.create(MediaType.parse("multipart/form-data"), stash_rant.getUser_avatar().getI());
+            RequestBody url;
+            String _url = null;
+            if (stash_rant.getAttached_image().toString().contains("http")) {
+                _url = stash_rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+            }
+            if (_url == null) {
+                 url = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+            } else {
+                 url = RequestBody.create(MediaType.parse("multipart/form-data"), _url);
+            }
+
+            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(SKY_SERVER_URL).addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+            StashClient client = retrofit.create(StashClient.class);
+
+            Call<ModelSuccess> call = client.upload(session_id, user_id,url,rant_id,text,score,created_time,num_comments,tags,edited,rant_user_id,user_username,user_score,b,i);
+            call.enqueue(new Callback<ModelSuccess>() {
+                @Override
+                public void onResponse(@NonNull Call<ModelSuccess> call, @NonNull Response<ModelSuccess> response) {
+                    Log.v("Upload", response + " ");
+                    progressBar.setVisibility(View.GONE);
+                    if (response.isSuccessful()) {
+                        // Do awesome stuff
+                        assert response.body() != null;
+                        Boolean success = response.body().getSuccess();
+
+                        if(Account.autoStash()) {
+                            return;
+                        }
+
+                        if (success) {
+                            toast("rant stashed!");
+                        } else {
+                            toast("rant was already stashed by someone");
+                        }
+                    } else if (response.code() == 400) {
+                        toast("Invalid login credentials entered. Please try again. :(");
+                        // editTextPost.setText(response.message());
+                    } else if (response.code() == 429) {
+                        // Handle unauthorized
+                        toast("You are not authorized :P");
+                    } else {
+                        toast(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ModelSuccess> call, @NonNull Throwable t) {
+                    stashed = false;
+                    progressBar.setVisibility(View.GONE);
+                    if(Account.autoStash()) {
+                        return;
+                    }
+                    toast("Request failed! " + t.getMessage());
+                }
+
+            });
+        } catch (Exception e) {
+            stashed = false;
+            progressBar.setVisibility(View.GONE);
+            if(Account.autoStash()) {
+                return;
+            }
+            toast("error "+e);
+
+        }
+    }
+
     EmojiPopup emojiPopup = null;
     public void addEmoji(View view) {
         if (emojiPopup!=null && emojiPopup.isShowing()) {

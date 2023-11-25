@@ -19,6 +19,11 @@ public class SkyProfileAuth {
     String avatar_bg_hex;
     String avatar_bg_url;
     String profile_bg_url;
+    int num_stashed_rants;
+
+    public int getNum_stashed_rants() {
+        return num_stashed_rants;
+    }
 
     public String getAvatar_frame_url() {
         return avatar_frame_url;

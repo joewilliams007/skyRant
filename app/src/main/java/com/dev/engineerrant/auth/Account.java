@@ -442,4 +442,14 @@ public class Account {
         editor.apply();
     }
 
+    public static Boolean autoStash() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("autoStash", false);
+    }
+
+    public static void setAutoStash(Boolean autoStash) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("autoStash",autoStash);
+        editor.apply();
+    }
 }
