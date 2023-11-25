@@ -487,7 +487,9 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     }
 
                     if(Account.autoStash()) {
-                        sendRantToServer();
+                        if (intent.getStringExtra("surprise")!=null) {
+                            sendRantToServer();
+                        }
                     }
 
                     user_id = String.valueOf(rants.getUser_id());
