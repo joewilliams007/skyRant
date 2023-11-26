@@ -15,6 +15,11 @@ public class Rants {
 
     String body; // NOTE ONLY FOR PROFILE COMMENTS
     Integer rant_id; // NOTE ONLY FOR PROFILE COMMENTS
+    String url; // NOTE ONLY FOR SKYAPI Rants;
+
+    public String getUrl() {
+        return url;
+    }
 
     public String getBody() {
         return body;

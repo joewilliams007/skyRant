@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.dev.engineerrant.R;
+import com.dev.engineerrant.auth.MyApplication;
+
 import java.io.InputStream;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -27,7 +30,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         } catch (Exception e) {
             Log.e("ErrorL", e.getMessage());
             e.printStackTrace();
-         //   mIcon11 = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(),R.drawable.error);
+           mIcon11 = BitmapFactory.decodeResource(MyApplication.getAppContext().getResources(), R.drawable.hidden_dark);
         }
         return mIcon11;
     }

@@ -114,6 +114,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/random_feed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_corner"
+                    android:fontFamily="@font/nunito"
+                    android:gravity="center_horizontal"
+                    android:onClick="randomFeed"
+                    android:padding="10dp"
+                    android:text="random"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/algo_feed"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/follow_feed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,7 +142,7 @@
                     android:text="follows"
                     android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/algo_feed"
+                    app:layout_constraintStart_toEndOf="@+id/random_feed"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView

@@ -7,6 +7,7 @@ import static com.dev.engineerrant.app.toast;
 import static com.dev.engineerrant.auth.Account.username;
 import static com.dev.engineerrant.auth.Account.vibrate;
 import static com.dev.engineerrant.network.RetrofitClient.BASE_URL;
+import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +60,7 @@ import com.dev.engineerrant.network.models.sky.ModelSuccess;
 import com.dev.engineerrant.network.RetrofitClient;
 import com.dev.engineerrant.notifcenter.AlarmReceiver;
 import com.dev.engineerrant.network.post.VoteClient;
+import com.google.gson.Gson;
 import com.vanniktech.emoji.EmojiManager;
 
 import java.util.ArrayList;
@@ -325,13 +327,17 @@ public class MainActivity extends AppCompatActivity {
         MethodsFeed methods = RetrofitClient.getRetrofitInstance().create(MethodsFeed.class);
         String total_url;
 
-        if (Account.isLoggedIn()) {
-            total_url = BASE_URL
-                    + "devrant/rants?token_id="+Account.id()+"&user_id="+Account.user_id()+"&token_key="+Account.key()+"&limit="+Account.limit()+"&sort="+sort+"&app=3&range=day&skip=0/";
-
+        if (sort.equals("random")) {
+            total_url = SKY_SERVER_URL+"feed/random/"+Account.limit();
         } else {
-            total_url = BASE_URL
-                    + "devrant/rants?app=3&limit="+Account.limit()+"&sort="+sort+"&range=day&skip=0/";
+            if (Account.isLoggedIn()) {
+                total_url = BASE_URL
+                        + "devrant/rants?token_id="+Account.id()+"&user_id="+Account.user_id()+"&token_key="+Account.key()+"&limit="+Account.limit()+"&sort="+sort+"&app=3&range=day&skip=0/";
+
+            } else {
+                total_url = BASE_URL
+                        + "devrant/rants?app=3&limit="+Account.limit()+"&sort="+sort+"&range=day&skip=0/";
+            }
         }
 
         Call<ModelFeed> call = methods.getAllData(total_url);
@@ -345,16 +351,20 @@ public class MainActivity extends AppCompatActivity {
                     assert response.body() != null;
                     Boolean success = response.body().getSuccess();
                     List<Rants> rants = response.body().getRants();
-                    //   toast("success: "+success+" size: "+rants.size());
+
 
                     if (Account.isLoggedIn()) {
-                        String text = response.body().getUnread().getTotal() + " NOTIF";
-                        String[] t = text.split("");
-                        text = "";
-                        for (String l:t) {
-                            text+=l+"\n";
+                        try {
+                            String text = response.body().getUnread().getTotal() + " NOTIF";
+                            String[] t = text.split("");
+                            text = "";
+                            for (String l:t) {
+                                text+=l+"\n";
+                            }
+                            textViewNotif.setText(text.substring(0,text.length()-1));
+                        } catch (Exception e) {
+
                         }
-                        textViewNotif.setText(text.substring(0,text.length()-1));
                     }
                     createFeedList(rants);
                 } else if (response.code() == 429) {
@@ -374,13 +384,12 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<ModelFeed> call, @NonNull Throwable t) {
                 Log.d("error_contact", t.toString());
                 toast("no network");
-
+                scrollLayout.setVisibility(View.VISIBLE);
                 if (rantLoadingAnimation != null)
                     rantLoadingAnimation.stop();
             }
         });
     }
-
 
     ArrayList<FeedItem> menuItems;
     public void createFeedList(List<Rants> rants){
@@ -394,13 +403,24 @@ public class MainActivity extends AppCompatActivity {
         String[] blockedUsers = Account.blockedUsers().split(",");
         for (Rants rant : rants){
             String s = rant.getText();
-            String username = rant.getUser_username().toLowerCase();
+            String username;
+            try {
+                username = rant.getUser_username().toLowerCase();
+            } catch (Exception e) {
+                username = "undefined";
+            }
+
 
             String[] tags = rant.getTags();
             String t = "";
-            for (String tag: tags) {
-                t+=tag;
+            try {
+                for (String tag: tags) {
+                    t+=tag;
+                }
+            } catch (Exception e) {
+
             }
+
 
             String s_check = s.toLowerCase()+t.toLowerCase();
             boolean containsBlocked = false;
@@ -435,8 +455,17 @@ public class MainActivity extends AppCompatActivity {
 
             if (!containsBlocked) {
                 String url = null;
-                if (rant.getAttached_image().toString().contains("http")) {
-                    url = rant.getAttached_image().toString().replace("{url=","").split(", width")[0];
+                try {
+                    if (rant.getAttached_image().toString().contains("http")) {
+                        url = rant.getAttached_image().toString().replace("{url=", "").split(", width")[0];
+                    }
+                } catch ( Exception e){
+
+                }
+
+                if (rant.getUrl()!=null) {
+                    url = rant.getUrl();
+
                 }
 
                 if (follow) {
@@ -768,6 +797,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void algoFeed(View view) {
         sort = "algo";
+        follow = false;
+        requestFeed();
+    }
+
+    public void randomFeed(View view) {
+        sort = "random";
         follow = false;
         requestFeed();
     }

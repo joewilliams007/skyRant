@@ -6,8 +6,10 @@ import static java.lang.Integer.toBinaryString;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -24,6 +27,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.dev.engineerrant.DoubleClickListener;
 import com.dev.engineerrant.R;
 import com.dev.engineerrant.animations.Tools;
@@ -97,7 +104,24 @@ public abstract class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.Recyc
             holder.textViewUsername.setText(data_provider.getUsername());
             holder.imageViewProfile.setImageDrawable(null);
             if (data_provider.getI()!=null) {
-                Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+data_provider.getI()).into(holder.imageViewProfile);
+                Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+data_provider.getI())
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                // Handle loading failure here
+                                // This method will be called when the image fails to load
+                                holder.imageViewProfile.setBackgroundColor(Color.parseColor("#7bc8a4"));
+                            return true; // Return false if you don't want to consume the failure
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                // Handle loading success here
+                                // This method will be called when the image is successfully loaded
+                                return false; // Return false if you don't want to consume the success
+                            }
+                        })
+                        .into(holder.imageViewProfile);
             } else {
                 holder.imageViewProfile.setBackgroundColor(Color.parseColor("#"+data_provider.getB()));
             }

@@ -11,6 +11,7 @@ import static com.dev.engineerrant.network.RetrofitClient.SKY_SERVER_URL;
 import static java.lang.Integer.toBinaryString;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,6 +38,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.dev.engineerrant.adapters.CommentAdapter;
 import com.dev.engineerrant.adapters.CommentItem;
 import com.dev.engineerrant.adapters.LinkAdapter;
@@ -210,7 +216,24 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
             imageViewProfile.setImageDrawable(null);
             if (intent.getStringExtra("i") != null) {
-                Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/" + intent.getStringExtra("i")).into(imageViewProfile);
+                Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/" + intent.getStringExtra("i"))
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                // Handle loading failure here
+                                // This method will be called when the image fails to load
+                                imageViewProfile.setBackgroundColor(Color.parseColor("#7bc8a4"));
+                                return true; // Return false if you don't want to consume the failure
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                // Handle loading success here
+                                // This method will be called when the image is successfully loaded
+                                return false; // Return false if you don't want to consume the success
+                            }
+                        })
+                        .into(imageViewProfile);
             } else {
                 imageViewProfile.setBackgroundColor(Color.parseColor("#" + intent.getStringExtra("b")));
             }
@@ -298,7 +321,24 @@ public class RantActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         imageViewProfile.setImageDrawable(null);
         if (rants.getUser_avatar().getI()!=null) {
-            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+rants.getUser_avatar().getI()).into(imageViewProfile);
+            Glide.with(MyApplication.getAppContext()).load("https://avatars.devrant.com/"+rants.getUser_avatar().getI())
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // Handle loading failure here
+                            // This method will be called when the image fails to load
+                            imageViewProfile.setBackgroundColor(Color.parseColor("#7bc8a4"));
+                            return true; // Return false if you don't want to consume the failure
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            // Handle loading success here
+                            // This method will be called when the image is successfully loaded
+                            return false; // Return false if you don't want to consume the success
+                        }
+                    })
+                    .into(imageViewProfile);
         } else {
             imageViewProfile.setBackgroundColor(Color.parseColor("#"+rants.getUser_avatar().getB()));
         }
