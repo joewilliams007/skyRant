@@ -11,8 +11,8 @@ android {
         applicationId "com.dev.engineerrant"
         minSdk 24
         targetSdk 33
-        versionCode 46
-        versionName "1.2.0.8"
+        versionCode 47
+        versionName "1.2.0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -87,5 +87,6 @@ dependencies {
         exclude group: 'androidx.core'
     }
 
+    implementation "com.github.jetradarmobile:android-snowfall:1.2.1"
 
 }

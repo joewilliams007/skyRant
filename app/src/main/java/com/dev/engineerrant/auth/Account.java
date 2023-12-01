@@ -324,6 +324,20 @@ public class Account {
         editor.apply();
     }
 
+    public static boolean isSnow() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return preferences.getBoolean("snow", true);
+    }
+
+
+
+    public static void setSnow(boolean b) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("snow",b);
+        editor.apply();
+    }
+
     public static long pushNotifTime() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return preferences.getLong("push_notif_time", 30L);

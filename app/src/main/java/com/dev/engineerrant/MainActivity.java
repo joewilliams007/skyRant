@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     RantLoadingAnimation rantLoadingAnimation;
     RecyclerView users_view;
     ConstraintLayout scrollLayout, search;
+    com.jetradarmobile.snowfall.SnowfallView snowfallView;
     private static final String NAME = "ThemeColors", KEY = "color";
     @SuppressLint("MissingInflatedId")
     @Override
@@ -97,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialize();
         handleDeepLinkIntent(); // feed request comes afterwards
-
 
         setUpFadeAnimation(textViewUsername);
         setUpFadeAnimation(textViewNotif);
@@ -152,6 +152,11 @@ public class MainActivity extends AppCompatActivity {
         users_view.setVisibility(View.GONE);
         follow_feed = findViewById(R.id.follow_feed);
         follow = false;
+        snowfallView = findViewById(R.id.snowFallView);
+        if (!Account.isSnow()) {
+            snowfallView.setVisibility(View.GONE);
+        }
+
 
         if (!Account.followBtn()) {
             follow_feed.setVisibility(View.GONE);

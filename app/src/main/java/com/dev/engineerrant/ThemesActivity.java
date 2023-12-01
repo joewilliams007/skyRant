@@ -28,12 +28,19 @@ public class ThemesActivity extends AppCompatActivity {
     private void initialize() {
         editTextSearchText = findViewById(R.id.editTextSearchText);
         SwitchCompat switchUsername = findViewById(R.id.switchUsername);
+        SwitchCompat switchSnow = findViewById(R.id.switchSnow);
 
+        switchSnow.setChecked(Account.isSnow());
         switchUsername.setChecked(Account.isFeedUsername());
     }
 
     public void switchUsername(View view) {
         Account.setFeedUsername(!Account.isFeedUsername());
+        initialize();
+    }
+
+    public void switchSnow(View view) {
+        Account.setSnow(!Account.isSnow());
         initialize();
     }
 
@@ -106,4 +113,6 @@ public class ThemesActivity extends AppCompatActivity {
         Intent intent = new Intent(ThemesActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
+
 }
