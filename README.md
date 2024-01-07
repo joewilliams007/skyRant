@@ -1,5 +1,11 @@
 <p align="center"> <img src="https://raw.githubusercontent.com/joewilliams007/skyRant/master/app/src/main/res/drawable/icon.png" /> </p>
 
+ ,---,   S
+: :/  :  K
+ '--v'   Y
+ 
+R A N T  x
+
 # skyRant
 - skyRant is an android client for devRant with a focus on animations and features.
 - skyRant is not in any way affiliated with devRant
